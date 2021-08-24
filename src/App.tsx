@@ -1,12 +1,18 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./app/theme";
+import HeroSection from "./components/HeroSection";
+import { CssBaseline } from "@material-ui/core";
+import Layout from "./Layout";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Typography variant="h1">sgov browser</Typography>
-      <Typography variant="h2">coming soon...</Typography>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout>
+        <HeroSection />
+      </Layout>
+    </ThemeProvider>
   );
 };
 
