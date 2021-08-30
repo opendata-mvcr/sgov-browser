@@ -6,6 +6,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
 import theme from "../app/theme";
 import { useSearch } from "../api/WordsAPI";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -34,12 +35,29 @@ const SearchBar: React.FC = () => {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
+  const history = useHistory();
+
+  const onChangeHandler = (label:string | null) => {
+      if (data.some(e => e.label === label)) {
+         history.push(`/words?label=${label}`)
+      }
+      else {
+          history.push(`/search?label=${label}`)
+      }
+
+  }
 
   return (
     <Autocomplete
       classes={classes}
-      freeSolo
+      loading={isLoading}
+      onChange={(event: any, newValue: string | null) => {
+          onChangeHandler(newValue);
+      }}
+      loadingText="Načítání"
+      noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
+      freeSolo
       options={data.map((item) => item.label)}
       onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
       renderInput={(params) => (
