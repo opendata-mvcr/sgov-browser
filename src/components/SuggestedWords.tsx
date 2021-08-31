@@ -23,7 +23,7 @@ const SuggestedWords: React.FC = () => {
   const classes = useStyles();
 
   //Only for development purposes, need to discuss how to fetch this personalized data
-  const words = ["budova", "bytový dům", "stavba", "koridor"];
+  const words = ["Budova", "Bytový dům", "Stavba", "Koridor"];
 
   return (
     <Container>
@@ -34,11 +34,11 @@ const SuggestedWords: React.FC = () => {
 
         {words.map((word) => (
           <Link
+            href={`/search?label=${word}`}
             key={word}
             className={classes.item}
             color="textPrimary"
             underline="always"
-            component="button"
             variant="h6"
           >
             {word}

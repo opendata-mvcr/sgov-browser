@@ -1,18 +1,28 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./app/theme";
-import HeroSection from "./components/HeroSection";
 import { CssBaseline } from "@material-ui/core";
-import Layout from "./Layout";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import Router from "./Router";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30 * 1000,
+    },
+  },
+});
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Layout>
-        <HeroSection />
-      </Layout>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router />
+      </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen />
+    </QueryClientProvider>
   );
 };
 
