@@ -38,7 +38,7 @@ const SearchBar: React.FC = () => {
   const history = useHistory();
 
   const onChangeHandler = (label: string | null) => {
-      history.push(`/search?label=${label}`);
+    history.push(`/search?label=${label}`);
   };
 
   const endAdornment = (

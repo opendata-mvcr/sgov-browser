@@ -9,18 +9,18 @@ import ErrorPage from "./components/ErrorPage";
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Layout>
         <Switch>
           <Route exact path="/search">
-            <Search/>
+            <Search />
           </Route>
           <Route exact path="/">
             <HeroSection />
           </Route>
-            <Route>
-                <ErrorPage/>
-            </Route>
+          <Route>
+            <ErrorPage />
+          </Route>
         </Switch>
       </Layout>
     </BrowserRouter>
