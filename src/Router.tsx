@@ -2,23 +2,25 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./Layout";
 import HeroSection from "./components/HeroSection";
-import Word from "./components/Word";
 import Search from "./components/Search";
+import ScrollToTop from "./ScrollToTop";
+import ErrorPage from "./components/ErrorPage";
 
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Layout>
         <Switch>
-          <Route path="/words">
-            <Word/>
-          </Route>
-          <Route path="/search">
+          <Route exact path="/search">
             <Search/>
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <HeroSection />
           </Route>
+            <Route>
+                <ErrorPage/>
+            </Route>
         </Switch>
       </Layout>
     </BrowserRouter>

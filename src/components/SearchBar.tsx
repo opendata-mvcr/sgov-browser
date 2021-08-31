@@ -37,22 +37,32 @@ const SearchBar: React.FC = () => {
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
 
-  const onChangeHandler = (label:string | null) => {
-      if (data.some(e => e.label === label)) {
-         history.push(`/words?label=${label}`)
-      }
-      else {
-          history.push(`/search?label=${label}`)
-      }
+  const onChangeHandler = (label: string | null) => {
+      history.push(`/search?label=${label}`);
+  };
 
-  }
+  const endAdornment = (
+    <InputAdornment position="start">
+      {isLoading ? (
+        <CircularProgress color="inherit" size={20} />
+      ) : (
+        <SearchIcon
+          fontSize="large"
+          style={{
+            color: "gray",
+            marginRight: theme.spacing(1),
+          }}
+        />
+      )}
+    </InputAdornment>
+  );
 
   return (
     <Autocomplete
       classes={classes}
       loading={isLoading}
       onChange={(event: any, newValue: string | null) => {
-          onChangeHandler(newValue);
+        onChangeHandler(newValue);
       }}
       loadingText="Načítání"
       noOptionsText="Nebyly nalezeny žádné výsledky"
@@ -66,21 +76,7 @@ const SearchBar: React.FC = () => {
           placeholder="Zadejte hledané slovo"
           InputProps={{
             ...params.InputProps,
-            endAdornment: (
-              <InputAdornment position="start">
-                {isLoading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : (
-                  <SearchIcon
-                    fontSize="large"
-                    style={{
-                      color: "gray",
-                      marginRight: theme.spacing(1),
-                    }}
-                  />
-                )}
-              </InputAdornment>
-            ),
+            endAdornment: endAdornment,
             disableUnderline: true,
           }}
         />
