@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <AppBar position="static" elevation={0}>
       <Toolbar>
         <NavIcon />
-        <Typography variant="h6" color="textPrimary">
+        <Typography variant="h6" color="textSecondary">
           sgov-browser
         </Typography>
       </Toolbar>

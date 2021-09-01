@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
     <Box bgcolor="primary.main" py={1}>
       <Container maxWidth="lg">
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="body2">
+          <Typography variant="body2" color="textSecondary">
             Tato aplikace je udržována v rámci projektu
             <br />
             OPZ č. CZ.03.4.74/0.0/0.0/15_025/0013983.

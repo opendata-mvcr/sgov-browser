@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
     border: "1px solid #e2e2e1",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     borderRadius: 26,
     /**This should be done differently to make the component reusable**/
     fontSize: 26,
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
   },
 }));
 
@@ -60,11 +60,9 @@ const SearchBar: React.FC = () => {
   return (
     <Autocomplete
       classes={classes}
-      loading={isLoading}
       onChange={(event: any, newValue: string | null) => {
         onChangeHandler(newValue);
       }}
-      loadingText="Načítání"
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo

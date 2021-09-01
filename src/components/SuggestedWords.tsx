@@ -28,7 +28,7 @@ const SuggestedWords: React.FC = () => {
   return (
     <Container>
       <Box className={classes.wrapper}>
-        <Typography variant="h6" className={classes.item}>
+        <Typography variant="h6" className={classes.item} color="textSecondary">
           Navrhovaná slova:
         </Typography>
 
@@ -37,7 +37,7 @@ const SuggestedWords: React.FC = () => {
             href={`/search?label=${word}`}
             key={word}
             className={classes.item}
-            color="textPrimary"
+            color="textSecondary"
             underline="always"
             variant="h6"
           >
