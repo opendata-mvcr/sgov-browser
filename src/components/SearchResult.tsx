@@ -11,6 +11,7 @@ interface Item {
 interface SearchItem {
   label: string;
   isWord: boolean;
+  vocabularies: string[];
   items: Item[];
 }
 
@@ -24,14 +25,13 @@ const SearchResult: React.FC<SearchItem> = (props) => {
     paddingLeft: theme.spacing(2),
     marginTop: theme.spacing(2)
   }));
-console.log(props.items);
   return (
     <Container>
       <SearchBox>
         <Typography variant="h2">{props.label}</Typography>
-        {/**props.items.map((item) => {
-          return <Label iri={item.vocabulary}/>;
-        })**/}
+        {props.vocabularies.map((item) => {
+          return <Label iri={item}/>;
+        })}
       </SearchBox>
     </Container>
   );
