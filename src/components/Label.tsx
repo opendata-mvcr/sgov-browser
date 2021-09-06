@@ -16,4 +16,6 @@ const Label: React.FC<LabelItem> = (props) => {
   return <></>;
 };
 
-export default Label;
+
+
+export default React.memo(Label);

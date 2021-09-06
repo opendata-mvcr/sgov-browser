@@ -5,6 +5,7 @@ import HeroSection from "./components/HeroSection";
 import Search from "./components/Search";
 import ScrollToTop from "./ScrollToTop";
 import ErrorPage from "./components/ErrorPage";
+import DisambiguationPage from "./components/DisambiguationPage";
 
 const Router: React.FC = () => {
   return (
@@ -12,6 +13,9 @@ const Router: React.FC = () => {
       <ScrollToTop />
       <Layout>
         <Switch>
+          <Route exact path="/disambiguation">
+            <DisambiguationPage />
+          </Route>
           <Route exact path="/search">
             <Search />
           </Route>
