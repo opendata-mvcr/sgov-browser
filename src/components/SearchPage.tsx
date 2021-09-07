@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Typography } from "@material-ui/core";
 import { useSearch } from "../api/WordsAPI";
 import useRouteQuery from "../hooks/useRouteQuery";
 import _ from "lodash";
-import SearchResult, { Item, SearchItem } from "./SearchResult";
+import SearchResult, { SearchItem } from "./SearchResult";
 import SearchBar from "./SearchBar";
 import { useHistory } from "react-router-dom";
 
-const Search: React.FC = () => {
+const NUMBER_OF_RESULT = 50;
+
+const SearchPage: React.FC = () => {
   const routeQuery = useRouteQuery();
   const wordLabel = routeQuery.get("label");
   const {
@@ -26,7 +28,7 @@ const Search: React.FC = () => {
       } else if (item.isWord) {
         history.replace(`/disambiguation?label=${item.label}`);
       } else {
-        console.log("redirect");
+        history.replace("/term");
       }
     }
   }, [data]);
@@ -35,7 +37,7 @@ const Search: React.FC = () => {
     if (item.isWord) {
       history.push(`/disambiguation?label=${item.label}`);
     } else {
-      console.log("redirect is gonna happen");
+      history.push("/term");
     }
   };
 
@@ -48,7 +50,7 @@ const Search: React.FC = () => {
     <Box>
       <Box bgcolor="primary.main" py={2}>
         <Container>
-          <SearchBar />
+          <SearchBar size="large" />
           <Box pl={6} pt={2}>
             <Typography variant="h5" color="textSecondary">
               Bohužel jsme nenalezli přesný význam slova "{wordLabel}"
@@ -56,9 +58,9 @@ const Search: React.FC = () => {
           </Box>
         </Container>
       </Box>
-      <Box pl={6}>
+      <Box pl={6} pt={2} pb={4}>
         {data.length ? (
-          data.slice(0, 10).map((item) => {
+          data.slice(0, NUMBER_OF_RESULT).map((item) => {
             return (
               <SearchResult
                 key={item.label}
@@ -71,11 +73,11 @@ const Search: React.FC = () => {
             );
           })
         ) : (
-          <>Empty</>
+          <Typography variant="h2">Nebyly nalezené žádné výsledky</Typography>
         )}
       </Box>
     </Box>
   );
 };
 
-export default Search;
+export default SearchPage;

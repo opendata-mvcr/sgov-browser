@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const HeroSection: React.FC = () => {
   const classes = useStyles();
   return (
-    <Box bgcolor="primary.main" py={3} style={{flex:1}}>
+    <Box bgcolor="primary.main" py={3} style={{ flex: 1 }}>
       <Container component="section" maxWidth="lg">
         <Grid container justifyContent="center" alignItems="center" spacing={1}>
           <Grid item md={5}>
@@ -37,7 +37,7 @@ const HeroSection: React.FC = () => {
             <Hero className={classes.heroImage} />
           </Grid>
           <Grid item md={10} xs={12}>
-            <SearchBar />
+            <SearchBar size="large" />
           </Grid>
           <Grid item md={10}>
             <SuggestedWords />

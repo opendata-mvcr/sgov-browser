@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch } from "../api/WordsAPI";
 import _ from "lodash";
-import {Box, Typography} from "@material-ui/core";
+import { Box, Container, Typography } from "@material-ui/core";
 import SearchResult, { Item } from "./SearchResult";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -33,23 +33,40 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data]);
 
+  const handleClick = () => {
+    history.push("/term");
+  };
+
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
 
   return (
-    <Box pl={6}>
-      {terms.map((term: any) => {
-        return (
-          <SearchResult
-            key={term.uri}
-            label={term.label}
-            isWord={false}
-            vocabularies={[term.vocabulary]}
-            click={() => console.log(term.uri)}
-          />
-        );
-      })}
+    <Box>
+      <Box bgcolor="primary.main" pl={9} pb={1}>
+        <Container>
+          <Typography variant="body1" color="textSecondary">
+            {terms.length}
+            {terms.length > 4 ? " pojmů" : " pojmy"}
+          </Typography>
+          <Typography variant="h1" color="textSecondary">
+            {wordLabel}
+          </Typography>
+        </Container>
+      </Box>
+      <Box pl={6} pt={2} pb={4}>
+        {terms.map((term: any) => {
+          return (
+            <SearchResult
+              key={term.uri}
+              label={term.label}
+              isWord={false}
+              vocabularies={[term.vocabulary]}
+              click={handleClick}
+            />
+          );
+        })}
+      </Box>
     </Box>
   );
 };
