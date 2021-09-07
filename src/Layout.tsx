@@ -17,6 +17,7 @@ const ContentBox = styled(Box)({
 
 interface LayoutSettings {
   fullHeader?: boolean;
+  fullFooter?: boolean;
 }
 
 const Layout: React.FC<LayoutSettings> = (props) => {
@@ -24,7 +25,7 @@ const Layout: React.FC<LayoutSettings> = (props) => {
     <FullSizedBox>
       <Header showSearch={props.fullHeader} />
       <ContentBox>{props.children}</ContentBox>
-      <Footer />
+      <Footer showImage={props.fullFooter} />
     </FullSizedBox>
   );
 };
