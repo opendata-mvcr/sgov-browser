@@ -31,7 +31,7 @@ const DisambiguationPage: React.FC = () => {
         setTerms(item.items);
       }
     }
-  }, [data]);
+  }, [data, isSuccess,wordLabel,history]);
 
   const handleClick = () => {
     history.push("/term");

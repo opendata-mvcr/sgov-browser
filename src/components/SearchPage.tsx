@@ -31,7 +31,7 @@ const SearchPage: React.FC = () => {
         history.replace("/term");
       }
     }
-  }, [data]);
+  });
 
   const clickCallback = (item: SearchItem) => {
     if (item.isWord) {
