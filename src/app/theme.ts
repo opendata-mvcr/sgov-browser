@@ -2,8 +2,8 @@ import { createTheme } from "@material-ui/core";
 
 const primary = "#00BC58";
 const secondary = "#3F3D56";
-const primaryText = "#FFFFFF";
-const secondaryText = "#000000";
+const primaryText = "#000000";
+const secondaryText = "#FFFFFF";
 
 const theme = createTheme({
   palette: {
@@ -17,7 +17,7 @@ const theme = createTheme({
       primary: primaryText,
       secondary: secondaryText,
     },
-    background: { default: primary },
+    //  background: { default: 'black' },
   },
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),

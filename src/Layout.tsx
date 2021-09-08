@@ -15,12 +15,17 @@ const ContentBox = styled(Box)({
   flexGrow: 1,
 });
 
-const Layout: React.FC = ({ children }) => {
+interface LayoutSettings {
+  fullHeader?: boolean;
+  fullFooter?: boolean;
+}
+
+const Layout: React.FC<LayoutSettings> = (props) => {
   return (
     <FullSizedBox>
-      <Header />
-      <ContentBox>{children}</ContentBox>
-      <Footer />
+      <Header showSearch={props.fullHeader} />
+      <ContentBox>{props.children}</ContentBox>
+      <Footer showImage={props.fullFooter} />
     </FullSizedBox>
   );
 };

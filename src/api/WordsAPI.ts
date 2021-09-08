@@ -9,17 +9,23 @@ const getSearchResult = async (word: string | undefined) => {
   });
 
   // Groups results with the same label, adds all individual scores and sort the final result
+  // adds isWord flag when there are multiple, only label results are accepted
   const result = _(data)
+    .filter((item) => {
+      return item.snippetField === "label";
+    })
     .groupBy("label")
-    .map((objs, key) => ({
-      label: key,
-      total_score: _.sumBy(objs, "score"),
-      items: { ...objs },
-      isWord: objs.length !== 1,
-    }))
+    .map((objs, key) => {
+      return {
+        label: key,
+        total_score: _.sumBy(objs, "score"),
+        items: [...objs],
+        isWord: objs.length !== 1,
+        vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
+      };
+    })
     .orderBy("total_score", "desc")
     .value();
-
   return result;
 };
 
