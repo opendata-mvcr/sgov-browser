@@ -3,17 +3,17 @@ import { Box, Container, Link, styled } from "@material-ui/core";
 import Label from "./Label";
 import { makeStyles } from "@material-ui/core/styles";
 
-//This is just a draft, better interface, with descriptions, is gonna be implemented in next PR
-export interface Item {
+//TODO: move these interfaces somewhere else
+export interface SearchTerm {
+  uri: string;
   vocabulary: string;
-  description?: string;
 }
 
 export interface SearchItem {
   label: string;
   isWord: boolean;
   vocabularies: string[];
-  items?: Item[];
+  items: SearchTerm[];
 }
 
 export interface clickCallback {
@@ -50,6 +50,7 @@ const SearchResult: React.FC<SearchItem & clickCallback> = (props) => {
         >
           {props.label}
         </Link>
+        {/** TODO: vocabulary interface**/}
         {props.vocabularies.map((item) => {
           return <Label key={item} iri={item} />;
         })}

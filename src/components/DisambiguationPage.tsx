@@ -3,8 +3,9 @@ import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch } from "../api/WordsAPI";
 import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
-import SearchResult, { Item } from "./SearchResult";
+import SearchResult, { SearchItem, SearchTerm } from "./SearchResult";
 import { useHistory } from "react-router-dom";
+import { getTerm, useTerm } from "../api/TermAPI";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -16,13 +17,13 @@ const DisambiguationPage: React.FC = () => {
     isError,
   } = useSearch(wordLabel ?? undefined);
 
-  const [terms, setTerms] = useState<Item[]>([]);
+  const [terms, setTerms] = useState<SearchTerm[]>([]);
   const history = useHistory();
 
   //Redirects when label isn't a word
   useEffect(() => {
     if (isSuccess) {
-      const item = _.find(data, { label: wordLabel ?? "" });
+      const item = _.find<SearchItem>(data, { label: wordLabel ?? "" });
       if (item === undefined) {
         history.replace(`/search?label=${wordLabel}`);
       } else if (!item.isWord) {
@@ -33,7 +34,8 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel, history]);
 
-  const handleClick = () => {
+  const handleClick = (term: SearchTerm) => {
+    // TODO: get rid off this callBack and make it work via hrefs instead
     history.push("/term");
   };
 
@@ -62,7 +64,10 @@ const DisambiguationPage: React.FC = () => {
               label={term.label}
               isWord={false}
               vocabularies={[term.vocabulary]}
-              click={handleClick}
+              click={() =>
+                handleClick({ uri: term.uri, vocabulary: term.vocabulary })
+              }
+              items={[]}
             />
           );
         })}

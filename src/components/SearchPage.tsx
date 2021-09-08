@@ -22,7 +22,7 @@ const SearchPage: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const item = _.find(data, { label: wordLabel ?? "" });
+      const item = _.find<SearchItem>(data, { label: wordLabel ?? "" });
       if (item === undefined) {
         return;
       } else if (item.isWord) {
