@@ -2,6 +2,7 @@ import { AppBar, Box, Link, Toolbar } from "@material-ui/core";
 import React from "react";
 import { ReactComponent as NavIcon } from "./assets/navIcon.svg";
 import SearchBar from "./components/SearchBar";
+import { Link as RouterLink } from "react-router-dom";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -12,7 +13,13 @@ const Header: React.FC<HeaderProps> = (props) => {
     <AppBar position="static" elevation={0}>
       <Toolbar>
         <NavIcon />
-        <Link href="/" variant="h6" color="textSecondary" underline="none">
+        <Link
+          component={RouterLink}
+          to="/"
+          variant="h6"
+          color="textSecondary"
+          underline="none"
+        >
           sgov-browser
         </Link>
         {props.showSearch && (

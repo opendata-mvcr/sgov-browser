@@ -3,6 +3,7 @@ import { SearchTerm } from "./SearchResult";
 import { Box, Container, Link, styled } from "@material-ui/core";
 import Label from "./Label";
 import DefinitionSnippet from "./DefinitionSnippet";
+import { Link as RouterLink } from "react-router-dom";
 
 const TermResult: React.FC<SearchTerm> = (props) => {
   const TermBox = styled(Box)(({ theme }) => ({
@@ -14,7 +15,13 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   return (
     <Container>
       <TermBox>
-        <Link color="textPrimary" underline="always" variant="h2">
+        <Link
+          component={RouterLink}
+          to="/term"
+          variant="h2"
+          color="textPrimary"
+          underline="always"
+        >
           {props.label}
         </Link>
         <Label iri={props.vocabulary} />

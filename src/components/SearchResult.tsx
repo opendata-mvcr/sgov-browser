@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Container, Link, styled } from "@material-ui/core";
 import Label from "./Label";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 //TODO: move these interfaces somewhere else
 export interface SearchTerm {
@@ -17,19 +17,7 @@ export interface SearchItem {
   items: SearchTerm[];
 }
 
-export interface clickCallback {
-  click: () => void;
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-}));
-
-const SearchResult: React.FC<SearchItem & clickCallback> = (props) => {
+const SearchResult: React.FC<SearchItem> = (props) => {
   const SearchBox = styled(Box)(({ theme }) => ({
     borderLeft: "solid",
     borderColor: props.isWord
@@ -38,16 +26,17 @@ const SearchResult: React.FC<SearchItem & clickCallback> = (props) => {
     paddingLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
   }));
-  const classes = useStyles();
+
+  const route = props.isWord ? `/disambiguation?label=${props.label}` : "/term";
   return (
     <Container>
       <SearchBox>
         <Link
-          classes={classes}
+          variant="h2"
           color="textPrimary"
           underline="always"
-          variant="h2"
-          onClick={props.click}
+          component={RouterLink}
+          to={route}
         >
           {props.label}
         </Link>

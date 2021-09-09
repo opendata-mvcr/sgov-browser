@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Container, Link, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -34,7 +35,8 @@ const SuggestedWords: React.FC = () => {
 
         {words.map((word) => (
           <Link
-            href={`/search?label=${word}`}
+            component={RouterLink}
+            to={`/search?label=${word}`}
             key={word}
             className={classes.item}
             color="textSecondary"

@@ -33,14 +33,6 @@ const SearchPage: React.FC = () => {
     }
   });
 
-  const clickCallback = (item: SearchItem) => {
-    if (item.isWord) {
-      history.push(`/disambiguation?label=${item.label}`);
-    } else {
-      history.push("/term");
-    }
-  };
-
   // Just to show something, not a final version at all
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
@@ -68,7 +60,6 @@ const SearchPage: React.FC = () => {
                 isWord={item.isWord}
                 items={item.items}
                 vocabularies={item.vocabularies}
-                click={() => clickCallback(item)}
               />
             );
           })
