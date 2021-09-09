@@ -8,6 +8,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
 import { useSearch } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
+import { SearchItem } from "./SearchResult";
+import _ from "lodash";
 
 const OPTIONS_LIMIT = 7;
 const defaultFilterOptions = createFilterOptions();
@@ -53,7 +55,14 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const history = useHistory();
 
   const onChangeHandler = (label: string | null) => {
-    history.push(`/search?label=${label}`);
+    const item = _.find<SearchItem>(data, { label: label ?? "" });
+    if (item === undefined) {
+      history.push(`/search?label=${label}`);
+    } else if (item.isWord) {
+      history.push(`/disambiguation?label=${label}`);
+    } else {
+      history.push("/term");
+    }
   };
 
   const endAdornment = (

@@ -13,7 +13,6 @@ export const getTerm = async (searchResult: SearchTerm) => {
   const { data } = await axios.get(route, {
     params: { namespace: namespace },
   });
-  // TODO: Add interface
   return data;
 };
 

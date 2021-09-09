@@ -3,7 +3,6 @@ import { Box, Container, Link, styled } from "@material-ui/core";
 import Label from "./Label";
 import { Link as RouterLink } from "react-router-dom";
 
-//TODO: move these interfaces somewhere else
 export interface SearchTerm {
   uri: string;
   vocabulary: string;
@@ -15,6 +14,7 @@ export interface SearchItem {
   isWord: boolean;
   vocabularies: string[];
   items: SearchTerm[];
+  snippetField?: string;
 }
 
 const SearchResult: React.FC<SearchItem> = (props) => {
@@ -40,8 +40,7 @@ const SearchResult: React.FC<SearchItem> = (props) => {
         >
           {props.label}
         </Link>
-        {/** TODO: vocabulary interface**/}
-        {props.vocabularies.map((item) => {
+        {props.vocabularies.map((item: string) => {
           return <Label key={item} iri={item} />;
         })}
       </SearchBox>

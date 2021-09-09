@@ -3,10 +3,7 @@ import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch } from "../api/WordsAPI";
 import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
-import SearchResult, { SearchItem, SearchTerm } from "./SearchResult";
-import { useHistory } from "react-router-dom";
-import { getTerm, useTerm } from "../api/TermAPI";
-import DefinitionSnippet from "./DefinitionSnippet";
+import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 
 const DisambiguationPage: React.FC = () => {
@@ -20,26 +17,15 @@ const DisambiguationPage: React.FC = () => {
   } = useSearch(wordLabel ?? undefined);
 
   const [terms, setTerms] = useState<SearchTerm[]>([]);
-  const history = useHistory();
 
-  //Redirects when label isn't a word
   useEffect(() => {
     if (isSuccess) {
       const item = _.find<SearchItem>(data, { label: wordLabel ?? "" });
-      if (item === undefined) {
-        history.replace(`/search?label=${wordLabel}`);
-      } else if (!item.isWord) {
-        history.replace(`/search?label=${item.label}`);
-      } else {
+      if (item) {
         setTerms(item.items);
       }
     }
-  }, [data, isSuccess, wordLabel, history]);
-
-  const handleClick = (term: SearchTerm) => {
-    // TODO: get rid off this callBack and make it work via hrefs instead
-    history.push("/term");
-  };
+  }, [data, isSuccess, wordLabel]);
 
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
@@ -49,9 +35,8 @@ const DisambiguationPage: React.FC = () => {
     <Box>
       <Box bgcolor="primary.main" pl={9} pb={1}>
         <Container>
-          <Typography variant="body1" color="textSecondary">
-            {terms.length}
-            {terms.length > 4 ? " pojmů" : " pojmy"}
+          <Typography variant="h5" color="textSecondary">
+            slovo
           </Typography>
           <Typography variant="h1" color="textSecondary">
             {wordLabel}
