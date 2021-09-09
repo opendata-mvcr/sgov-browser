@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export interface SearchTerm {
   uri: string;
   vocabulary: string;
+  label: string;
 }
 
 export interface SearchItem {

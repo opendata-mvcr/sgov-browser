@@ -6,6 +6,8 @@ import { Box, Container, Typography } from "@material-ui/core";
 import SearchResult, { SearchItem, SearchTerm } from "./SearchResult";
 import { useHistory } from "react-router-dom";
 import { getTerm, useTerm } from "../api/TermAPI";
+import DefinitionSnippet from "./DefinitionSnippet";
+import TermResult from "./TermResult";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -57,17 +59,13 @@ const DisambiguationPage: React.FC = () => {
         </Container>
       </Box>
       <Box pl={6} pt={2} pb={4}>
-        {terms.map((term: any) => {
+        {terms.map((term: SearchTerm) => {
           return (
-            <SearchResult
+            <TermResult
               key={term.uri}
+              uri={term.uri}
+              vocabulary={term.vocabulary}
               label={term.label}
-              isWord={false}
-              vocabularies={[term.vocabulary]}
-              click={() =>
-                handleClick({ uri: term.uri, vocabulary: term.vocabulary })
-              }
-              items={[]}
             />
           );
         })}
