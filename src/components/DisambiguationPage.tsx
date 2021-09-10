@@ -3,8 +3,8 @@ import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch } from "../api/WordsAPI";
 import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
-import SearchResult, { Item } from "./SearchResult";
-import { useHistory } from "react-router-dom";
+import { SearchItem, SearchTerm } from "./SearchResult";
+import TermResult from "./TermResult";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -16,26 +16,16 @@ const DisambiguationPage: React.FC = () => {
     isError,
   } = useSearch(wordLabel ?? undefined);
 
-  const [terms, setTerms] = useState<Item[]>([]);
-  const history = useHistory();
+  const [terms, setTerms] = useState<SearchTerm[]>([]);
 
-  //Redirects when label isn't a word
   useEffect(() => {
     if (isSuccess) {
-      const item = _.find(data, { label: wordLabel ?? "" });
-      if (item === undefined) {
-        history.replace(`/search?label=${wordLabel}`);
-      } else if (!item.isWord) {
-        history.replace(`/search?label=${item.label}`);
-      } else {
+      const item = _.find<SearchItem>(data, { label: wordLabel ?? "" });
+      if (item) {
         setTerms(item.items);
       }
     }
-  }, [data, isSuccess,wordLabel,history]);
-
-  const handleClick = () => {
-    history.push("/term");
-  };
+  }, [data, isSuccess, wordLabel]);
 
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
@@ -45,9 +35,8 @@ const DisambiguationPage: React.FC = () => {
     <Box>
       <Box bgcolor="primary.main" pl={9} pb={1}>
         <Container>
-          <Typography variant="body1" color="textSecondary">
-            {terms.length}
-            {terms.length > 4 ? " pojmů" : " pojmy"}
+          <Typography variant="h5" color="textSecondary">
+            slovo
           </Typography>
           <Typography variant="h1" color="textSecondary">
             {wordLabel}
@@ -55,14 +44,13 @@ const DisambiguationPage: React.FC = () => {
         </Container>
       </Box>
       <Box pl={6} pt={2} pb={4}>
-        {terms.map((term: any) => {
+        {terms.map((term: SearchTerm) => {
           return (
-            <SearchResult
+            <TermResult
               key={term.uri}
+              uri={term.uri}
+              vocabulary={term.vocabulary}
               label={term.label}
-              isWord={false}
-              vocabularies={[term.vocabulary]}
-              click={handleClick}
             />
           );
         })}
