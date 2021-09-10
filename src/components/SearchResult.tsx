@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Container, Link, styled } from "@material-ui/core";
+import { Box, Container, styled } from "@material-ui/core";
 import Label from "./Label";
-import { Link as RouterLink } from "react-router-dom";
+import RouteLink from "./RouteLink";
 
 export interface SearchTerm {
   uri: string;
@@ -31,15 +31,7 @@ const SearchResult: React.FC<SearchItem> = (props) => {
   return (
     <Container>
       <SearchBox>
-        <Link
-          variant="h2"
-          color="textPrimary"
-          underline="always"
-          component={RouterLink}
-          to={route}
-        >
-          {props.label}
-        </Link>
+        <RouteLink to={route}>{props.label}</RouteLink>
         {props.vocabularies.map((item: string) => {
           return <Label key={item} iri={item} />;
         })}
