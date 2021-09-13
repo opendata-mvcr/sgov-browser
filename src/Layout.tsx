@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Box, styled } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 
 const FullSizedBox = styled(Box)({
   minHeight: "100vh",
@@ -15,17 +16,23 @@ const ContentBox = styled(Box)({
   flexGrow: 1,
 });
 
-interface LayoutSettings {
-  fullHeader?: boolean;
-  fullFooter?: boolean;
-}
+const searchRoutes = ["/term", "/disambiguation"];
+const illustrationRoutes = ["/search", "/term", "/disambiguation"];
 
-const Layout: React.FC<LayoutSettings> = (props) => {
+const Layout: React.FC = (props) => {
+  const location = useLocation();
+  const [showSearch, setShowSearch] = useState(false);
+  const [showIllustration, setShowIllustration] = useState(false);
+  useEffect(() => {
+    setShowSearch(searchRoutes.includes(location.pathname));
+    setShowIllustration(illustrationRoutes.includes(location.pathname));
+  }, [location]);
+
   return (
     <FullSizedBox>
-      <Header showSearch={props.fullHeader} />
+      <Header showSearch={showSearch} />
       <ContentBox>{props.children}</ContentBox>
-      <Footer showImage={props.fullFooter} />
+      <Footer showImage={showIllustration} />
     </FullSizedBox>
   );
 };

@@ -12,7 +12,7 @@ const Footer: React.FC<FooterProps> = (props) => {
     <Box>
       {props.showImage && (
         <Container>
-          <Box style={{ position: "relative" }}>
+          <Box style={{ position: "relative", marginTop: 100 }}>
             <FooterImage
               style={{
                 position: "absolute",

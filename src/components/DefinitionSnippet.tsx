@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DefinitionSnippet: React.FC<SearchTerm> = (props) => {
-
   const { data = [], isLoading, isSuccess } = useTerm(props);
   const definition = data.definition?.cs;
   const classes = useStyles();

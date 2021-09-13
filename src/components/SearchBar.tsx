@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       "&:hover": {
         backgroundColor: "#fff",
       },
-      "&$focused": {
+      "&:focused": {
         backgroundColor: "#fff",
       },
     },
