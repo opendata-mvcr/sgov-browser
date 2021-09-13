@@ -4,19 +4,18 @@ import { useLocation } from "react-router-dom";
 import { SearchTerm } from "./SearchResult";
 import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
-import DetailHeader from "./DetailHeader";
+import TermHeader from "./TermHeader";
 import Definition from "./Definition";
 
 const TermPage: React.FC = () => {
   const { state } = useLocation<SearchTerm>();
   const { data = [], isLoading, isSuccess } = useTerm(state);
-  const label = data.label?.cs;
 
   if (isLoading) return <Typography variant="h5">Načítání ...</Typography>;
   if (isSuccess) {
     return (
       <Box>
-        <DetailHeader type="pojem" label={label} />
+        <TermHeader data={data} />
         <Container>
           <Definition data={data} />
         </Container>

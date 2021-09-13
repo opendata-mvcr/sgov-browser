@@ -2,7 +2,6 @@ import React from "react";
 import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useTerm } from "../api/TermAPI";
 
 interface DefinitionProps {
   data: {
@@ -13,10 +12,9 @@ interface DefinitionProps {
 
 const defaultProps = {
   borderColor: "primary.main",
-  m: 1,
-  p: 1,
-  border: 3,
-  width: "50%",
+  px: 3,
+  py: 2,
+  border: 2,
   borderRadius: 16,
 };
 
@@ -25,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 300,
   },
   wrapper: {
+    margin: theme.spacing(2),
     display: "flex",
     flexDirection: "row",
-    flexGrow: 1,
   },
 }));
 
@@ -40,12 +38,22 @@ const Definition: React.FC<DefinitionProps> = (props) => {
 
   return (
     <Box className={classes.wrapper}>
-      <Box {...defaultProps}>
-        <Typography variant="h4">Definice</Typography>
-        <Typography variant="body1">{definition}</Typography>
-        <Typography variant="body2">{source}</Typography>
+      <Box>
+        <Box {...defaultProps}>
+          <Box mb={2}>
+            <Typography variant="h6">Definice</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography variant="body1">{definition}</Typography>
+          </Box>
+          {source && (
+            <Box fontStyle="italic">
+              <Typography variant="body2">- {source}</Typography>
+            </Box>
+          )}
+        </Box>
       </Box>
-      <Box style={{ position: "relative", left: -68 }}>
+      <Box style={{ position: "relative", left: -60 }}>
         <DefinitionIllustration className={classes.definitionImage} />
       </Box>
     </Box>

@@ -5,7 +5,7 @@ import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
-import DetailHeader from "./DetailHeader";
+import TermHeader from "./TermHeader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -34,19 +34,32 @@ const DisambiguationPage: React.FC = () => {
 
   return (
     <Box>
-      <DetailHeader type="slovo" label={wordLabel ?? ""} />
-      <Box pl={6} pt={2} pb={4}>
-        {terms.map((term: SearchTerm) => {
-          return (
-            <TermResult
-              key={term.uri}
-              uri={term.uri}
-              vocabulary={term.vocabulary}
-              label={term.label}
-            />
-          );
-        })}
+      <Box bgcolor="primary.main" pb={1}>
+        <Container>
+          <Box px={5}>
+            <Typography variant="h5" color="textSecondary">
+              slovo
+            </Typography>
+            <Typography variant="h1" color="textSecondary">
+              {wordLabel ?? ""}
+            </Typography>
+          </Box>
+        </Container>
       </Box>
+      <Container>
+        <Box pt={2} pb={4}>
+          {terms.map((term: SearchTerm) => {
+            return (
+              <TermResult
+                key={term.uri}
+                uri={term.uri}
+                vocabulary={term.vocabulary}
+                label={term.label}
+              />
+            );
+          })}
+        </Box>
+      </Container>
     </Box>
   );
 };

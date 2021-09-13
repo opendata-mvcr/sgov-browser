@@ -18,7 +18,7 @@ const Footer: React.FC<FooterProps> = (props) => {
                 position: "absolute",
                 bottom: "-20px",
                 right: "0px",
-                maxHeight: 270,
+                maxHeight: 230,
               }}
             />
           </Box>
