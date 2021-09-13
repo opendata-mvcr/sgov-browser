@@ -5,6 +5,7 @@ import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
+import DetailHeader from "./DetailHeader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -33,16 +34,7 @@ const DisambiguationPage: React.FC = () => {
 
   return (
     <Box>
-      <Box bgcolor="primary.main" pl={9} pb={1}>
-        <Container>
-          <Typography variant="h5" color="textSecondary">
-            slovo
-          </Typography>
-          <Typography variant="h1" color="textSecondary">
-            {wordLabel}
-          </Typography>
-        </Container>
-      </Box>
+      <DetailHeader type="slovo" label={wordLabel ?? ""} />
       <Box pl={6} pt={2} pb={4}>
         {terms.map((term: SearchTerm) => {
           return (

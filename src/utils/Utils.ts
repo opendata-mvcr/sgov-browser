@@ -8,3 +8,16 @@ export const getNamespaceUri = (uri: string) => {
   const index = uri.lastIndexOf("/");
   return uri.substr(0, index);
 };
+
+export const getNameFromUri = (uri: string) => {
+  const index = uri.lastIndexOf("/") + 1;
+  return uri.substr(index);
+};
+
+export const createTermUri = (
+  vocabulary: string,
+  term: string,
+  namespace: string
+) => {
+  return `${namespace}/${vocabulary}/${term}`;
+};

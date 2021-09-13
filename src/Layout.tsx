@@ -16,16 +16,16 @@ const ContentBox = styled(Box)({
   flexGrow: 1,
 });
 
-const searchRoutes = ["/term", "/disambiguation"];
-const illustrationRoutes = ["/search", "/term", "/disambiguation"];
+const nonSearchRoutes = ["/", "/search"];
+const nonIllustrationRoutes = ["/"];
 
 const Layout: React.FC = (props) => {
   const location = useLocation();
   const [showSearch, setShowSearch] = useState(false);
   const [showIllustration, setShowIllustration] = useState(false);
   useEffect(() => {
-    setShowSearch(searchRoutes.includes(location.pathname));
-    setShowIllustration(illustrationRoutes.includes(location.pathname));
+    setShowSearch(!nonSearchRoutes.includes(location.pathname));
+    setShowIllustration(!nonIllustrationRoutes.includes(location.pathname));
   }, [location]);
 
   return (

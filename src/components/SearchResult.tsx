@@ -27,11 +27,12 @@ const SearchResult: React.FC<SearchItem> = (props) => {
     marginTop: theme.spacing(2),
   }));
 
-  const route = props.isWord ? `/disambiguation?label=${props.label}` : "/term";
+  //Decides whether user is redirected to term page or to word page
+  const routeProps = props.isWord ?  `/disambiguation?label=${props.label}` : {pathname: 'term', state: props.items[0]}
   return (
     <Container>
       <SearchBox>
-        <RouteLink to={route}>{props.label}</RouteLink>
+        <RouteLink to={routeProps}>{props.label}</RouteLink>
         {props.vocabularies.map((item: string) => {
           return <Label key={item} iri={item} />;
         })}

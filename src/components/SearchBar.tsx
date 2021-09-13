@@ -61,7 +61,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     } else if (item.isWord) {
       history.push(`/disambiguation?label=${label}`);
     } else {
-      history.push("/term");
+      const prop = item.items[0];
+      history.push("/term", prop);
     }
   };
 
