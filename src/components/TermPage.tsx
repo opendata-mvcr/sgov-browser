@@ -6,6 +6,7 @@ import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
 import Definition from "./Definition";
+import VocabularyLabel from "./VocabularyLabel";
 
 const TermPage: React.FC = () => {
   const { state } = useLocation<SearchTerm>();
@@ -17,6 +18,7 @@ const TermPage: React.FC = () => {
       <Box>
         <TermHeader data={data} />
         <Definition data={data} />
+        <VocabularyLabel iri={data.vocabulary}/>
       </Box>
     );
   }
