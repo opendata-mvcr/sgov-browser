@@ -28,7 +28,9 @@ const SearchResult: React.FC<SearchItem> = (props) => {
   }));
 
   //Decides whether user is redirected to term page or to word page
-  const routeProps = props.isWord ?  `/disambiguation?label=${props.label}` : {pathname: 'term', state: props.items[0]}
+  const routeProps = props.isWord
+    ? `/disambiguation?label=${props.label}`
+    : { pathname: "term", state: props.items[0] };
   return (
     <Container>
       <SearchBox>

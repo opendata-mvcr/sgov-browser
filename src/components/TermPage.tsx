@@ -16,9 +16,7 @@ const TermPage: React.FC = () => {
     return (
       <Box>
         <TermHeader data={data} />
-        <Container>
-          <Definition data={data} />
-        </Container>
+        <Definition data={data} />
       </Box>
     );
   }

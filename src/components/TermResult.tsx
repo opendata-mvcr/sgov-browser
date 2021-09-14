@@ -15,7 +15,9 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   return (
     <Container>
       <TermBox>
-        <RouteLink to={{pathname: 'term', state: props}}>{props.label}</RouteLink>
+        <RouteLink to={{ pathname: "term", state: props }}>
+          {props.label}
+        </RouteLink>
         <Label iri={props.vocabulary} />
         <DefinitionSnippet
           uri={props.uri}

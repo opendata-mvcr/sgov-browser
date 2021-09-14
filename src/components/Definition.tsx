@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Container, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import VocabularyLabel from "./VocabularyLabel";
 
@@ -8,7 +8,7 @@ interface DefinitionProps {
   data: {
     definition?: { cs: string };
     sources: string[];
-    vocabulary: string
+    vocabulary: string;
   };
 }
 
@@ -36,12 +36,12 @@ const Definition: React.FC<DefinitionProps> = (props) => {
   const definition = props.data.definition?.cs;
   const source = props.data.sources !== null ? props.data.sources[0] : "";
 
- // if (!definition) return <></>;
+  if (!definition) return <></>;
 
   return (
-    <Box className={classes.wrapper}>
-      <Box>
-        <Box>
+    <Container>
+      <Grid container>
+        <Grid item sm={10}>
           <Box {...defaultProps}>
             <Box mb={2}>
               <Typography variant="h6">Definice</Typography>
@@ -51,17 +51,20 @@ const Definition: React.FC<DefinitionProps> = (props) => {
             </Box>
             {source && (
               <Box fontStyle="italic">
-                <Typography variant="body2">- {source}</Typography>
+                <Typography variant="body2">{source}</Typography>
               </Box>
             )}
           </Box>
-          <VocabularyLabel iri={props.data.vocabulary}/>
-        </Box>
-      </Box>
-      <Box style={{ position: "relative", left: -60 }}>
-        <DefinitionIllustration className={classes.definitionImage} />
-      </Box>
-    </Box>
+        </Grid>
+        <Grid item sm={2}>
+          <Box style={{ position: "relative" }}>
+            <Box style={{ position: "absolute", left: -60 }}>
+              <DefinitionIllustration className={classes.definitionImage} />
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 export default Definition;
