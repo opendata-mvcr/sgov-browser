@@ -1,5 +1,5 @@
 import React from "react";
-import { LabelItem } from "./SearchLabel";
+import { IriItem } from "./SearchLabel";
 import { useLabel } from "../api/LabelAPI";
 import {
   Box,
@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { ReactComponent as VocabularyLogo } from "../assets/vocabulary.svg";
 
-const VocabularyLabel: React.FC<LabelItem> = (props) => {
+const VocabularyLabel: React.FC<IriItem> = (props) => {
   const { data, isSuccess } = useLabel(props.iri);
 
   if (isSuccess) {
@@ -19,7 +19,7 @@ const VocabularyLabel: React.FC<LabelItem> = (props) => {
       <Container>
         <Box px={2}>
           <Grid container>
-            <Grid item sm={10}>
+            <Grid item sm={10} xs={12}>
               <Box
                 bgcolor="secondary.main"
                 color="textSecondary"
