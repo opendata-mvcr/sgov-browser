@@ -2,7 +2,7 @@ import React from "react";
 import { useLabel } from "../api/LabelAPI";
 import { Typography } from "@material-ui/core";
 
-interface LabelItem {
+export interface LabelItem {
   iri: string;
 }
 
