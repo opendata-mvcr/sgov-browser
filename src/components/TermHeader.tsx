@@ -7,7 +7,7 @@ interface DetailHeaderProps {
   data: {
     label: { cs: string };
     altLabels?: { cs?: string }[];
-    uri: string
+    uri: string;
   };
 }
 
@@ -31,7 +31,7 @@ const TermHeader: React.FC<DetailHeaderProps> = (props) => {
               <AltLabel altLabels={altLabels} />
             </Grid>
             <Grid item md={1} sm={2} xs={3}>
-              <IRI iri={iri}/>
+              <IRI iri={iri} />
             </Grid>
           </Grid>
         </Box>
