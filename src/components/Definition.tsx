@@ -2,8 +2,6 @@ import React from "react";
 import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
 import { Box, Container, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import VocabularyLabel from "./VocabularyLabel";
-import theme from "../app/theme";
 
 interface DefinitionProps {
   data: {

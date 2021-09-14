@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container, styled } from "@material-ui/core";
-import Label from "./Label";
+import Label from "./SearchLabel";
 import RouteLink from "./RouteLink";
 
 export interface SearchTerm {

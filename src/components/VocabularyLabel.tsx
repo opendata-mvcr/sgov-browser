@@ -1,5 +1,5 @@
 import React from "react";
-import { LabelItem } from "./Label";
+import { LabelItem } from "./SearchLabel";
 import { useLabel } from "../api/LabelAPI";
 import {
   Box,

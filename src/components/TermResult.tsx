@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchTerm } from "./SearchResult";
 import { Box, Container, styled } from "@material-ui/core";
-import Label from "./Label";
+import SearchLabel from "./SearchLabel";
 import DefinitionSnippet from "./DefinitionSnippet";
 import RouteLink from "./RouteLink";
 
@@ -18,7 +18,7 @@ const TermResult: React.FC<SearchTerm> = (props) => {
         <RouteLink to={{ pathname: "term", state: props }}>
           {props.label}
         </RouteLink>
-        <Label iri={props.vocabulary} />
+        <SearchLabel iri={props.vocabulary} />
         <DefinitionSnippet
           uri={props.uri}
           vocabulary={props.vocabulary}

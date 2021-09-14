@@ -6,7 +6,7 @@ export interface LabelItem {
   iri: string;
 }
 
-const Label: React.FC<LabelItem> = (props) => {
+const SearchLabel: React.FC<LabelItem> = (props) => {
   const { data, isSuccess } = useLabel(props.iri);
 
   if (isSuccess) {
@@ -16,4 +16,4 @@ const Label: React.FC<LabelItem> = (props) => {
   return <></>;
 };
 
-export default React.memo(Label);
+export default React.memo(SearchLabel);

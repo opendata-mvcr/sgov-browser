@@ -1,14 +1,18 @@
 import React from "react";
 import { Box, Container, Typography } from "@material-ui/core";
+import AltLabel from "./AltLabel";
 
 interface DetailHeaderProps {
   data: {
     label: { cs: string };
-    altLabels?: { cs: string }[];
+    altLabels?: { cs?: string }[];
   };
 }
 
 const TermHeader: React.FC<DetailHeaderProps> = (props) => {
+  const label = props.data.label.cs;
+  const altLabels = props.data.altLabels;
+
   return (
     <Box bgcolor="primary.main" pb={1}>
       <Container>
@@ -17,11 +21,9 @@ const TermHeader: React.FC<DetailHeaderProps> = (props) => {
             pojem
           </Typography>
           <Typography variant="h1" color="textSecondary">
-            {props.data.label.cs}
+            {label}
           </Typography>
-          <Typography variant="h5" color="textSecondary">
-            {props.data.altLabels?.map((altLabel) => altLabel.cs)}
-          </Typography>
+          <AltLabel altLabels={altLabels} />
         </Box>
       </Container>
     </Box>

@@ -5,7 +5,6 @@ import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
-import TermHeader from "./TermHeader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
