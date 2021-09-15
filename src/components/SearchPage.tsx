@@ -30,23 +30,26 @@ const SearchPage: React.FC = () => {
           </Box>
         </Container>
       </Box>
-      <Box pl={6} pt={2} pb={4}>
-        {data.length ? (
-          data.slice(0, NUMBER_OF_RESULT).map((item) => {
-            return (
-              <SearchResult
-                key={item.label}
-                label={item.label}
-                isWord={item.isWord}
-                items={item.items}
-                vocabularies={item.vocabularies}
-              />
-            );
-          })
-        ) : (
-          <NoResults />
-        )}
-      </Box>
+
+      <Container>
+        <Box pt={2} pb={4}>
+          {data.length ? (
+            data.slice(0, NUMBER_OF_RESULT).map((item) => {
+              return (
+                <SearchResult
+                  key={item.label}
+                  label={item.label}
+                  isWord={item.isWord}
+                  items={item.items}
+                  vocabularies={item.vocabularies}
+                />
+              );
+            })
+          ) : (
+            <NoResults />
+          )}
+        </Box>
+      </Container>
     </Box>
   );
 };

@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       "&:hover": {
         backgroundColor: "#fff",
       },
-      "&$focused": {
+      "&:focused": {
         backgroundColor: "#fff",
       },
     },
@@ -56,12 +56,13 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   const onChangeHandler = (label: string | null) => {
     const item = _.find<SearchItem>(data, { label: label ?? "" });
-    if (item === undefined) {
+    if (!item) {
       history.push(`/search?label=${label}`);
     } else if (item.isWord) {
       history.push(`/disambiguation?label=${label}`);
     } else {
-      history.push("/term");
+      const prop = item.items[0];
+      history.push("/term", prop);
     }
   };
 

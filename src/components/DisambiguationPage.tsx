@@ -33,28 +33,32 @@ const DisambiguationPage: React.FC = () => {
 
   return (
     <Box>
-      <Box bgcolor="primary.main" pl={9} pb={1}>
+      <Box bgcolor="primary.main" pb={1}>
         <Container>
-          <Typography variant="h5" color="textSecondary">
-            slovo
-          </Typography>
-          <Typography variant="h1" color="textSecondary">
-            {wordLabel}
-          </Typography>
+          <Box px={5}>
+            <Typography variant="h5" color="textSecondary">
+              slovo
+            </Typography>
+            <Typography variant="h1" color="textSecondary">
+              {wordLabel ?? ""}
+            </Typography>
+          </Box>
         </Container>
       </Box>
-      <Box pl={6} pt={2} pb={4}>
-        {terms.map((term: SearchTerm) => {
-          return (
-            <TermResult
-              key={term.uri}
-              uri={term.uri}
-              vocabulary={term.vocabulary}
-              label={term.label}
-            />
-          );
-        })}
-      </Box>
+      <Container>
+        <Box pt={2} pb={4}>
+          {terms.map((term: SearchTerm) => {
+            return (
+              <TermResult
+                key={term.uri}
+                uri={term.uri}
+                vocabulary={term.vocabulary}
+                label={term.label}
+              />
+            );
+          })}
+        </Box>
+      </Container>
     </Box>
   );
 };

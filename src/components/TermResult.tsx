@@ -1,9 +1,9 @@
 import React from "react";
 import { SearchTerm } from "./SearchResult";
-import { Box, Container, Link, styled } from "@material-ui/core";
-import Label from "./Label";
+import { Box, Container, styled } from "@material-ui/core";
+import SearchLabel from "./SearchLabel";
 import DefinitionSnippet from "./DefinitionSnippet";
-import { Link as RouterLink } from "react-router-dom";
+import RouteLink from "./RouteLink";
 
 const TermResult: React.FC<SearchTerm> = (props) => {
   const TermBox = styled(Box)(({ theme }) => ({
@@ -15,16 +15,10 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   return (
     <Container>
       <TermBox>
-        <Link
-          component={RouterLink}
-          to="/term"
-          variant="h2"
-          color="textPrimary"
-          underline="always"
-        >
+        <RouteLink to={{ pathname: "term", state: props }}>
           {props.label}
-        </Link>
-        <Label iri={props.vocabulary} />
+        </RouteLink>
+        <SearchLabel iri={props.vocabulary} />
         <DefinitionSnippet
           uri={props.uri}
           vocabulary={props.vocabulary}

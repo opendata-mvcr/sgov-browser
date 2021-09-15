@@ -12,37 +12,25 @@ const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Switch>
-        {/* Routes with the search input in the header*/}
-        <Route path={["/term", "/disambiguation"]}>
-          <Layout fullHeader={true}>
-            <Switch>
-              <Route exact path="/term">
-                <TermPage />
-              </Route>
-              <Route exact path="/disambiguation">
-                <DisambiguationPage />
-              </Route>
-            </Switch>
-          </Layout>
-        </Route>
-        {/* Routes without the search input in the header*/}
-        <Route path={["/search", "/"]}>
-          <Layout>
-            <Switch>
-              <Route exact path="/search">
-                <SearchPage />
-              </Route>
-              <Route exact path="/">
-                <HeroSection />
-              </Route>
-              <Route>
-                <ErrorPage />
-              </Route>
-            </Switch>
-          </Layout>
-        </Route>
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route exact path="/term">
+            <TermPage />
+          </Route>
+          <Route exact path="/disambiguation">
+            <DisambiguationPage />
+          </Route>
+          <Route exact path="/search">
+            <SearchPage />
+          </Route>
+          <Route exact path="/">
+            <HeroSection />
+          </Route>
+          <Route>
+            <ErrorPage />
+          </Route>
+        </Switch>
+      </Layout>
     </BrowserRouter>
   );
 };

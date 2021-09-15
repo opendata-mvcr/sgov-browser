@@ -17,6 +17,7 @@ const theme = createTheme({
       primary: primaryText,
       secondary: secondaryText,
     },
+    divider: secondaryText,
     //  background: { default: 'black' },
   },
   typography: {

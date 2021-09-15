@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Container, Link, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link as RouterLink } from "react-router-dom";
+import RouteLink from "./RouteLink";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -34,17 +34,15 @@ const SuggestedWords: React.FC = () => {
         </Typography>
 
         {words.map((word) => (
-          <Link
-            component={RouterLink}
-            to={`/search?label=${word}`}
+          <RouteLink
             key={word}
+            to={`/search?label=${word}`}
             className={classes.item}
             color="textSecondary"
-            underline="always"
             variant="h6"
           >
             {word}
-          </Link>
+          </RouteLink>
         ))}
       </Box>
     </Container>

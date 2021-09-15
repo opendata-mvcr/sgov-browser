@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Container, Link, styled } from "@material-ui/core";
-import Label from "./Label";
-import { Link as RouterLink } from "react-router-dom";
+import { Box, Container, styled } from "@material-ui/core";
+import Label from "./SearchLabel";
+import RouteLink from "./RouteLink";
 
 export interface SearchTerm {
   uri: string;
@@ -27,19 +27,14 @@ const SearchResult: React.FC<SearchItem> = (props) => {
     marginTop: theme.spacing(2),
   }));
 
-  const route = props.isWord ? `/disambiguation?label=${props.label}` : "/term";
+  //Decides whether user is redirected to term page or to word page
+  const routeProps = props.isWord
+    ? `/disambiguation?label=${props.label}`
+    : { pathname: "term", state: props.items[0] };
   return (
     <Container>
       <SearchBox>
-        <Link
-          variant="h2"
-          color="textPrimary"
-          underline="always"
-          component={RouterLink}
-          to={route}
-        >
-          {props.label}
-        </Link>
+        <RouteLink to={routeProps}>{props.label}</RouteLink>
         {props.vocabularies.map((item: string) => {
           return <Label key={item} iri={item} />;
         })}
