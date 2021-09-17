@@ -44,7 +44,7 @@ const Definition: React.FC<DefinitionProps> = (props) => {
           <Grid item sm={10} xs={12}>
             <Box {...defaultProps}>
               <Box mb={2}>
-                <Typography variant="h6">Definice</Typography>
+                <Typography variant="h5">Definice</Typography>
               </Box>
               <Box mb={2}>
                 <Typography variant="body1">{definition}</Typography>
