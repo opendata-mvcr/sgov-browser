@@ -1,50 +1,81 @@
 import React, { useState } from "react";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  FormControl,
-  Typography,
-} from "@material-ui/core";
+import { Box, FormControl, Typography, withStyles } from "@material-ui/core";
+
+import MuiAccordion from "@material-ui/core/Accordion";
+import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
+import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { makeStyles } from "@material-ui/core/styles";
 import RouteLink from "./RouteLink";
-import { ReactComponent as Connector } from "../assets/connector.svg";
 
-const useStyles = makeStyles((theme) => ({
-  root: (props: TermAccordionProps) => ({
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.text.secondary,
-    //   marginLeft: theme.spacing(props.level * 2),
-  }),
-  expanded: {
-    marginTop: `${theme.spacing(2)}px !important`,
-    //  marginBottom: `${theme.spacing(2)}px !important`,
-  },
-  icon: {
-    color: theme.palette.text.secondary,
-  },
-}));
+import { ReactComponent as Connector } from "../assets/connector_resized.svg";
 
-
-interface TermAccordionProps {
+export interface TermAccordionProps {
   level: number;
 }
 
+const Accordion = withStyles({
+  root: {
+    border: "1px solid rgba(0, 0, 0, .125)",
+    boxShadow: "none",
+    "&:not(:last-child)": {
+      borderBottom: 0,
+    },
+    "&:before": {
+      display: "none",
+    },
+    "&$expanded": {
+      margin: "auto",
+    },
+  },
+  expanded: {},
+})(MuiAccordion);
+
+const AccordionSummary = withStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.primary.main,
+    borderBottom: "1px solid rgba(0, 0, 0, .125)",
+    marginBottom: -1,
+    minHeight: 56,
+    "&$expanded": {
+      minHeight: 56,
+    },
+  },
+  content: {
+    "&$expanded": {
+      margin: "12px 0",
+    },
+  },
+  expanded: {},
+}))(MuiAccordionSummary);
+
+const AccordionDetails = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiAccordionDetails);
+
+const ExpandIcon = withStyles((theme) => ({
+  root: {
+    color: theme.palette.text.secondary,
+  },
+}))(ExpandMoreIcon);
+
 const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const classes = useStyles(props);
+
   return (
-    <Box display="flex" style={{ minHeight: 90 }} ml={props.level * 5}>
-      <Box alignSelf="flex-start">
+    <Box display="flex" ml={props.level * 5} mt={2}>
+      <Box style={{ position: "relative", minWidth:"28px" }}>
         <Connector
-          style={{ visibility: props.level !== 0 ? "visible" : "hidden" }}
+          style={{
+            visibility: props.level !== 0 ? "visible" : "hidden",
+            position: "absolute",
+            top: "-16px",
+          }}
         />
       </Box>
-      <Box alignSelf="end">
+      <Box>
         <Accordion
-          classes={classes}
           square
           expanded={expanded}
           onChange={() => setExpanded(!expanded)}
@@ -52,7 +83,7 @@ const TermAccordion: React.FC<TermAccordionProps> = (props) => {
           <AccordionSummary
             aria-controls="panel1d-content"
             id="panel1d-header"
-            expandIcon={<ExpandMoreIcon className={classes.icon} />}
+            expandIcon={<ExpandIcon />}
           >
             <FormControl
               onClick={(event) => event.stopPropagation()}

@@ -31,11 +31,14 @@ const TermPage: React.FC = () => {
         <VocabularyLabel iri={data.vocabulary} />
         <Container>
           <Box py={2} mb={10} px={2}>
-            <Box borderLeft={4}  pr={6} borderColor="primary.main">
-              <Box pl={4}><Typography variant="h5">Hierarchie</Typography></Box>
-                <TermAccordion level={0} />
-                <TermAccordion level={1} />
-                <TermAccordion level={2} />
+            <Box borderLeft={4} pr={6} borderColor="primary.main">
+              <Box pl={4}>
+                <Typography variant="h5">Hierarchie</Typography>
+              </Box>
+              <TermAccordion level={0} />
+              <TermAccordion level={1} />
+              <TermAccordion level={2} />
+              <TermAccordion level={3} />
             </Box>
           </Box>
         </Container>
