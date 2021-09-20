@@ -8,9 +8,15 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RouteLink from "./RouteLink";
 
 import { ReactComponent as Connector } from "../assets/connector_resized.svg";
+import { makeStyles } from "@material-ui/core/styles";
 
 export interface TermAccordionProps {
   level: number;
+  isCurrent?: boolean;
+  term: {
+    uri: string;
+    label: { cs?: string };
+  };
 }
 
 const Accordion = withStyles({
@@ -60,12 +66,24 @@ const ExpandIcon = withStyles((theme) => ({
   },
 }))(ExpandMoreIcon);
 
+//TODO: current term is displayed differently
+
+const useStyles = (props: TermAccordionProps) =>
+  makeStyles((theme) => ({
+    root: {
+      backgroundColor:
+        props.isCurrent
+          ? theme.palette.secondary.main
+          : theme.palette.primary.main,
+    },
+  }));
+
 const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-
+  const classes = useStyles(props)();
   return (
     <Box display="flex" ml={props.level * 5} mt={2}>
-      <Box style={{ position: "relative", minWidth:"28px" }}>
+      <Box style={{ position: "relative", minWidth: "28px" }}>
         <Connector
           style={{
             visibility: props.level !== 0 ? "visible" : "hidden",
@@ -84,13 +102,14 @@ const TermAccordion: React.FC<TermAccordionProps> = (props) => {
             aria-controls="panel1d-content"
             id="panel1d-header"
             expandIcon={<ExpandIcon />}
+            className={classes.root}
           >
             <FormControl
               onClick={(event) => event.stopPropagation()}
               onFocus={(event) => event.stopPropagation()}
             >
               <RouteLink to={"/"} variant="h5" color="textSecondary">
-                Click to redirect
+                {props.term.label.cs}
               </RouteLink>
             </FormControl>
           </AccordionSummary>

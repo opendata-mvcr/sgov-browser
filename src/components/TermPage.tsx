@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { SearchTerm } from "./SearchResult";
 import { useTerm } from "../api/TermAPI";
@@ -7,7 +7,7 @@ import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
 import Definition from "./Definition";
 import VocabularyLabel from "./VocabularyLabel";
-import TermAccordion from "./TermAccordion";
+import Hierarchy from "./Hierarchy";
 
 //This is a quick fix, not a final solution
 const emptyTerm = {
@@ -29,19 +29,7 @@ const TermPage: React.FC = () => {
         <TermHeader data={data} />
         <Definition data={data} />
         <VocabularyLabel iri={data.vocabulary} />
-        <Container>
-          <Box py={2} mb={10} px={2}>
-            <Box borderLeft={4} pr={6} borderColor="primary.main">
-              <Box pl={4}>
-                <Typography variant="h5">Hierarchie</Typography>
-              </Box>
-              <TermAccordion level={0} />
-              <TermAccordion level={1} />
-              <TermAccordion level={2} />
-              <TermAccordion level={3} />
-            </Box>
-          </Box>
-        </Container>
+        <Hierarchy data={data} />
       </Box>
     );
   }
