@@ -1,5 +1,5 @@
 import React from "react";
-import TermAccordion from "./TermAccordion";
+import {CurrentTerm, TermAccordion} from "./TermAccordion";
 import { Box, Container, Typography } from "@material-ui/core";
 
 interface HierarchyProps {
@@ -34,11 +34,8 @@ const Hierarchy: React.FC<HierarchyProps> = (props) => {
             <Typography variant="h5">Hierarchie</Typography>
           </Box>
           {parentTerm && <TermAccordion level={0} term={parentTerm} />}
-          <TermAccordion
-            level={parentTerm ? 1 : 0}
-            term={{ uri: props.data.uri, label: props.data.label }}
-            isCurrent={true}
-          />
+          <CurrentTerm level={parentTerm ? 1 : 0} term={{uri:props.data.uri,label:props.data.label}}/>
+
           {subTerm && (
             <TermAccordion level={parentTerm ? 2 : 1} term={subTerm} />
           )}
