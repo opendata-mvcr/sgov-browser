@@ -10,10 +10,9 @@ import VocabularyLabel from "./VocabularyLabel";
 import Hierarchy from "./Hierarchy";
 
 //This is a quick fix, not a final solution
-const emptyTerm = {
+export const emptyTerm = {
   uri: "",
   vocabulary: "",
-  label: "",
 };
 
 const TermPage: React.FC = () => {

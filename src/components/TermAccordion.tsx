@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -14,14 +14,14 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RouteLink from "./RouteLink";
 
 import { ReactComponent as Connector } from "../assets/connector_resized.svg";
+import { TermInfo } from "./Hierarchy";
+import { useTerm } from "../api/TermAPI";
+import { emptyTerm } from "./TermPage";
 
 export interface TermAccordionProps {
   level: number;
   isCurrent?: boolean;
-  term: {
-    uri: string;
-    label: { cs?: string };
-  };
+  term: TermInfo;
 }
 
 const Accordion = withStyles({
@@ -76,12 +76,12 @@ const CurrentTermBox = withStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     marginBottom: -1,
     minHeight: 56,
-    display:"flex",
+    display: "flex",
     paddingLeft: theme.spacing(2),
-    paddingRight:theme.spacing(7),
-    alignItems:"center",
+    paddingRight: theme.spacing(7),
+    alignItems: "center",
     paddingTop: 12,
-    paddingBottom: 12
+    paddingBottom: 12,
   },
 }))(Paper);
 
@@ -110,6 +110,15 @@ const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
+  const [description, setDescription] = useState("Pojem nemá definici");
+  const { data = [], isLoading, isSuccess } = useTerm(props.term ?? emptyTerm);
+  useEffect(() => {
+    if (isSuccess) {
+      if (data.definition?.cs) {
+        setDescription(data.definition.cs);
+      }
+    }
+  }, [data]);
   return (
     <HierarchyItem level={props.level}>
       <Accordion
@@ -132,12 +141,7 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
           </FormControl>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <Typography>{description}</Typography>
         </AccordionDetails>
       </Accordion>
     </HierarchyItem>
@@ -154,9 +158,9 @@ export const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
         }}
       >
         <CurrentTermBox square elevation={0}>
-            <Typography variant="h5" color="textSecondary">
-              {props.term.label.cs}
-            </Typography>
+          <Typography variant="h5" color="textSecondary">
+            {props.term.label.cs}
+          </Typography>
         </CurrentTermBox>
       </Box>
     </HierarchyItem>
