@@ -22,9 +22,6 @@ const TermHeader: React.FC<DetailHeaderProps> = (props) => {
         <Box px={5}>
           <Grid container>
             <Grid item md={11} sm={10} xs={9}>
-              <Typography variant="h5" color="textSecondary">
-                pojem
-              </Typography>
               <Typography variant="h1" color="textSecondary">
                 {label}
               </Typography>

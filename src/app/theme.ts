@@ -4,6 +4,7 @@ const primary = "#00BC58";
 const secondary = "#3F3D56";
 const primaryText = "#000000";
 const secondaryText = "#FFFFFF";
+const lightText = "#797979";
 
 const theme = createTheme({
   palette: {
@@ -16,6 +17,7 @@ const theme = createTheme({
     text: {
       primary: primaryText,
       secondary: secondaryText,
+      disabled: lightText,
     },
     divider: secondaryText,
     //  background: { default: 'black' },
