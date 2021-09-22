@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  CircularProgress,
   FormControl,
   Paper,
   Typography,
@@ -16,10 +17,8 @@ import RouteLink from "./RouteLink";
 import { ReactComponent as TallConnector } from "../assets/connector_taller.svg";
 
 import { TermInfo } from "./Hierarchy";
-import { useTerm } from "../api/TermAPI";
+import { TermBase, useTerm } from "../api/TermAPI";
 import { emptyTerm } from "./TermPage";
-
-
 
 const Accordion = withStyles({
   root: {
@@ -87,15 +86,17 @@ interface HierarchyItemProps {
 }
 
 const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
+  //TODO: hide the connector for now, just show the structure
+
   return (
     <Box display="flex" ml={props.level * 5} mt={2}>
-      <Box style={{ position: "relative", minWidth: "28px"}}>
+      <Box style={{ position: "relative", minWidth: "28px" }}>
         <TallConnector
           style={{
-            visibility: props.level !== 0 ? "visible" : "hidden",
+            visibility: "hidden",
             position: "absolute",
             top: "-45px",
-            zIndex:-1,
+            zIndex: -1,
           }}
         />
       </Box>
@@ -111,15 +112,9 @@ export interface TermAccordionProps {
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const [description, setDescription] = useState("Pojem nemá definici");
-  const { data = [], isLoading, isSuccess } = useTerm(props.term ?? emptyTerm);
-  useEffect(() => {
-    if (isSuccess) {
-      if (data.definition?.cs) {
-        setDescription(data.definition.cs);
-      }
-    }
-  }, [data]);
+
+  const routeProps = { pathname: "term", state: props.term };
+
   return (
     <HierarchyItem level={props.level}>
       <Accordion
@@ -128,21 +123,22 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
         onChange={() => setExpanded(!expanded)}
       >
         <AccordionSummary
-          aria-controls="panel1d-content"
-          id="panel1d-header"
           expandIcon={<ExpandIcon />}
         >
           <FormControl
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
           >
-            <RouteLink to={"/"} variant="h5" color="textSecondary">
+            <RouteLink to={routeProps} variant="h5" color="textSecondary">
               {props.term.label.cs}
             </RouteLink>
           </FormControl>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{description}</Typography>
+          <AccordionDescription
+            uri={props.term.uri}
+            vocabulary={props.term.vocabulary}
+          />
         </AccordionDetails>
       </Accordion>
     </HierarchyItem>
@@ -166,4 +162,31 @@ export const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
       </Box>
     </HierarchyItem>
   );
+};
+
+const AccordionDescription: React.FC<TermBase> = (props) => {
+  const [description, setDescription] = useState<string>();
+  const { data = [], isLoading, isSuccess } = useTerm(props ?? emptyTerm);
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data.definition?.cs) {
+        setDescription(data.definition.cs);
+      } else {
+        setDescription("Pojem nemá definici");
+      }
+    }
+  }, [data]);
+
+  if (isLoading)
+    return (
+      <Box flex={1} display="flex" alignItems="center">
+        <CircularProgress />
+        <Typography>Načítání definice</Typography>
+      </Box>
+    );
+
+  if (isSuccess) return <Typography>{description}</Typography>;
+
+  return null;
 };

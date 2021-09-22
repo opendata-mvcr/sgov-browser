@@ -1,4 +1,3 @@
-import { SearchTerm } from "../components/SearchResult";
 import { API } from "../app/variables";
 import { encodeNormalizedName, getNamespaceUri } from "../utils/Utils";
 import axios from "axios";

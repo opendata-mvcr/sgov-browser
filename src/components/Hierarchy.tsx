@@ -19,15 +19,26 @@ interface HierarchyProps {
 }
 
 const Hierarchy: React.FC<HierarchyProps> = (props) => {
-  const parentTerm: TermInfo | null =
-    props.data.parentTerms !== null ? props.data.parentTerms[0] : null;
-  const subTerm: TermInfo = props.data.subTerms[0];
   const current: TermInfo = {
     uri: props.data.uri,
     label: props.data.label,
     vocabulary: props.data.vocabulary,
   };
-  if (!parentTerm && !subTerm) return null;
+
+  const parentTerms = props.data.parentTerms?.map((item) => {
+    return <TermAccordion level={0} term={item} key={item.uri} />;
+  });
+  const currentTerm = (
+    <CurrentTerm level={parentTerms ? 1 : 0} term={current} />
+  );
+  const subTerms = props.data.subTerms?.map((item) => {
+    return (
+      <TermAccordion level={parentTerms ? 2 : 1} term={item} key={item.uri} />
+    );
+  });
+
+  if (!parentTerms && !subTerms) return null;
+
   return (
     <Container>
       <Box py={2} mb={10} px={2}>
@@ -35,11 +46,9 @@ const Hierarchy: React.FC<HierarchyProps> = (props) => {
           <Box pl={4}>
             <Typography variant="h5">Hierarchie</Typography>
           </Box>
-          {parentTerm && <TermAccordion level={0} term={parentTerm} />}
-          <CurrentTerm level={parentTerm ? 1 : 0} term={current} />
-          {subTerm && (
-            <TermAccordion level={parentTerm ? 2 : 1} term={subTerm} />
-          )}
+          {parentTerms}
+          {currentTerm}
+          {subTerms}
         </Box>
       </Box>
     </Container>
