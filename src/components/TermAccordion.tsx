@@ -13,16 +13,13 @@ import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RouteLink from "./RouteLink";
 
-import { ReactComponent as Connector } from "../assets/connector_resized.svg";
+import { ReactComponent as TallConnector } from "../assets/connector_taller.svg";
+
 import { TermInfo } from "./Hierarchy";
 import { useTerm } from "../api/TermAPI";
 import { emptyTerm } from "./TermPage";
 
-export interface TermAccordionProps {
-  level: number;
-  isCurrent?: boolean;
-  term: TermInfo;
-}
+
 
 const Accordion = withStyles({
   root: {
@@ -89,17 +86,16 @@ interface HierarchyItemProps {
   level: number;
 }
 
-//TODO: Fetch the term and show the snippet
-
 const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
   return (
     <Box display="flex" ml={props.level * 5} mt={2}>
-      <Box style={{ position: "relative", minWidth: "28px" }}>
-        <Connector
+      <Box style={{ position: "relative", minWidth: "28px"}}>
+        <TallConnector
           style={{
             visibility: props.level !== 0 ? "visible" : "hidden",
             position: "absolute",
-            top: "-16px",
+            top: "-45px",
+            zIndex:-1,
           }}
         />
       </Box>
@@ -107,6 +103,11 @@ const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
     </Box>
   );
 };
+
+export interface TermAccordionProps {
+  level: number;
+  term: TermInfo;
+}
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
