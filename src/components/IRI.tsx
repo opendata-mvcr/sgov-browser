@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as Copy } from "../assets/copy_small.svg";
 import { Box, Button, Tooltip, Typography } from "@material-ui/core";
-import { IriItem } from "./SearchLabel";
+import { IriItem } from "./IriLabel";
 
 const Content = React.forwardRef((props: any, ref: any) => {
   return (

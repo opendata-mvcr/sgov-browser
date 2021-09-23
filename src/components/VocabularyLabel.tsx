@@ -1,5 +1,5 @@
 import React from "react";
-import { IriItem } from "./SearchLabel";
+import { IriItem } from "./IriLabel";
 import { useLabel } from "../api/LabelAPI";
 import {
   Box,

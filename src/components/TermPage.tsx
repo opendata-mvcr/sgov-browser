@@ -24,10 +24,9 @@ const TermPage: React.FC = () => {
   if (isLoading) return <Typography variant="h5">Načítání ...</Typography>;
   if (isSuccess) {
     return (
-      <Box>
+      <Box mb={10}>
         <TermHeader data={data} />
         <Definition data={data} />
-        <VocabularyLabel iri={data.vocabulary} />
         <Hierarchy data={data} />
       </Box>
     );

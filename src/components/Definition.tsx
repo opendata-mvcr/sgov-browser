@@ -13,6 +13,7 @@ interface DefinitionProps {
 
 const defaultProps = {
   borderColor: "primary.main",
+  minHeight: 144,
   px: 3,
   py: 2,
   border: 2,
@@ -39,26 +40,26 @@ const Definition: React.FC<DefinitionProps> = (props) => {
 
   return (
     <Container>
-      <Box px={2} mt={2}>
+      <Box px={2} mt={4}>
         <Grid container>
           <Grid item sm={10} xs={12}>
             <Box {...defaultProps}>
               <Box mb={2}>
-                <Typography variant="h5">Definice</Typography>
+                <Typography variant="h4">Definice</Typography>
               </Box>
               <Box mb={2}>
-                <Typography variant="body1">{definition}</Typography>
+                <Typography variant="h5">{definition}</Typography>
               </Box>
               {source && (
                 <Box fontStyle="italic">
-                  <Typography variant="body2">{source}</Typography>
+                  <Typography variant="body1">{source}</Typography>
                 </Box>
               )}
             </Box>
           </Grid>
           <Grid item sm={2} className={classes.definitionImageWrapper}>
-            <Box style={{ position: "relative" }}>
-              <Box style={{ position: "absolute", left: -60 }}>
+            <Box style={{ position: "relative", height:'100%' }}>
+              <Box style={{ position: "absolute", left: -60, bottom:-95 }}>
                 <DefinitionIllustration className={classes.definitionImage} />
               </Box>
             </Box>

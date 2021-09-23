@@ -112,7 +112,6 @@ export interface TermAccordionProps {
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-
   const routeProps = { pathname: "term", state: props.term };
 
   return (
