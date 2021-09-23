@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchTerm } from "./SearchResult";
 import { useTerm } from "../api/TermAPI";
-import { Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const MAX_LINES = 3;
@@ -42,7 +42,11 @@ const DefinitionSnippet: React.FC<SearchTerm> = (props) => {
     );
   }
 
-  return <></>;
+  return (
+    <Box fontStyle="italic" color="text.disabled">
+      <Typography variant="h5">Pojem nemá definici</Typography>
+    </Box>
+  );
 };
 
 export default DefinitionSnippet;

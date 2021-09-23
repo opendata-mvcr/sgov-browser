@@ -6,13 +6,12 @@ import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
 import Definition from "./Definition";
-import VocabularyLabel from "./VocabularyLabel";
+import { Hierarchy } from "./Hierarchy";
 
 //This is a quick fix, not a final solution
-const emptyTerm = {
+export const emptyTerm = {
   uri: "",
   vocabulary: "",
-  label: "",
 };
 
 const TermPage: React.FC = () => {
@@ -24,10 +23,10 @@ const TermPage: React.FC = () => {
   if (isLoading) return <Typography variant="h5">Načítání ...</Typography>;
   if (isSuccess) {
     return (
-      <Box>
+      <Box mb={10}>
         <TermHeader data={data} />
         <Definition data={data} />
-        <VocabularyLabel iri={data.vocabulary} />
+        <Hierarchy data={data} />
       </Box>
     );
   }
