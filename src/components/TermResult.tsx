@@ -11,10 +11,6 @@ const TermResult: React.FC<SearchTerm> = (props) => {
     borderColor: theme.palette.primary.main,
     paddingLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
-    transition: "margin ease-in-out 100ms",
-    "&:hover": {
-      marginLeft: theme.spacing(2),
-    },
   }));
   return (
     <Container>
