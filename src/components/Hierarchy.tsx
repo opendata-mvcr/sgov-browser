@@ -44,7 +44,7 @@ const Hierarchy: React.FC<HierarchyProps> = (props) => {
       <Box py={2} mb={10} px={2} mt={2}>
         <Box borderLeft={4} pr={6} borderColor="primary.main">
           <Box pl={4}>
-            <Typography variant="h4">Hierarchie</Typography>
+            <Typography variant="h5">Hierarchie</Typography>
           </Box>
           {parentTerms}
           {currentTerm}

@@ -22,7 +22,7 @@ const defaultProps = {
 
 const useStyles = makeStyles((theme) => ({
   definitionImage: {
-    maxHeight: 300,
+    maxHeight: 260,
   },
   definitionImageWrapper: {
     [theme.breakpoints.down("xs")]: {
@@ -45,13 +45,13 @@ const Definition: React.FC<DefinitionProps> = (props) => {
           <Grid item sm={10} xs={12}>
             <Box {...defaultProps}>
               <Box mb={2}>
-                <Typography variant="h4">Definice</Typography>
+                <Typography variant="h5">Definice</Typography>
               </Box>
               <Box mb={2}>
-                <Typography variant="h5">{definition}</Typography>
+                <Typography variant="h6">{definition}</Typography>
               </Box>
               {source && (
-                <Box fontStyle="italic">
+                <Box fontStyle="italic" color="text.disabled">
                   <Typography variant="body1">{source}</Typography>
                 </Box>
               )}
@@ -59,7 +59,7 @@ const Definition: React.FC<DefinitionProps> = (props) => {
           </Grid>
           <Grid item sm={2} className={classes.definitionImageWrapper}>
             <Box style={{ position: "relative", height:'100%' }}>
-              <Box style={{ position: "absolute", left: -60, bottom:-95 }}>
+              <Box style={{ position: "absolute", left: -72, bottom:-86 }}>
                 <DefinitionIllustration className={classes.definitionImage} />
               </Box>
             </Box>

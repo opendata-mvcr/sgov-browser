@@ -128,7 +128,7 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
           >
-            <RouteLink to={routeProps} variant="h5" color="textSecondary">
+            <RouteLink to={routeProps} variant="h6" color="textSecondary">
               {props.term.label.cs}
             </RouteLink>
           </FormControl>
@@ -154,7 +154,7 @@ export const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
         }}
       >
         <CurrentTermBox square elevation={0}>
-          <Typography variant="h5" color="textSecondary">
+          <Typography variant="h6" color="textSecondary">
             {props.term.label.cs}
           </Typography>
         </CurrentTermBox>
