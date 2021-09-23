@@ -58,8 +58,8 @@ const Definition: React.FC<DefinitionProps> = (props) => {
             </Box>
           </Grid>
           <Grid item sm={2} className={classes.definitionImageWrapper}>
-            <Box style={{ position: "relative", height:'100%' }}>
-              <Box style={{ position: "absolute", left: -72, bottom:-86 }}>
+            <Box style={{ position: "relative", height: "100%" }}>
+              <Box style={{ position: "absolute", left: -72, bottom: -86 }}>
                 <DefinitionIllustration className={classes.definitionImage} />
               </Box>
             </Box>

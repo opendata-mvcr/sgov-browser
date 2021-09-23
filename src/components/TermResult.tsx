@@ -21,7 +21,6 @@ const TermResult: React.FC<SearchTerm> = (props) => {
             vocabulary={props.vocabulary}
             label={props.label}
           />
-
           <IriLabel iri={props.vocabulary} />
         </RouteLink>
       </TermBox>

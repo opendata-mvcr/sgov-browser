@@ -121,9 +121,7 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
         expanded={expanded}
         onChange={() => setExpanded(!expanded)}
       >
-        <AccordionSummary
-          expandIcon={<ExpandIcon />}
-        >
+        <AccordionSummary expandIcon={<ExpandIcon />}>
           <FormControl
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}

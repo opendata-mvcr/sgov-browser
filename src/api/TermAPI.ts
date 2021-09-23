@@ -3,7 +3,7 @@ import { encodeNormalizedName, getNamespaceUri } from "../utils/Utils";
 import axios from "axios";
 import { useQuery } from "react-query";
 
-export interface TermBase{
+export interface TermBase {
   uri: string;
   vocabulary: string;
 }
