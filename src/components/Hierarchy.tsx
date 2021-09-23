@@ -1,6 +1,7 @@
 import React from "react";
-import { CurrentTerm, TermAccordion } from "./TermAccordion";
+import CurrentTerm from "./CurrentTerm";
 import { Box, Container, Typography } from "@material-ui/core";
+import ExpandableItems from "./ExpandableItems";
 
 export interface TermInfo {
   uri: string;
@@ -18,27 +19,16 @@ interface HierarchyProps {
   };
 }
 
-const Hierarchy: React.FC<HierarchyProps> = (props) => {
+export const Hierarchy: React.FC<HierarchyProps> = (props) => {
+  if (!props.data.parentTerms && !props.data.subTerms.length) return null;
+
   const current: TermInfo = {
     uri: props.data.uri,
     label: props.data.label,
     vocabulary: props.data.vocabulary,
   };
 
-  const parentTerms = props.data.parentTerms?.map((item) => {
-    return <TermAccordion level={0} term={item} key={item.uri} />;
-  });
-  const currentTerm = (
-    <CurrentTerm level={parentTerms ? 1 : 0} term={current} />
-  );
-  const subTerms = props.data.subTerms?.map((item) => {
-    return (
-      <TermAccordion level={parentTerms ? 2 : 1} term={item} key={item.uri} />
-    );
-  });
-
-  if (!parentTerms && !subTerms.length) return null;
-
+  const currIndex = props.data.parentTerms ? 1 : 0;
   return (
     <Container>
       <Box py={2} mb={10} px={2} mt={2}>
@@ -46,12 +36,11 @@ const Hierarchy: React.FC<HierarchyProps> = (props) => {
           <Box pl={4}>
             <Typography variant="h5">Hierarchie</Typography>
           </Box>
-          {parentTerms}
-          {currentTerm}
-          {subTerms}
+          <ExpandableItems items={props.data.parentTerms} level={0} />
+          <CurrentTerm level={currIndex} term={current} />
+          <ExpandableItems items={props.data.subTerms} level={currIndex + 1} />
         </Box>
       </Box>
     </Container>
   );
 };
-export default Hierarchy;

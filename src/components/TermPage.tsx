@@ -6,8 +6,7 @@ import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
 import Definition from "./Definition";
-import VocabularyLabel from "./VocabularyLabel";
-import Hierarchy from "./Hierarchy";
+import { Hierarchy } from "./Hierarchy";
 
 //This is a quick fix, not a final solution
 export const emptyTerm = {
