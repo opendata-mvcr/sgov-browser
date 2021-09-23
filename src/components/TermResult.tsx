@@ -11,6 +11,10 @@ const TermResult: React.FC<SearchTerm> = (props) => {
     borderColor: theme.palette.primary.main,
     paddingLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
+    transition: "margin ease-in-out 100ms",
+    "&:hover": {
+      marginLeft: theme.spacing(2),
+    },
   }));
   return (
     <Container>
@@ -22,7 +26,8 @@ const TermResult: React.FC<SearchTerm> = (props) => {
             label={props.label}
           />
 
-        <IriLabel iri={props.vocabulary} /></RouteLink>
+          <IriLabel iri={props.vocabulary} />
+        </RouteLink>
       </TermBox>
     </Container>
   );
