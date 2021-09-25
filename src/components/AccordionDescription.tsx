@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TermBase, useTerm } from "../api/TermAPI";
 import { emptyTerm } from "./TermPage";
 import { Box, CircularProgress, Typography } from "@material-ui/core";
@@ -12,7 +12,9 @@ const AccordionDescription: React.FC<TermBase> = (props) => {
         <Typography>Načítání definice</Typography>
       </Box>
     );
-  const description = data.definition?.cs ? data.definition.cs : "Pojem nemá definici"
+  const description = data.definition?.cs
+    ? data.definition.cs
+    : "Pojem nemá definici";
   if (isSuccess) return <Typography>{description}</Typography>;
 
   return null;

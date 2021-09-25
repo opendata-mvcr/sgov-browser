@@ -8,6 +8,7 @@ import RouteLink from "./RouteLink";
 import { TermInfo } from "./Hierarchy";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";
+import { generateTermRoute } from "../utils/Utils";
 
 const Accordion = withStyles({
   root: {
@@ -63,7 +64,7 @@ export interface TermAccordionProps {
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const routeProps = { pathname: "term", state: props.term };
+  const routeProps = generateTermRoute(props.term);
 
   return (
     <HierarchyItem level={props.level}>

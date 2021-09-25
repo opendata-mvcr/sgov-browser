@@ -10,6 +10,7 @@ import { useSearch } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { SearchItem } from "./SearchResult";
 import _ from "lodash";
+import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
 const defaultFilterOptions = createFilterOptions();
@@ -62,7 +63,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       history.push(`/disambiguation?label=${label}`);
     } else {
       const prop = item.items[0];
-      history.push("/term", prop);
+      history.push(generateTermRoute(prop));
     }
   };
 

@@ -11,13 +11,14 @@ const NUMBER_OF_RESULT = 50;
 const SearchPage: React.FC = () => {
   const routeQuery = useRouteQuery();
   const wordLabel = routeQuery.get("label");
+  console.log("In search")
   const { data = [], isLoading, isError } = useSearch(wordLabel ?? undefined);
 
   // Just to show something, not a final version at all
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
-
+console.log("SUCCESS")
   return (
     <Box>
       <Box bgcolor="primary.main" py={2}>
