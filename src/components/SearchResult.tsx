@@ -36,6 +36,7 @@ const SearchResult: React.FC<SearchItem> = (props) => {
       : generateTermRoute(props.items[0]);
   } catch (e) {
     //Grr this is really ugly, I will fix it in the near future
+    //The crash happens when term has no vocabulary
     console.log(props);
     console.log(e);
     routeProps = "/error";
