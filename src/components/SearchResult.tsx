@@ -29,28 +29,19 @@ const SearchResult: React.FC<SearchItem> = (props) => {
   }));
 
   //Decides whether user is redirected to term page or to word page
-  let routeProps;
-  try {
-    routeProps = props.isWord
-      ? `/disambiguation?label=${props.label}`
-      : generateTermRoute(props.items[0]);
-  } catch (e) {
-    //Grr this is really ugly, I will fix it in the near future
-    //The crash happens when term has no vocabulary
-    console.log(props);
-    console.log(e);
-    routeProps = "/error";
-  }
+  const routeProps = props.isWord
+    ? `/disambiguation?label=${props.label}`
+    : generateTermRoute(props.items[0]);
 
   return (
-    <Container>
-      <SearchBox>
-        <RouteLink to={routeProps}>{props.label}</RouteLink>
-        {props.vocabularies.map((item: string) => {
-          return <IriLabel key={item} iri={item} />;
-        })}
-      </SearchBox>
-    </Container>
+      <Container>
+        <SearchBox>
+          <RouteLink to={routeProps}>{props.label}</RouteLink>
+          {props.vocabularies.map((item: string) => {
+            return <IriLabel key={item} iri={item} />;
+          })}
+        </SearchBox>
+      </Container>
   );
 };
 

@@ -25,9 +25,13 @@ export const createTermUri = (
 };
 
 export const generateTermRoute = (term: TermBase) => {
-  return `/vocabularies/${getNameFromUri(
-    term.vocabulary
-  )}/terms/${getNameFromUri(term.uri)}?namespace=${getNamespaceUri(
-    term.vocabulary
-  )}/`;
+  try {
+    return `/vocabularies/${getNameFromUri(
+      term.vocabulary
+    )}/terms/${getNameFromUri(term.uri)}?namespace=${getNamespaceUri(
+      term.vocabulary
+    )}/`;
+  } catch {
+    return "/error";
+  }
 };
