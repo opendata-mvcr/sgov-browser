@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
@@ -9,7 +15,7 @@ import { CircularProgress, InputAdornment } from "@material-ui/core";
 import { useSearch } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { SearchItem } from "./SearchResult";
-import _ from "lodash";
+import { find, debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
@@ -56,7 +62,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const history = useHistory();
 
   const onChangeHandler = (label: string | null) => {
-    const item = _.find<SearchItem>(data, { label: label ?? "" });
+    const item = find<SearchItem>(data, { label: label ?? "" });
     if (!item) {
       history.push(`/search?label=${label}`);
     } else if (item.isWord) {
@@ -66,6 +72,21 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       history.push(generateTermRoute(prop));
     }
   };
+
+  const handleChange = (event: ChangeEvent<{}>, newInputValue: string) => {
+    setInputValue(newInputValue);
+  };
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleChange, 300),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, []);
 
   const endAdornment = (
     <InputAdornment position="end">
@@ -93,7 +114,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       fullWidth
       freeSolo
       options={data.map((item) => item.label)}
-      onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+      onInputChange={debouncedChangeHandler}
       renderInput={(params) => (
         <TextField
           {...params}
