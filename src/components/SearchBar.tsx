@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
@@ -77,16 +71,13 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     setInputValue(newInputValue);
   };
 
-  const debouncedChangeHandler = useMemo(
-    () => debounce(handleChange, 300),
-    []
-  );
+  const debouncedChangeHandler = useMemo(() => debounce(handleChange, 300), []);
 
   useEffect(() => {
     return () => {
       debouncedChangeHandler.cancel();
     };
-  }, []);
+  });
 
   const endAdornment = (
     <InputAdornment position="end">
