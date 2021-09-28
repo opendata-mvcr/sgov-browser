@@ -1,24 +1,98 @@
 import React from "react";
 import { Box } from "@material-ui/core";
-import { ReactComponent as TallConnector } from "../assets/connector_taller.svg";
 
 interface HierarchyItemProps {
   level: number;
 }
 
-const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
-  // The connector is hidden for now, will be visible in the next PR
+const ParentEnd: React.FC = () => {
   return (
-    <Box display="flex" ml={props.level * 5} mt={2}>
-      <Box style={{ position: "relative", minWidth: "28px" }}>
-        <TallConnector
+      <Box
+        style={{
+          width: "16px",
+          height: "100%",
+          borderLeft: "4px solid #E7E7E7",
+          borderTop: "4px solid #E7E7E7",
+        }}
+      />
+  );
+};
+
+const ParentsEnd: React.FC = () => {
+    return (
+        <>
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                    borderLeft: "4px solid #E7E7E7",
+                    borderBottom: "4px solid #E7E7E7",
+                }}
+            />
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                    borderBottom: "4px solid #E7E7E7",
+                }}
+            />
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                    borderBottom: "4px solid #E7E7E7",
+                }}
+            />
+        </>
+
+    );
+};
+
+const NormalEnd: React.FC = () => {
+    return (
+        <>
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                }}
+            />
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                }}
+            />
+            <Box
+                style={{
+                    width: "16px",
+                    height: "100%",
+                    borderBottom: "4px solid #E7E7E7",
+                    borderLeft: "4px solid #E7E7E7",
+                }}
+            />
+        </>
+    );
+};
+
+//TODO: add adequate connectors to the terms
+
+const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
+  return (
+    <Box display="flex" ml={props.level * 4} mt={2}>
+      <Box style={{ position: "relative", minWidth: "16px" }}>
+        <Box
+          display="flex"
+          flexDirection="row"
           style={{
-            visibility: "hidden",
             position: "absolute",
-            top: "-45px",
+            top: "28px",
             zIndex: -1,
+            height: `calc(100% + 16px)`,
           }}
-        />
+        >
+          <NormalEnd />
+        </Box>
       </Box>
       <Box style={{ flex: 1 }}>{props.children}</Box>
     </Box>
