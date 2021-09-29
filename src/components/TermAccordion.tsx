@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { FormControl, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
@@ -60,6 +60,7 @@ const ExpandIcon = withStyles((theme) => ({
 export interface TermAccordionProps {
   level: number;
   term: TermInfo;
+  connector?: ReactElement;
 }
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
@@ -67,7 +68,7 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const routeProps = generateTermRoute(props.term);
 
   return (
-    <HierarchyItem level={props.level}>
+    <HierarchyItem level={props.level} connector={props.connector}>
       <Accordion
         square
         expanded={expanded}

@@ -34,14 +34,14 @@ const SearchResult: React.FC<SearchItem> = (props) => {
     : generateTermRoute(props.items[0]);
 
   return (
-      <Container>
-        <SearchBox>
-          <RouteLink to={routeProps}>{props.label}</RouteLink>
-          {props.vocabularies.map((item: string) => {
-            return <IriLabel key={item} iri={item} />;
-          })}
-        </SearchBox>
-      </Container>
+    <Container>
+      <SearchBox>
+        <RouteLink to={routeProps}>{props.label}</RouteLink>
+        {props.vocabularies.map((item: string) => {
+          return <IriLabel key={item} iri={item} />;
+        })}
+      </SearchBox>
+    </Container>
   );
 };
 

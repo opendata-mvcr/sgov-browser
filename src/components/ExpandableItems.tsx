@@ -2,7 +2,7 @@ import React from "react";
 import { TermAccordion } from "./TermAccordion";
 import { TermInfo } from "./Hierarchy";
 
-interface ExpandableItemsProps {
+export interface ExpandableItemsProps {
   items: TermInfo[];
   level: number;
 }
