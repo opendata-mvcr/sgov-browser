@@ -36,7 +36,7 @@ const Definition: React.FC<DefinitionProps> = (props) => {
   const definition = props.data.definition?.cs;
   const source = props.data.sources !== null ? props.data.sources[0] : "";
 
-  if (!definition) return <></>;
+  if (!definition) return null;
 
   return (
     <Container>

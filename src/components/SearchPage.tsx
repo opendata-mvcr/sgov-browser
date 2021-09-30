@@ -17,7 +17,6 @@ const SearchPage: React.FC = () => {
   if (isLoading) return <Typography variant="h1">Loading...</Typography>;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
-
   return (
     <Box>
       <Box bgcolor="primary.main" py={2}>

@@ -19,7 +19,7 @@ const CurrentTermBox = withStyles((theme) => ({
 
 const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
   return (
-    <HierarchyItem level={props.level}>
+    <HierarchyItem level={props.level} connector={props.connector}>
       <Box
         style={{
           border: "1px solid rgba(0, 0, 0, .125)",

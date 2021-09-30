@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container, styled } from "@material-ui/core";
 import RouteLink from "./RouteLink";
 import IriLabel from "./IriLabel";
+import { generateTermRoute } from "../utils/Utils";
 
 export interface SearchTerm {
   uri: string;
@@ -30,7 +31,8 @@ const SearchResult: React.FC<SearchItem> = (props) => {
   //Decides whether user is redirected to term page or to word page
   const routeProps = props.isWord
     ? `/disambiguation?label=${props.label}`
-    : { pathname: "term", state: props.items[0] };
+    : generateTermRoute(props.items[0]);
+
   return (
     <Container>
       <SearchBox>

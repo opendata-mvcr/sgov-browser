@@ -1,7 +1,9 @@
 import React from "react";
 import CurrentTerm from "./CurrentTerm";
 import { Box, Container, Typography } from "@material-ui/core";
-import ExpandableItems from "./ExpandableItems";
+import { NormalEnd } from "./HierarchyItem";
+import HierarchyParents from "./HierarchyParents";
+import HierarchyChildren from "./HierarchyChildren";
 
 export interface TermInfo {
   uri: string;
@@ -36,9 +38,18 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
           <Box pl={4}>
             <Typography variant="h5">Hierarchie</Typography>
           </Box>
-          <ExpandableItems items={props.data.parentTerms} level={0} />
-          <CurrentTerm level={currIndex} term={current} />
-          <ExpandableItems items={props.data.subTerms} level={currIndex + 1} />
+          <Box pl={2}>
+            <HierarchyParents items={props.data.parentTerms} level={0} />
+            <CurrentTerm
+              level={currIndex}
+              term={current}
+              connector={props.data.subTerms.length ? <NormalEnd /> : undefined}
+            />
+            <HierarchyChildren
+              items={props.data.subTerms}
+              level={currIndex + 1}
+            />
+          </Box>
         </Box>
       </Box>
     </Container>

@@ -1,3 +1,5 @@
+import { TermBase } from "../api/TermAPI";
+
 export const encodeNormalizedName = (uri: string) => {
   const index = uri.lastIndexOf("/") + 1;
   const name = uri.substr(index);
@@ -19,5 +21,18 @@ export const createTermUri = (
   term: string,
   namespace: string
 ) => {
-  return `${namespace}/${vocabulary}/${term}`;
+  return `${namespace}${vocabulary}/pojem/${term}`;
+};
+
+export const generateTermRoute = (term: TermBase) => {
+  //Exception is checked because some terms don't have vocabulary (don't know how is that possible)
+  try {
+    return `/vocabularies/${getNameFromUri(
+      term.vocabulary
+    )}/terms/${getNameFromUri(term.uri)}?namespace=${getNamespaceUri(
+      term.vocabulary
+    )}/`;
+  } catch {
+    return "/error";
+  }
 };

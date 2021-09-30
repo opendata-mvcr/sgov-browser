@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { FormControl, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
@@ -8,6 +8,7 @@ import RouteLink from "./RouteLink";
 import { TermInfo } from "./Hierarchy";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";
+import { generateTermRoute } from "../utils/Utils";
 
 const Accordion = withStyles({
   root: {
@@ -59,14 +60,16 @@ const ExpandIcon = withStyles((theme) => ({
 export interface TermAccordionProps {
   level: number;
   term: TermInfo;
+  connector?: ReactElement;
 }
+
+//TODO: for some reason, if single parent term with no definition is expanded and then redirected to a term with single parent with no definition, the accordion is still open
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const routeProps = { pathname: "term", state: props.term };
-
+  const routeProps = generateTermRoute(props.term);
   return (
-    <HierarchyItem level={props.level}>
+    <HierarchyItem level={props.level} connector={props.connector}>
       <Accordion
         square
         expanded={expanded}

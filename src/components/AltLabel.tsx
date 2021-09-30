@@ -8,7 +8,7 @@ interface AltLabelProps {
 
 const AltLabel: React.FC<AltLabelProps> = (props) => {
   const altLabels = map(props.altLabels, "cs").join(", ");
-  if (!altLabels) return <></>;
+  if (!altLabels) return null;
   return (
     <Typography variant="h5" color="textSecondary">
       {altLabels}

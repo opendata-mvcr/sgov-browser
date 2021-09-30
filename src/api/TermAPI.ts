@@ -13,7 +13,6 @@ export const getTerm = async (searchResult: TermBase) => {
   const term = encodeNormalizedName(searchResult.uri);
   const namespace = getNamespaceUri(searchResult.vocabulary);
   const route = `${API}/public/vocabularies/${vocabulary}/terms/${term}`;
-
   const { data } = await axios.get(route, {
     params: { namespace: namespace },
   });

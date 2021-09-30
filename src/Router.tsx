@@ -14,7 +14,7 @@ const Router: React.FC = () => {
       <ScrollToTop />
       <Layout>
         <Switch>
-          <Route exact path="/term">
+          <Route exact path="/vocabularies/:vocabularyName/terms/:termName">
             <TermPage />
           </Route>
           <Route exact path="/disambiguation">

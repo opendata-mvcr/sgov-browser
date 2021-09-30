@@ -58,7 +58,7 @@ const VocabularyLabel: React.FC<IriItem> = (props) => {
     );
   }
 
-  return <></>;
+  return null;
 };
 
 export default VocabularyLabel;
