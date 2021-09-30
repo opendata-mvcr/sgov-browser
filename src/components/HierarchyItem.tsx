@@ -1,96 +1,38 @@
 import React, { ReactElement } from "react";
-import { Box } from "@material-ui/core";
+import { Box, styled } from "@material-ui/core";
 
 interface HierarchyItemProps {
   level: number;
   connector?: ReactElement;
 }
 
-export const ParentEnd: React.FC = () => {
-  return (
-    <Box
-      style={{
-        width: "16px",
-        height: "100%",
-        borderLeft: "4px solid #E7E7E7",
-        borderTop: "4px solid #E7E7E7",
-      }}
-    />
-  );
+const ConnectorBox = styled(Box)({
+  width: "16px",
+  height: "100%",
+  border: "solid #E7E7E7",
+});
+
+export const NormalEnd: React.FC = () => {
+  return <ConnectorBox ml={4} style={{ borderWidth: "0px 0px 4px 4px" }} />;
 };
 
 export const ChildrenEnd: React.FC = () => {
-  return (
-    <Box
-      style={{
-        width: "16px",
-        height: "100%",
-        borderLeft: "4px solid #E7E7E7",
-        borderBottom: "4px solid #E7E7E7",
-      }}
-    />
-  );
+  return <ConnectorBox style={{ borderWidth: "0px 0px 4px 4px" }} />;
+};
+
+export const ParentEnd: React.FC = () => {
+  return <ConnectorBox style={{ borderWidth: "4px 0px 0px 4px" }} />;
 };
 
 export const ParentsEnd: React.FC = () => {
   return (
     <>
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-          borderTop: "4px solid #E7E7E7",
-          borderLeft: "4px solid #E7E7E7",
-          borderBottom: "4px solid #E7E7E7",
-        }}
-      />
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-          borderBottom: "4px solid #E7E7E7",
-        }}
-      />
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-          borderBottom: "4px solid #E7E7E7",
-        }}
-      />
+      <ConnectorBox style={{ borderWidth: "4px 0px 4px 4px" }} />
+      <ConnectorBox style={{ borderWidth: "0px 0px 4px 0px" }} />
+      <ConnectorBox style={{ borderWidth: "0px 0px 4px 0px" }} />
     </>
   );
 };
-
-export const NormalEnd: React.FC = () => {
-  return (
-    <>
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-        }}
-      />
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-        }}
-      />
-      <Box
-        style={{
-          width: "16px",
-          height: "100%",
-          borderBottom: "4px solid #E7E7E7",
-          borderLeft: "4px solid #E7E7E7",
-        }}
-      />
-    </>
-  );
-};
-
-//TODO: add adequate connectors to the terms
-// situations: 1) multiple parent terms, 2) single parent terms, 3) children -> line from current + in children
 
 const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
   return (

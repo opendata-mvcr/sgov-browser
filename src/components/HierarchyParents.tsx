@@ -4,14 +4,6 @@ import { TermAccordion } from "./TermAccordion";
 import { NormalEnd, ParentEnd, ParentsEnd } from "./HierarchyItem";
 
 const HierarchyParents: React.FC<ExpandableItemsProps> = (props) => {
-  /*
-       3 situations:
-           1) no parents
-           2) single parent
-           3) multiple parents
-              3.1) need to check if item is last
-      */
-
   if (props.items?.length === 1)
     return (
       <TermAccordion
@@ -20,7 +12,7 @@ const HierarchyParents: React.FC<ExpandableItemsProps> = (props) => {
         connector={<NormalEnd />}
       />
     );
-
+  //If there is more than one parent, connectors need to look differently
   return (
     <>
       {props.items?.map((item, index) => {

@@ -25,6 +25,7 @@ export const createTermUri = (
 };
 
 export const generateTermRoute = (term: TermBase) => {
+  //Exception is checked because some terms don't have vocabulary (don't know how is that possible)
   try {
     return `/vocabularies/${getNameFromUri(
       term.vocabulary
