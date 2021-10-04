@@ -77,7 +77,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     return () => {
       debouncedChangeHandler.cancel();
     };
-  });
+  },[debouncedChangeHandler]);
 
   const endAdornment = (
     <InputAdornment position="end">
