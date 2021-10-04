@@ -5,13 +5,14 @@ import { Box, CircularProgress, Typography } from "@material-ui/core";
 
 const AccordionDescription: React.FC<TermBase> = (props) => {
   const { data = [], isLoading, isSuccess } = useTerm(props ?? emptyTerm);
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box flex={1} display="flex" alignItems="center">
         <CircularProgress />
         <Typography>Načítání definice</Typography>
       </Box>
     );
+  }
   const description = data.definition?.cs
     ? data.definition.cs
     : "Pojem nemá definici";
