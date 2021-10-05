@@ -3,7 +3,6 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { useSearch } from "../api/WordsAPI";
 import useRouteQuery from "../hooks/useRouteQuery";
 import SearchResult from "./SearchResult";
-import SearchBar from "./SearchBar";
 import NoResults from "./NoResults";
 import SearchResultLoader from "./SearchResultLoader";
 import LargeSearchBar from "./LargeSearchBar";

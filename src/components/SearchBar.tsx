@@ -67,17 +67,18 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<{}>, newInputValue: string) => {
-    setInputValue(newInputValue);
-  };
+  const handleChange = useMemo(
+    () => (event: ChangeEvent<{}>, newInputValue: string) =>{
+      setInputValue(newInputValue)}
+  ,[setInputValue]);
 
-  const debouncedChangeHandler = useMemo(() => debounce(handleChange, 300), []);
+  const debouncedChangeHandler = useMemo(() => debounce(handleChange, 300), [handleChange]);
 
   useEffect(() => {
     return () => {
       debouncedChangeHandler.cancel();
     };
-  },[debouncedChangeHandler]);
+  }, [debouncedChangeHandler]);
 
   const endAdornment = (
     <InputAdornment position="end">
