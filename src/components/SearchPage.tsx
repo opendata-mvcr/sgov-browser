@@ -4,7 +4,7 @@ import { useSearch } from "../api/WordsAPI";
 import useRouteQuery from "../hooks/useRouteQuery";
 import SearchResult from "./SearchResult";
 import NoResults from "./NoResults";
-import SearchResultLoader from "./SearchResultLoader";
+import Loader from "./Loader";
 import LargeSearchBar from "./LargeSearchBar";
 
 const NUMBER_OF_RESULT = 50;
@@ -15,7 +15,7 @@ const SearchPage: React.FC = () => {
   const { data = [], isLoading, isError } = useSearch(wordLabel ?? undefined);
 
   // Just to show something, not a final version at all
-  if (isLoading) return <SearchResultLoader />;
+  if (isLoading) return <Loader />;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
   return (

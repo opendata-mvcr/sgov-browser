@@ -5,6 +5,7 @@ import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
+import Loader from "./Loader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -27,7 +28,7 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel]);
 
-  if (isLoading) return <Typography variant="h1">Loading...</Typography>;
+  if (isLoading) return <Loader/>;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
 
