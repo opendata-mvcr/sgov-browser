@@ -13,7 +13,6 @@ const SearchPage: React.FC = () => {
   const routeQuery = useRouteQuery();
   const wordLabel = routeQuery.get("label");
   const { data = [], isLoading, isError } = useSearch(wordLabel ?? undefined);
-
   // Just to show something, not a final version at all
   if (isLoading) return <Loader />;
 

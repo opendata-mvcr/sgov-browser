@@ -1,7 +1,7 @@
 import React from "react";
 import { ExpandableItemsProps } from "./ExpandableItems";
 import { TermAccordion } from "./TermAccordion";
-import { ChildrenEnd} from "./HierarchyItem";
+import { ChildrenEnd } from "./HierarchyItem";
 
 const HierarchyChildren: React.FC<ExpandableItemsProps> = (props) => {
   return (

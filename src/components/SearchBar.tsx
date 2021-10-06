@@ -101,7 +101,9 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     <Autocomplete
       classes={classes}
       onChange={(event: any, newValue: any) => {
-        onChangeHandler(newValue);
+        if (newValue !== null) {
+          onChangeHandler(newValue);
+        }
       }}
       filterOptions={filterOptions}
       noOptionsText="Nebyly nalezeny žádné výsledky"

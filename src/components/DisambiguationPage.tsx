@@ -28,7 +28,7 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel]);
 
-  if (isLoading) return <Loader/>;
+  if (isLoading) return <Loader />;
 
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
 
