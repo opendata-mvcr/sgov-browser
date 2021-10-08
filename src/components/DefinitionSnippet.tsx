@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       right: 0,
       width: "1.6rem",
       height: "1.6rem",
-      background: theme.palette.background.default,
+      background: theme.palette.text.secondary,
     },
   },
 }));

@@ -7,13 +7,21 @@ export interface IriItem {
 }
 
 const IriLabel: React.FC<IriItem & TypographyProps> = (props) => {
-  const { data, isSuccess } = useLabel(props.iri);
-  const result = isSuccess ? data : "Načítání";
-  return (
-    <Typography variant="h6" {...props}>
-      {result}
-    </Typography>
-  );
+  const { data, isSuccess, isLoading } = useLabel(props.iri);
+  if (isLoading)
+    return (
+      <Typography variant="h6" {...props}>
+        Načítání...
+      </Typography>
+    );
+  if (isSuccess) {
+    return (
+      <Typography variant="h6" {...props}>
+        {data}
+      </Typography>
+    );
+  }
+  return null;
 };
 
 export default React.memo(IriLabel);
