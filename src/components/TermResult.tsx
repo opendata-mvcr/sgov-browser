@@ -24,7 +24,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 
 const TermResult: React.FC<SearchTerm> = (props) => {
   const route = generateTermRoute(props);
-
+  if (route === "/error") return null;
   return (
     <Container>
       <Wrapper>
