@@ -9,9 +9,9 @@ import { getTerm } from "../api/TermAPI";
  * Known issues = after stale time is reached, this hook forces re-renders for every term previously fetched.
  * Reason = useQueries modifies the isStale property => change of the object => re-render
  * **/
-const useTerms = (props: { terms: SearchTerm[] }) => {
+const usePrefetchTerms = (terms: SearchTerm[]) => {
   const queryResults: UseQueryResult[] = useQueries(
-    props.terms?.map((term) => {
+    terms?.map((term) => {
       return {
         queryKey: ["term", term.uri],
         queryFn: () => getTerm(term),
@@ -21,4 +21,4 @@ const useTerms = (props: { terms: SearchTerm[] }) => {
   );
   return queryResults.some((query: UseQueryResult) => query.isLoading);
 };
-export default useTerms;
+export default usePrefetchTerms;

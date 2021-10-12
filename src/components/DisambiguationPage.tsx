@@ -6,7 +6,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
-import useTerms from "../hooks/useTerms";
+import usePrefetchTerms from "../hooks/usePrefetchTerms";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -57,7 +57,7 @@ interface WordContentProps {
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
-  const isLoading = useTerms({ terms: props.terms });
+  const isLoading = usePrefetchTerms(props.terms);
   if (isLoading) return <Loader />;
 
   return (
