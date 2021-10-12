@@ -34,7 +34,7 @@ const DisambiguationPage: React.FC = () => {
   if (isError) return <Typography variant="h1">Error occurred</Typography>;
 
   return (
-    <Box>
+    <Box flex={1} display="flex" flexDirection="column">
       <Box bgcolor="primary.main" pb={1}>
         <Container>
           <Box px={5}>
