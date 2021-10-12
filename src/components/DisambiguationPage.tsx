@@ -57,9 +57,9 @@ interface WordContentProps {
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
+
   const isLoading = usePrefetchTerms(props.terms);
   if (isLoading) return <Loader />;
-
   return (
     <Container>
       <Box pt={2} pb={4}>

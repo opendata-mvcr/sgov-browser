@@ -41,4 +41,4 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   );
 };
 
-export default TermResult;
+export default React.memo(TermResult);
