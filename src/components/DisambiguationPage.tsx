@@ -6,6 +6,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
+import useTerms from "../hooks/useTerms";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -46,22 +47,34 @@ const DisambiguationPage: React.FC = () => {
           </Box>
         </Container>
       </Box>
-      <Container>
-        <Box pt={2} pb={4}>
-          {terms.map((term: SearchTerm) => {
-            return (
-              <TermResult
-                key={term.uri}
-                uri={term.uri}
-                vocabulary={term.vocabulary}
-                label={term.label}
-              />
-            );
-          })}
-        </Box>
-      </Container>
+      <WordContent terms={terms} />
     </Box>
   );
 };
 
+interface WordContentProps {
+  terms: SearchTerm[];
+}
+
+const WordContent: React.FC<WordContentProps> = (props) => {
+  const isLoading = useTerms({ terms: props.terms });
+  if (isLoading) return <Loader />
+
+  return (
+    <Container>
+      <Box pt={2} pb={4}>
+        {props.terms.map((term: SearchTerm) => {
+          return (
+            <TermResult
+              key={term.uri}
+              uri={term.uri}
+              vocabulary={term.vocabulary}
+              label={term.label}
+            />
+          );
+        })}
+      </Box>
+    </Container>
+  );
+};
 export default DisambiguationPage;

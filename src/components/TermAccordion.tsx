@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { Box, FormControl, Typography, withStyles } from "@material-ui/core";
+import { Box, FormControl, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";

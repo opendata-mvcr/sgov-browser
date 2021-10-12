@@ -6,4 +6,3 @@ export interface ExpandableItemsProps {
   level: number;
   vocabularyDefault: string;
 }
-
