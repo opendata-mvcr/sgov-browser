@@ -8,16 +8,11 @@ export interface IriItem {
 
 const IriLabel: React.FC<IriItem & TypographyProps> = (props) => {
   const { data, isSuccess, isLoading } = useLabel(props.iri);
-  if (isLoading)
+  if (isLoading || isSuccess) {
+    const message = isLoading ? "Načítání..." : data;
     return (
       <Typography variant="h6" {...props}>
-        Načítání...
-      </Typography>
-    );
-  if (isSuccess) {
-    return (
-      <Typography variant="h6" {...props}>
-        {data}
+        {message}
       </Typography>
     );
   }
