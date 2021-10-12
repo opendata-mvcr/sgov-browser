@@ -32,7 +32,7 @@ const SearchResult: React.FC<SearchItem> = (props) => {
   const routeProps = props.isWord
     ? `/disambiguation?label=${props.label}`
     : generateTermRoute(props.items[0]);
-
+  if (routeProps === "/error") return null;
   return (
     <Container>
       <SearchBox>

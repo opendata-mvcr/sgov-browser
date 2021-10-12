@@ -7,16 +7,15 @@ const HierarchyChildren: React.FC<ExpandableItemsProps> = (props) => {
   return (
     <>
       {props.items?.map((item, index) => {
-        if (index + 1 === props.items.length)
-          return (
-            <TermAccordion level={props.level} term={item} key={item.uri} />
-          );
+        const connector =
+          index + 1 !== props.items.length ? <ChildrenEnd /> : undefined;
         return (
           <TermAccordion
             level={props.level}
             term={item}
             key={item.uri}
-            connector={<ChildrenEnd />}
+            connector={connector}
+            showVocabulary={props.vocabularyDefault !== item.vocabulary}
           />
         );
       })}

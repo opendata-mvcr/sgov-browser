@@ -19,38 +19,35 @@ const filterOptions = (options: any, state: any) => {
   return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
 };
 
+const useStyles = makeStyles((theme) => ({
+  inputRoot: (props: SearchBarProps) => ({
+    border: "1px solid #e2e2e1",
+    color: theme.palette.text.primary,
+    borderRadius: props.size === "large" ? 26 : 16,
+    fontSize: props.size === "large" ? 26 : 16,
+    height: props.size === "large" ? 63 : 38,
+    backgroundColor: "#fcfcfb",
+    paddingLeft: props.size === "large" ? theme.spacing(6) : theme.spacing(1),
+    paddingRight:
+      props.size === "large"
+        ? `${theme.spacing(6)}px !important`
+        : `${theme.spacing(1)}px !important`,
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:hover": {
+      backgroundColor: "#fff",
+    },
+  }),
+  paper: {
+    color: theme.palette.text.primary,
+  },
+}));
+
 interface SearchBarProps {
   size: "small" | "large";
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    inputRoot: {
-      border: "1px solid #e2e2e1",
-      color: theme.palette.text.primary,
-      borderRadius: props.size === "large" ? 26 : 16,
-      fontSize: props.size === "large" ? 26 : 16,
-      height: props.size === "large" ? 63 : 38,
-      backgroundColor: "#fcfcfb",
-      paddingLeft: props.size === "large" ? theme.spacing(6) : theme.spacing(1),
-      paddingRight:
-        props.size === "large"
-          ? `${theme.spacing(6)}px !important`
-          : `${theme.spacing(1)}px !important`,
-      transition: theme.transitions.create(["border-color", "box-shadow"]),
-      "&:hover": {
-        backgroundColor: "#fff",
-      },
-      "&:focused": {
-        backgroundColor: "#fff",
-      },
-    },
-    paper: {
-      color: theme.palette.text.primary,
-    },
-  }));
-
-  const classes = useStyles();
+  const classes = useStyles(props);
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
@@ -67,17 +64,23 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<{}>, newInputValue: string) => {
-    setInputValue(newInputValue);
-  };
+  const handleChange = useMemo(
+    () => (event: ChangeEvent<{}>, newInputValue: string) => {
+      setInputValue(newInputValue);
+    },
+    [setInputValue]
+  );
 
-  const debouncedChangeHandler = useMemo(() => debounce(handleChange, 300), []);
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleChange, 300),
+    [handleChange]
+  );
 
   useEffect(() => {
     return () => {
       debouncedChangeHandler.cancel();
     };
-  });
+  }, [debouncedChangeHandler]);
 
   const endAdornment = (
     <InputAdornment position="end">
@@ -98,7 +101,9 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     <Autocomplete
       classes={classes}
       onChange={(event: any, newValue: any) => {
-        onChangeHandler(newValue);
+        if (newValue !== null) {
+          onChangeHandler(newValue);
+        }
       }}
       filterOptions={filterOptions}
       noOptionsText="Nebyly nalezeny žádné výsledky"
