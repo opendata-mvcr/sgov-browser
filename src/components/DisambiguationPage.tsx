@@ -58,7 +58,7 @@ interface WordContentProps {
 
 const WordContent: React.FC<WordContentProps> = (props) => {
   const isLoading = useTerms({ terms: props.terms });
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader />;
 
   return (
     <Container>
