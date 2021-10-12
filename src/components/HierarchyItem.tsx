@@ -35,6 +35,7 @@ export const ParentsEnd: React.FC = () => {
 };
 
 const HierarchyItem: React.FC<HierarchyItemProps> = (props) => {
+  //TODO: Fix responsiveness, when Term has foreign vocabulary or text is wrapped => connectors are not aligned in the center
   return (
     <Box display="flex" ml={props.level * 4} mt={2}>
       <Box style={{ position: "relative", minWidth: "16px" }}>
