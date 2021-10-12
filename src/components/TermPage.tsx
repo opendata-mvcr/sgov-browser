@@ -24,7 +24,7 @@ const TermPage: React.FC = () => {
       <Box mb={10}>
         <TermHeader data={data} />
         <Definition data={data} />
-        <Hierarchy data={data} key={term.uri} />
+        <Hierarchy data={data} />
       </Box>
     );
   }

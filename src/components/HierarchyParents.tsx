@@ -10,6 +10,8 @@ const HierarchyParents: React.FC<ExpandableItemsProps> = (props) => {
         term={props.items[0]}
         level={props.level}
         connector={<NormalEnd />}
+        showVocabulary={props.vocabularyDefault !== props.items[0].vocabulary}
+        key={props.items[0].uri}
       />
     );
   }

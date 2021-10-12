@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { FormControl, withStyles } from "@material-ui/core";
+import { Box, FormControl, Typography, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
@@ -9,6 +9,7 @@ import { TermInfo } from "./Hierarchy";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";
 import { generateTermRoute } from "../utils/Utils";
+import IriLabel from "./IriLabel";
 
 const Accordion = withStyles({
   root: {
@@ -61,8 +62,8 @@ export interface TermAccordionProps {
   level: number;
   term: TermInfo;
   connector?: ReactElement;
+  showVocabulary?: boolean;
 }
-
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
@@ -75,14 +76,23 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
         onChange={() => setExpanded(!expanded)}
       >
         <AccordionSummary expandIcon={<ExpandIcon />}>
-          <FormControl
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-          >
-            <RouteLink to={routeProps} variant="h6" color="textSecondary">
-              {props.term.label.cs}
-            </RouteLink>
-          </FormControl>
+          <Box>
+            {props.showVocabulary && (
+              <IriLabel
+                iri={props.term.vocabulary}
+                variant="body2"
+                color="textSecondary"
+              />
+            )}
+            <FormControl
+              onClick={(event) => event.stopPropagation()}
+              onFocus={(event) => event.stopPropagation()}
+            >
+              <RouteLink to={routeProps} variant="h6" color="textSecondary">
+                {props.term.label.cs}
+              </RouteLink>
+            </FormControl>
+          </Box>
         </AccordionSummary>
         <AccordionDetails>
           <AccordionDescription

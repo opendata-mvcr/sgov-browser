@@ -39,7 +39,11 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
             <Typography variant="h5">Hierarchie</Typography>
           </Box>
           <Box pl={2}>
-            <HierarchyParents items={props.data.parentTerms} level={0} />
+            <HierarchyParents
+              items={props.data.parentTerms}
+              level={0}
+              vocabularyDefault={current.vocabulary}
+            />
             <CurrentTerm
               level={currIndex}
               term={current}
@@ -48,6 +52,7 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
             <HierarchyChildren
               items={props.data.subTerms}
               level={currIndex + 1}
+              vocabularyDefault={current.vocabulary}
             />
           </Box>
         </Box>
