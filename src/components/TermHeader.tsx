@@ -2,6 +2,8 @@ import React from "react";
 import AltLabel from "./AltLabel";
 import IriLabel from "./IriLabel";
 import DetailPageHeader from "./DetailPageHeader";
+import RouteLink from "./RouteLink";
+import { generateVocabularyRoute } from "../utils/Utils";
 
 export interface DetailHeaderProps {
   data: {
@@ -17,9 +19,11 @@ const TermHeader: React.FC<DetailHeaderProps> = (props) => {
   const altLabels = props.data.altLabels;
   const iri = props.data.uri;
   const vocabulary = props.data.vocabulary;
-
+  const vocabularyRoute = generateVocabularyRoute(vocabulary);
   const above = (
-    <IriLabel iri={vocabulary} variant="h5" color="textSecondary" />
+    <RouteLink to={vocabularyRoute} color="textSecondary">
+      <IriLabel iri={vocabulary} variant="h5" color="textSecondary" />
+    </RouteLink>
   );
   const below = <AltLabel altLabels={altLabels} />;
 

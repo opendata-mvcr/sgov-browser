@@ -40,3 +40,9 @@ export const generateTermRoute = (term: TermBase) => {
     return "/error";
   }
 };
+
+export const generateVocabularyRoute = (vocabularyUri: string) => {
+  const name = getNameFromUri(vocabularyUri);
+  const namespace = getNamespaceUri(vocabularyUri);
+  return `/vocabularies/${name}?namespace=${namespace}/`
+};
