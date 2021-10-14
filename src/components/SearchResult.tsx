@@ -1,8 +1,10 @@
 import React from "react";
-import { Box, Container, styled } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import RouteLink from "./RouteLink";
 import IriLabel from "./IriLabel";
 import { generateTermRoute } from "../utils/Utils";
+import SearchCard from "./SearchCard";
+import theme from "../app/theme";
 
 export interface SearchTerm {
   uri: string;
@@ -19,28 +21,26 @@ export interface SearchItem {
 }
 
 const SearchResult: React.FC<SearchItem> = (props) => {
-  const SearchBox = styled(Box)(({ theme }) => ({
-    borderLeft: "solid",
-    borderColor: props.isWord
-      ? theme.palette.secondary.main
-      : theme.palette.primary.main,
-    paddingLeft: theme.spacing(2),
-    marginTop: theme.spacing(2),
-  }));
-
   //Decides whether user is redirected to term page or to word page
   const routeProps = props.isWord
     ? `/disambiguation?label=${props.label}`
     : generateTermRoute(props.items[0]);
   if (routeProps === "/error") return null;
+
+  const border = props.isWord
+    ? theme.palette.secondary.main
+    : theme.palette.primary.main;
+
   return (
     <Container>
-      <SearchBox>
-        <RouteLink to={routeProps}>{props.label}</RouteLink>
-        {props.vocabularies.map((item: string) => {
-          return <IriLabel key={item} iri={item} />;
-        })}
-      </SearchBox>
+      <SearchCard borderColor={`${border} !important`}>
+        <RouteLink to={routeProps} underline="none">
+          <Typography variant="h2"> {props.label}</Typography>
+          {props.vocabularies.map((item: string) => {
+            return <IriLabel key={item} iri={item} />;
+          })}
+        </RouteLink>
+      </SearchCard>
     </Container>
   );
 };
