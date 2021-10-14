@@ -2,7 +2,6 @@ import { SearchTerm } from "../components/SearchResult";
 import { useQueries, UseQueryResult } from "react-query";
 import { getTerm } from "../api/TermAPI";
 
-
 const usePrefetchTerms = (terms: SearchTerm[]) => {
   const queryResults: UseQueryResult[] = useQueries(
     terms?.map((term) => {

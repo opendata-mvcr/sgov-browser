@@ -24,6 +24,10 @@ export const createTermUri = (
   return `${namespace}${vocabulary}/pojem/${term}`;
 };
 
+export const createVocabularyUri = (vocabulary: string, namespace: string) => {
+  return `${namespace}${vocabulary}`;
+};
+
 export const generateTermRoute = (term: TermBase) => {
   //Exception is checked because some terms don't have vocabulary (don't know how is that possible)
   try {

@@ -8,7 +8,6 @@ import { generateTermRoute } from "../utils/Utils";
 import SearchCard from "./SearchCard";
 import theme from "../app/theme";
 
-
 const TermResult: React.FC<SearchTerm> = (props) => {
   const route = generateTermRoute(props);
   if (route === "/error") return null;
