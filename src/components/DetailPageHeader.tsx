@@ -28,7 +28,7 @@ const DetailPageHeader: React.FC<DetailPageHeaderProps> = (props) => {
   );
 };
 
-const DetailHeaderWrapper: React.FC = (props) => {
+export const DetailHeaderWrapper: React.FC = (props) => {
   return (
     <Box bgcolor="primary.main" pb={1}>
       <Container>

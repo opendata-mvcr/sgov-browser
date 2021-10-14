@@ -7,6 +7,7 @@ import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
 import usePrefetchTerms from "../hooks/usePrefetchTerms";
+import { DetailHeaderWrapper } from "./DetailPageHeader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -35,18 +36,11 @@ const DisambiguationPage: React.FC = () => {
 
   return (
     <Box flex={1} display="flex" flexDirection="column">
-      <Box bgcolor="primary.main" pb={1}>
-        <Container>
-          <Box px={5}>
-            <Typography variant="h5" color="textSecondary">
-              slovo
-            </Typography>
-            <Typography variant="h1" color="textSecondary">
-              {wordLabel ?? ""}
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+      <DetailHeaderWrapper>
+        <Typography variant="h1" color="textSecondary">
+          {wordLabel ?? ""}
+        </Typography>
+      </DetailHeaderWrapper>
       <WordContent terms={terms} />
     </Box>
   );
