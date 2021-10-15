@@ -3,8 +3,9 @@ import { useQueries, UseQueryResult } from "react-query";
 import { getTerm } from "../api/TermAPI";
 
 const usePrefetchTerms = (terms: SearchTerm[]) => {
+  const validTerms = terms.filter((item) => item.uri && item.vocabulary);
   const queryResults: UseQueryResult[] = useQueries(
-    terms?.map((term) => {
+    validTerms?.map((term) => {
       return {
         queryKey: ["term", term.uri],
         queryFn: () => getTerm(term),
