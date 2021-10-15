@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
-import Definition from "./Definition";
+import TermDefinition from "./TermDefinition";
 import { Hierarchy } from "./Hierarchy";
 import useURLTerm from "../hooks/useURLTerm";
 import Loader from "./Loader";
@@ -23,7 +23,7 @@ const TermPage: React.FC = () => {
     return (
       <Box mb={10}>
         <TermHeader data={data} />
-        <Definition data={data} />
+        <TermDefinition data={data} />
         <Hierarchy data={data} />
       </Box>
     );
