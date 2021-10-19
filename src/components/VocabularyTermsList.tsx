@@ -5,6 +5,8 @@ import { generateTermRoute } from "../utils/Utils";
 import { TermBase } from "../api/TermAPI";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Box } from "@material-ui/core";
+import AutoSizer from "react-virtualized-auto-sizer";
+
 
 interface VocabularyTermsListProps {
   terms: { uri: string; vocabulary: string; label: { cs?: string } }[];
@@ -28,16 +30,20 @@ const VocabularyTermsList: React.FC<VocabularyTermsListProps> = (props) => {
 
   return (
     <DetailItemWrapper title={"Pojmy"}>
-      <Box mt={2}>
+      <Box mt={2} height={350}>
+        <AutoSizer>
+          {({ height, width }) => (
         <List
-          height={350}
+          height={height}
           itemCount={props.terms.length}
           itemSize={34}
-          width={700}
+          width={width}
           overscanCount={10}
         >
           {Row}
         </List>
+          )}
+        </AutoSizer>
       </Box>
     </DetailItemWrapper>
   );
