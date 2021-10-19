@@ -6,6 +6,7 @@ import { Box } from "@material-ui/core";
 import NoResults from "./NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
+import VocabularyTerms from "./VocabularyTerms";
 
 const VocabularyPage: React.FC = () => {
   const uri = useURLVocabulary();
@@ -16,6 +17,7 @@ const VocabularyPage: React.FC = () => {
       <Box mb={10}>
         <VocabularyHeader data={data} />
         <VocabularyDefinition description={data.description}/>
+        <VocabularyTerms uri={data.uri}/>
       </Box>
     );
   }
