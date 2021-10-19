@@ -34,7 +34,7 @@ const VocabularyTermsList: React.FC<VocabularyTermsListProps> = (props) => {
           itemCount={props.terms.length}
           itemSize={34}
           width={700}
-          overscanCount={5}
+          overscanCount={10}
         >
           {Row}
         </List>
