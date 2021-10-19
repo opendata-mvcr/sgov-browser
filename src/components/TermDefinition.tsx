@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
-import {Box} from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DefinitionWrapper from "./DefinitionWrapper";
 
@@ -26,11 +26,11 @@ const TermDefinition: React.FC<DefinitionProps> = (props) => {
   if (!definition && !source) return null;
 
   const illustration = (
-      <Box style={{ position: "relative", height: "100%" }}>
-        <Box left={-72} bottom={-102} style={{ position: "absolute" }}>
-          <DefinitionIllustration className={classes.definitionImage} />
-        </Box>
+    <Box style={{ position: "relative", height: "100%" }}>
+      <Box left={-72} bottom={-102} style={{ position: "absolute" }}>
+        <DefinitionIllustration className={classes.definitionImage} />
       </Box>
+    </Box>
   );
 
   return (
@@ -41,7 +41,5 @@ const TermDefinition: React.FC<DefinitionProps> = (props) => {
     />
   );
 };
-
-
 
 export default TermDefinition;

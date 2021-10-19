@@ -61,9 +61,8 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
   );
 };
 
-
-interface DetailItemWrapperProps{
-  title:string
+interface DetailItemWrapperProps {
+  title: string;
 }
 export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
   return (
@@ -73,9 +72,7 @@ export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
           <Box pl={4}>
             <Typography variant="h5">{props.title}</Typography>
           </Box>
-          <Box pl={4}>
-            {props.children}
-          </Box>
+          <Box pl={4}>{props.children}</Box>
         </Box>
       </Box>
     </Container>

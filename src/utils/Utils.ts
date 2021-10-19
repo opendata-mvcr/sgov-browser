@@ -44,5 +44,5 @@ export const generateTermRoute = (term: TermBase) => {
 export const generateVocabularyRoute = (vocabularyUri: string) => {
   const name = getNameFromUri(vocabularyUri);
   const namespace = getNamespaceUri(vocabularyUri);
-  return `/vocabularies/${name}?namespace=${namespace}/`
+  return `/vocabularies/${name}?namespace=${namespace}/`;
 };

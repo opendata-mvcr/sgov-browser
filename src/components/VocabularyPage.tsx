@@ -16,8 +16,8 @@ const VocabularyPage: React.FC = () => {
     return (
       <Box mb={10}>
         <VocabularyHeader data={data} />
-        <VocabularyDefinition description={data.description}/>
-        <VocabularyTerms uri={data.uri}/>
+        <VocabularyDefinition description={data.description} />
+        <VocabularyTerms uri={data.uri} />
       </Box>
     );
   }

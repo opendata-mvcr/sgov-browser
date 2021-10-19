@@ -1,6 +1,6 @@
 import React from "react";
-import {Box} from "@material-ui/core";
-import {ReactComponent as DefinitionIllustration} from "../assets/definition2.svg";
+import { Box } from "@material-ui/core";
+import { ReactComponent as DefinitionIllustration } from "../assets/definition2.svg";
 import DefinitionWrapper from "./DefinitionWrapper";
 
 interface VocabularyDefinitionProps {
@@ -8,19 +8,22 @@ interface VocabularyDefinitionProps {
 }
 
 const VocabularyDefinition: React.FC<VocabularyDefinitionProps> = (props) => {
-
-  if(!props.description) return null;
+  if (!props.description) return null;
 
   const illustration = (
-      <Box style={{ position: "relative", height: "100%" }}>
-        <Box left={-32} bottom={-102} style={{ position: "absolute" }}>
-          <DefinitionIllustration style={{maxHeight: 260}} />
-        </Box>
+    <Box style={{ position: "relative", height: "100%" }}>
+      <Box left={-32} bottom={-102} style={{ position: "absolute" }}>
+        <DefinitionIllustration style={{ maxHeight: 260 }} />
       </Box>
+    </Box>
   );
 
-
-  return <DefinitionWrapper illustration={illustration} definition={props.description} />;
+  return (
+    <DefinitionWrapper
+      illustration={illustration}
+      definition={props.description}
+    />
+  );
 };
 
 export default VocabularyDefinition;
