@@ -13,7 +13,7 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
   if (isLoading) {
     return (
       <DetailItemWrapper title={"Pojmy"}>
-        <Loader size={50} variant="h4" />
+        <Loader size={50} variant="h5" />
       </DetailItemWrapper>
     );
   }
