@@ -1,8 +1,12 @@
-import { FixedSizeList as List, areEqual } from "react-window";
+import {
+  FixedSizeList as List,
+  areEqual,
+  ListChildComponentProps,
+} from "react-window";
 import RouteLink from "./RouteLink";
 import React, { memo } from "react";
 import { DetailItemWrapper } from "./Hierarchy";
-import { Box, Link } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { makeStyles } from "@material-ui/core/styles";
 import memoize from "memoize-one";
@@ -16,16 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface VocabularyTermsListProps {
-  terms: {
-    uri: string;
-    vocabulary: string;
-    label: { cs?: string };
-    route: string;
-  }[];
-}
-
-const Row = memo(({ data, index, style }: any) => {
+const Row = memo(({ data, index, style }: ListChildComponentProps) => {
   const classes = useStyles();
   const { items } = data;
   const item = items[index];
@@ -54,10 +49,19 @@ const createItemData = memoize((items) => ({
   items,
 }));
 
+interface VocabularyTermsListProps {
+  terms: {
+    uri: string;
+    vocabulary: string;
+    label: { cs?: string };
+    route: string;
+  }[];
+}
+
 const VocabularyTermsList: React.FC<VocabularyTermsListProps> = (props) => {
   const itemData = createItemData(props.terms);
-
   const customHeight = props.terms.length < 10 ? props.terms.length * 34 : 350;
+
   return (
     <DetailItemWrapper title={"Pojmy"}>
       <Box mt={2} height={customHeight}>

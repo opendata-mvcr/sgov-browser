@@ -1,5 +1,9 @@
 import { useQuery } from "react-query";
-import {encodeNormalizedName, generateTermRoute, getNamespaceUri} from "../utils/Utils";
+import {
+  encodeNormalizedName,
+  generateTermRoute,
+  getNamespaceUri,
+} from "../utils/Utils";
 import { API } from "../app/variables";
 import axios from "axios";
 import _ from "lodash";
@@ -41,13 +45,18 @@ export const getVocabularyTerms = async (vocabularyUri: string) => {
   const { data } = await axios.get(route, {
     params: { namespace: namespace },
   });
-  const result = _(data).map((item) => {
-    return {
-      uri: item.uri,
-      label: {cs: item.label.cs},
-      vocabulary: item.vocabulary,
-      route: generateTermRoute({vocabulary: item.vocabulary,uri:item.uri})
-    };
-  }).value();
+  const result = _(data)
+    .map((item) => {
+      return {
+        uri: item.uri,
+        label: { cs: item.label.cs },
+        vocabulary: item.vocabulary,
+        route: generateTermRoute({
+          vocabulary: item.vocabulary,
+          uri: item.uri,
+        }),
+      };
+    })
+    .value();
   return result;
 };

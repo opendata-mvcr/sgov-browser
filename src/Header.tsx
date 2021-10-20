@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       <Toolbar>
         <NavIcon />
         <RouteLink to="/" variant="h6" color="textSecondary" underline="none">
-          sgov-browser
+          ShowIt
         </RouteLink>
         {props.showSearch && (
           <Box width={250} ml={10}>
