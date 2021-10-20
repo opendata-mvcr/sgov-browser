@@ -1,8 +1,6 @@
 import { FixedSizeList as List } from "react-window";
 import RouteLink from "./RouteLink";
 import React from "react";
-import { generateTermRoute } from "../utils/Utils";
-import { TermBase } from "../api/TermAPI";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Box } from "@material-ui/core";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -18,21 +16,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface VocabularyTermsListProps {
-  terms: { uri: string; vocabulary: string; label: { cs?: string } }[];
+  terms: { uri: string; vocabulary: string; label: { cs?: string }; route:string}[];
 }
 
 const VocabularyTermsList: React.FC<VocabularyTermsListProps> = (props) => {
   const classes = useStyles();
   const Row = ({ index, style }: any) => {
     const curr = props.terms[index];
-    //This is not good, these functions are called multiple times, whenever the term is in the view
-    const termBase: TermBase = { uri: curr.uri, vocabulary: curr.vocabulary };
-    const route = generateTermRoute(termBase);
     return (
       <div style={style}>
         <Box borderBottom={2} className={classes.wrapper}>
           <RouteLink
-            to={route}
+            to={curr.route}
             variant="h6"
             style={{
               display: "block",
