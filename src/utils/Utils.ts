@@ -24,6 +24,10 @@ export const createTermUri = (
   return `${namespace}${vocabulary}/pojem/${term}`;
 };
 
+export const createVocabularyUri = (vocabulary: string, namespace: string) => {
+  return `${namespace}${vocabulary}`;
+};
+
 export const generateTermRoute = (term: TermBase) => {
   //Exception is checked because some terms don't have vocabulary (don't know how is that possible)
   try {
@@ -35,4 +39,10 @@ export const generateTermRoute = (term: TermBase) => {
   } catch {
     return "/error";
   }
+};
+
+export const generateVocabularyRoute = (vocabularyUri: string) => {
+  const name = getNameFromUri(vocabularyUri);
+  const namespace = getNamespaceUri(vocabularyUri);
+  return `/vocabularies/${name}?namespace=${namespace}/`;
 };

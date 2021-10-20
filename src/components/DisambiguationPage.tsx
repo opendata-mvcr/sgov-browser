@@ -6,7 +6,8 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
-import useTerms from "../hooks/useTerms";
+import usePrefetchTerms from "../hooks/usePrefetchTerms";
+import { DetailHeaderWrapper } from "./DetailPageHeader";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -35,18 +36,11 @@ const DisambiguationPage: React.FC = () => {
 
   return (
     <Box flex={1} display="flex" flexDirection="column">
-      <Box bgcolor="primary.main" pb={1}>
-        <Container>
-          <Box px={5}>
-            <Typography variant="h5" color="textSecondary">
-              slovo
-            </Typography>
-            <Typography variant="h1" color="textSecondary">
-              {wordLabel ?? ""}
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+      <DetailHeaderWrapper>
+        <Typography variant="h1" color="textSecondary">
+          {wordLabel ?? ""}
+        </Typography>
+      </DetailHeaderWrapper>
       <WordContent terms={terms} />
     </Box>
   );
@@ -57,9 +51,8 @@ interface WordContentProps {
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
-  const isLoading = useTerms({ terms: props.terms });
+  const isLoading = usePrefetchTerms(props.terms);
   if (isLoading) return <Loader />;
-
   return (
     <Container>
       <Box pt={2} pb={4}>

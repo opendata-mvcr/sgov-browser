@@ -7,6 +7,7 @@ import ScrollToTop from "./ScrollToTop";
 import ErrorPage from "./components/ErrorPage";
 import DisambiguationPage from "./components/DisambiguationPage";
 import TermPage from "./components/TermPage";
+import VocabularyPage from "./components/VocabularyPage";
 
 const Router: React.FC = () => {
   return (
@@ -16,6 +17,9 @@ const Router: React.FC = () => {
         <Switch>
           <Route exact path="/vocabularies/:vocabularyName/terms/:termName">
             <TermPage />
+          </Route>
+          <Route exact path="/vocabularies/:vocabularyName">
+            <VocabularyPage />
           </Route>
           <Route exact path="/disambiguation">
             <DisambiguationPage />
