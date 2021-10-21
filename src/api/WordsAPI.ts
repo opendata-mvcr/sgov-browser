@@ -12,7 +12,7 @@ const getSearchResult = async (word: string | undefined) => {
   // adds isWord flag when there are multiple, only label results are accepted
   const result = _(data)
     .filter((item) => {
-      return item.snippetField === "label";
+      return item.snippetField === "label" && item.uri && item.vocabulary;
     })
     .groupBy("label")
     .map((objs, key) => {

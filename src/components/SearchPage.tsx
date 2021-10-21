@@ -24,7 +24,7 @@ const SearchPage: React.FC = () => {
 
       <Container>
         <Box pt={2} pb={4}>
-          <NumberOfResults amount={data.length} />
+          <NumberOfResults amount={data.length > 50 ? 50 : data.length} />
           {data.length ? (
             data.slice(0, NUMBER_OF_RESULT).map((item) => {
               return (
