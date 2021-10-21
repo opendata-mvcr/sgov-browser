@@ -24,7 +24,7 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
     );
   }
 
-  return <VocabularyTermsList terms={data} />;
+ return <VocabularyTermsList terms={data} />;
 };
 
 export default VocabularyTerms;

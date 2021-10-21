@@ -49,7 +49,7 @@ const createItemData = memoize((items) => ({
   items,
 }));
 
-interface VocabularyTermsListProps {
+export interface VocabularyTermsListProps {
   terms: {
     uri: string;
     vocabulary: string;
