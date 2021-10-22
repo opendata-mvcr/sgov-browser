@@ -1,7 +1,6 @@
 import React from "react";
 import { useVocabularyTerms } from "../api/VocabularyAPI";
 import Loader from "./Loader";
-import VocabularyTermsList from "./VocabularyTermsList";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Typography } from "@material-ui/core";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
@@ -24,9 +23,7 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
       </DetailItemWrapper>
     );
   }
-
- //return <VocabularyTermsList terms={data} />;
-  return <VocabularyTermsListWindow terms={data} />
+ return <VocabularyTermsListWindow terms={data} />
 };
 
 export default VocabularyTerms;

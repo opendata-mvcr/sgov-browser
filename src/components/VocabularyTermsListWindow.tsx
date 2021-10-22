@@ -1,84 +1,71 @@
 import {
-    FixedSizeList as List,
-    areEqual,
-    ListChildComponentProps,
+  FixedSizeList as List,
 } from "react-window";
-import RouteLink from "./RouteLink";
 import React, { memo } from "react";
 import { DetailItemWrapper } from "./Hierarchy";
-import { Box } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
 
 // @ts-ignore
-import { ReactWindowScroller } from 'react-window-scroller'
+import { ReactWindowScroller } from "react-window-scroller";
 import { makeStyles } from "@material-ui/core/styles";
-import memoize from "memoize-one";
-import {VocabularyTermsListProps} from "./VocabularyTermsList";
+import { VocabularyTermsListProps } from "./VocabularyTermsList";
 
-const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        borderColor: "#e0e0e0 !important",
-        "&:hover": {
-            backgroundColor: "#e0e0e0",
-        },
+const useStyles = makeStyles(() => ({
+  wrapper: {
+    borderBottom: "1px solid #e0e0e0",
+    "&:hover": {
+      backgroundColor: "#e0e0e0",
     },
-}));
-
-const Row = memo(({ data, index, style }: ListChildComponentProps) => {
-    const classes = useStyles();
-    const { items } = data;
-
-    const item = items[index];
-
-    return (
-        <div style={style}>
-            <Box borderBottom={2} className={classes.wrapper}>
-                <RouteLink
-                    to={item.route}
-                    variant="h6"
-                    style={{
-                        display: "block",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                    }}
-                >
-                    {item.label.cs}
-                </RouteLink>
-            </Box>
-        </div>
-    );
-}, areEqual);
-
-const createItemData = memoize((items) => ({
-    items,
+  },
+  text: {
+    fontSize: "1.25rem",
+    fontFamily: "Poppins,sans-serif",
+    fontWeight: 500,
+    lineHeight: "1.6",
+    display: "block",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textDecoration: "underline",
+    color: "#000000",
+  },
 }));
 
 
-const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (props) => {
-    const itemData = createItemData(props.terms);
-    return (
-        <DetailItemWrapper title={"Pojmy"}>
-
-        <ReactWindowScroller>
-            {({ ref, outerRef, style, onScroll }:any) => (
-                <List
-                    ref={ref}
-                    width={10}
-                    outerRef={outerRef}
-                    style={style}
-                    height={window.innerHeight}
-                    itemCount={props.terms.length}
-                    itemSize={34}
-                    overscanCount={30}
-                    itemData={itemData}
-                    onScroll={onScroll}
-                >
-                    {Row}
-                </List>
+const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (
+  props
+) => {
+  const classes = useStyles();
+  return (
+    <DetailItemWrapper title={"Pojmy"}>
+      <ReactWindowScroller>
+        {({ ref, outerRef, style, onScroll }: any) => (
+          <List
+            ref={ref}
+            width={10}
+            outerRef={outerRef}
+            style={style}
+            height={window.innerHeight}
+            itemCount={props.terms.length}
+            itemSize={34}
+            onScroll={onScroll}
+          >
+            {({ index, style }) => (
+              <div style={style}>
+                <div className={classes.wrapper}>
+                  <RouterLink
+                    to={props.terms[index].route}
+                    className={classes.text}
+                  >
+                    {props.terms[index].label.cs}
+                  </RouterLink>
+                </div>
+              </div>
             )}
-        </ReactWindowScroller>
-
-        </DetailItemWrapper>
-    );
+          </List>
+        )}
+      </ReactWindowScroller>
+    </DetailItemWrapper>
+  );
 };
 export default VocabularyTermsListWindow;
