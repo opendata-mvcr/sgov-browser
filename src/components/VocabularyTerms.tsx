@@ -4,6 +4,7 @@ import Loader from "./Loader";
 import VocabularyTermsList from "./VocabularyTermsList";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Typography } from "@material-ui/core";
+import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
 
 interface UriItem {
   uri: string;
@@ -24,7 +25,8 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
     );
   }
 
- return <VocabularyTermsList terms={data} />;
+ //return <VocabularyTermsList terms={data} />;
+  return <VocabularyTermsListWindow terms={data} />
 };
 
 export default VocabularyTerms;
