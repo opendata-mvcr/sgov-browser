@@ -23,7 +23,7 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
       </DetailItemWrapper>
     );
   }
- return <VocabularyTermsListWindow terms={data} />
+  return <VocabularyTermsListWindow terms={data} />;
 };
 
 export default VocabularyTerms;

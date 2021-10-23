@@ -14,8 +14,10 @@ const usePrefetchTerms = (terms: SearchTerm[]) => {
       };
     })
   );
-  const isLoading = queryResults.some((query: UseQueryResult) => query.isLoading);
+  const isLoading = queryResults.some(
+    (query: UseQueryResult) => query.isLoading
+  );
   const amount = validTerms.length;
-  return [isLoading, amount] as const
+  return [isLoading, amount] as const;
 };
 export default usePrefetchTerms;
