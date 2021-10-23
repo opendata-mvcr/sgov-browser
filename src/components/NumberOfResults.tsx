@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 
 const messageHelper = (length: number) => {
-  if (length === 1) return `Nalezen ${length} výsledek`;
+  if (length === 0) return `Nalezeno ${length} výsledků`;
+  else if (length === 1) return `Nalezen ${length} výsledek`;
   else if (length <= 4) return `Nalezeny ${length} výsledky`;
   else return `Nalezeno ${length} výsledků`;
 };
