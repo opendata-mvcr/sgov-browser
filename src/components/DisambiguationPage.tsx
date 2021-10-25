@@ -8,6 +8,7 @@ import TermResult from "./TermResult";
 import Loader from "./Loader";
 import usePrefetchTerms from "../hooks/usePrefetchTerms";
 import { DetailHeaderWrapper } from "./DetailPageHeader";
+import NumberOfResults from "./NumberOfResults";
 
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
@@ -51,11 +52,12 @@ interface WordContentProps {
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
-  const isLoading = usePrefetchTerms(props.terms);
+  const [isLoading, amount] = usePrefetchTerms(props.terms);
   if (isLoading) return <Loader />;
   return (
     <Container>
       <Box pt={2} pb={4}>
+        <NumberOfResults amount={amount} />
         {props.terms.map((term: SearchTerm) => {
           return (
             <TermResult

@@ -67,7 +67,7 @@ interface DetailItemWrapperProps {
 export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
   return (
     <Container>
-      <Box py={2} mb={10} px={2} mt={4}>
+      <Box py={2} mb={2} px={2} mt={4}>
         <Box borderLeft={4} pr={6} borderColor="primary.main">
           <Box pl={4}>
             <Typography variant="h5">{props.title}</Typography>

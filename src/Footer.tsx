@@ -16,9 +16,9 @@ const Footer: React.FC<FooterProps> = (props) => {
             <FooterImage
               style={{
                 position: "absolute",
-                bottom: "-20px",
-                right: "0px",
-                maxHeight: 190,
+                bottom: "-16px",
+                right: "60px",
+                maxHeight: 115,
               }}
             />
           </Box>

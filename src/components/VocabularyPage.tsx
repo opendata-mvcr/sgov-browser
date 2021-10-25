@@ -14,7 +14,7 @@ const VocabularyPage: React.FC = () => {
   if (isLoading) return <Loader />;
   if (isSuccess) {
     return (
-      <Box mb={10}>
+      <Box mb={2}>
         <VocabularyHeader data={data} />
         <VocabularyDefinition description={data.description} />
         <VocabularyTerms uri={data.uri} />

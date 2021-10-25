@@ -6,6 +6,7 @@ import SearchResult from "./SearchResult";
 import NoResults from "./NoResults";
 import Loader from "./Loader";
 import LargeSearchBar from "./LargeSearchBar";
+import NumberOfResults from "./NumberOfResults";
 
 const NUMBER_OF_RESULT = 50;
 
@@ -23,6 +24,7 @@ const SearchPage: React.FC = () => {
 
       <Container>
         <Box pt={2} pb={4}>
+          <NumberOfResults amount={data.length > 50 ? 50 : data.length} />
           {data.length ? (
             data.slice(0, NUMBER_OF_RESULT).map((item) => {
               return (

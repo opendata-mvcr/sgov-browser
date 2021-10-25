@@ -34,6 +34,7 @@ export const useVocabularyTerms = (vocabularyUri: string) => {
     () => getVocabularyTerms(vocabularyUri),
     {
       enabled: !!vocabularyUri,
+      retry: false,
     }
   );
 };

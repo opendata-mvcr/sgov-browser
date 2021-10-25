@@ -21,7 +21,7 @@ const TermPage: React.FC = () => {
   if (isLoading) return <Loader />;
   if (isSuccess) {
     return (
-      <Box mb={10}>
+      <Box mb={2}>
         <TermHeader data={data} />
         <TermDefinition data={data} />
         <Hierarchy data={data} />
