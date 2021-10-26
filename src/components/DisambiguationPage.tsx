@@ -30,7 +30,6 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel]);
 
- // if (isLoading) return <Loader />;
 
 
   return (

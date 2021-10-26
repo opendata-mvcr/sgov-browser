@@ -41,6 +41,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
   },
 }));
+const useOtherStyles = makeStyles(() => ({
+  icon: {
+    color: "gray",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+}));
 
 interface SearchBarProps {
   size: "small" | "large";
@@ -48,6 +56,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
+  const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
@@ -89,8 +98,11 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       ) : (
         <SearchIcon
           fontSize={props.size === "small" ? "medium" : "large"}
-          style={{
-            color: "gray",
+          className={otherClasses.icon}
+          onClick={() => {
+            if (!(inputValue == undefined || inputValue == "")) {
+              onChangeHandler(inputValue);
+            }
           }}
         />
       )}
