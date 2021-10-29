@@ -1,22 +1,18 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete, {
-  createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
-import { useSearch } from "../api/WordsAPI";
+import { useDirectSearch, DirectSearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
-import { SearchItem } from "./SearchResult";
-import { find, debounce } from "lodash";
+import { debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
-const defaultFilterOptions = createFilterOptions();
 
-const filterOptions = (options: any, state: any) => {
-  return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+const filterOptions = (options: DirectSearchResult[], state: any) => {
+  return options.slice(0, OPTIONS_LIMIT) as DirectSearchResult[];
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     color: theme.palette.text.primary,
   },
+  option: {
+    "& em": {
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
+  },
 }));
 
 interface SearchBarProps {
@@ -49,18 +51,22 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
   const [inputValue, setInputValue] = useState<string | undefined>();
-  const { data = [], isLoading } = useSearch(inputValue);
+  const { data = [], isLoading } = useDirectSearch(inputValue);
   const history = useHistory();
 
-  const onChangeHandler = (label: string | null) => {
-    const item = find<SearchItem>(data, { label: label ?? "" });
-    if (!item) {
-      history.push(`/search?label=${label}`);
-    } else if (item.isWord) {
-      history.push(`/disambiguation?label=${label}`);
+  const onChangeHandler = (option: DirectSearchResult | string | null) => {
+    if (typeof option === "string") {
+      history.push(`/search?label=${option}`);
+    } else if (!option) {
+      return;
     } else {
-      const prop = item.items[0];
-      history.push(generateTermRoute(prop));
+      // option selected
+      if (option.isWord) {
+        history.push(`/disambiguation?label=${option.label}`);
+      } else {
+        const prop = option.items[0];
+        history.push(generateTermRoute(prop));
+      }
     }
   };
 
@@ -109,7 +115,11 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
-      options={data.map((item) => item.label)}
+      options={data}
+      getOptionLabel={(option: DirectSearchResult) => option.label}
+      renderOption={(option: DirectSearchResult) => (
+        <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+      )}
       onInputChange={debouncedChangeHandler}
       renderInput={(params) => (
         <TextField
