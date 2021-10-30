@@ -35,7 +35,7 @@ const DisambiguationPage: React.FC = () => {
   return (
     <Box flex={1} display="flex" flexDirection="column">
       <DetailHeaderWrapper>
-        <Typography variant="h1" color="textSecondary">
+        <Typography variant="h3" color="textSecondary">
           {wordLabel ?? ""}
         </Typography>
       </DetailHeaderWrapper>

@@ -15,7 +15,7 @@ const DetailPageHeader: React.FC<DetailPageHeaderProps> = (props) => {
       <Grid container>
         <Grid item md={11} sm={10} xs={9}>
           {props.aboveLabel}
-          <Typography variant="h1" color="textSecondary">
+          <Typography variant="h3" color="textSecondary">
             {props.label}
           </Typography>
           {props.belowLabel}
