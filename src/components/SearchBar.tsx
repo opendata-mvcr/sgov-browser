@@ -100,7 +100,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           fontSize={props.size === "small" ? "medium" : "large"}
           className={otherClasses.icon}
           onClick={() => {
-            if (!(inputValue == undefined || inputValue == "")) {
+            if (!(inputValue === undefined || inputValue === "")) {
               onChangeHandler(inputValue);
             }
           }}
