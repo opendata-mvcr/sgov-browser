@@ -6,7 +6,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
 import { useDirectSearch, DirectSearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
-import { debounce, find } from "lodash";
+import { debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
@@ -56,16 +56,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   const onChangeHandler = (option: DirectSearchResult | string | null) => {
     if (typeof option === "string") {
-      //Super quick fix, there might be smarter solution
-      const item = find(data, { label: option ?? "" });
-      if (!item) {
-        history.push(`/search?label=${option}`);
-      } else if (item.isWord) {
-        history.push(`/disambiguation?label=${option}`);
-      } else {
-        const prop = item.items[0];
-        history.push(generateTermRoute(prop));
-      }
+      history.push(`/search?label=${option}`);
     } else if (!option) {
       return;
     } else {
