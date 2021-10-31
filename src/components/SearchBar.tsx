@@ -54,17 +54,28 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const { data = [], isLoading } = useDirectSearch(inputValue);
   const history = useHistory();
 
+  const searchResultLabelMap = useMemo(() => {
+    return data.reduce((map, item) => {
+      map.set(item.label.toLocaleLowerCase(), item);
+      return map;
+    }, new Map<string, DirectSearchResult>());
+  }, [data]);
+
   const onChangeHandler = (option: DirectSearchResult | string | null) => {
-    if (typeof option === "string") {
-      history.push(`/search?label=${option}`);
-    } else if (!option) {
+    if (!option) {
       return;
+    }
+    const label = typeof option === "string" ? option : option.label;
+    const matchedOption = searchResultLabelMap.get(label.toLocaleLowerCase());
+    if (!matchedOption) {
+      // user typed a query that does not match any suggested label
+      history.push(`/search?label=${label}`);
     } else {
       // option selected
-      if (option.isWord) {
-        history.push(`/disambiguation?label=${option.label}`);
+      if (matchedOption.isWord) {
+        history.push(`/disambiguation?label=${matchedOption.label}`);
       } else {
-        const prop = option.items[0];
+        const prop = matchedOption.items[0];
         history.push(generateTermRoute(prop));
       }
     }
