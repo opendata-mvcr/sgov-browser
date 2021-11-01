@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchTerm } from "./SearchResult";
-import { Container } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import DefinitionSnippet from "./DefinitionSnippet";
 import RouteLink from "./RouteLink";
 import IriLabel from "./IriLabel";
@@ -20,7 +20,9 @@ const TermResult: React.FC<SearchTerm> = (props) => {
             vocabulary={props.vocabulary}
             label={props.label}
           />
-          <IriLabel iri={props.vocabulary} />
+          <Box mt={1}>
+            <IriLabel iri={props.vocabulary} variant={"h5"} />
+          </Box>
         </SearchCard>
       </RouteLink>
     </Container>

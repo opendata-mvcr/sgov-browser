@@ -9,7 +9,7 @@ const MAX_LINES = 3;
 const useStyles = makeStyles((theme) => ({
   overflow: {
     position: "relative",
-    maxHeight: `calc(${theme.typography.h5.lineHeight}*${theme.typography.h5.fontSize} * ${MAX_LINES})`,
+    maxHeight: `calc(${theme.typography.h4.lineHeight}*${theme.typography.h4.fontSize} * ${MAX_LINES})`,
     overflow: "hidden",
     paddingRight: "1.6rem" /* space for ellipsis */,
     "&::before": {
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
       content: "''!important",
       position: "absolute",
       right: 0,
-      width: "1.6rem",
-      height: "1.6rem",
+      width: "1.8rem",
+      height: "2rem",
       background: theme.palette.text.secondary,
     },
   },
@@ -33,10 +33,10 @@ const DefinitionSnippet: React.FC<SearchTerm> = (props) => {
   const { data = [], isLoading, isSuccess } = useTerm(props);
   const definition = data.definition?.cs;
   const classes = useStyles();
-  if (isLoading) return <Typography variant="h5">Načítání definice</Typography>;
+  if (isLoading) return <Typography variant="h4">Načítání definice</Typography>;
   if (isSuccess && definition) {
     return (
-      <Typography variant="h5" className={classes.overflow}>
+      <Typography variant="h4" className={classes.overflow}>
         {definition}
       </Typography>
     );
@@ -44,7 +44,7 @@ const DefinitionSnippet: React.FC<SearchTerm> = (props) => {
 
   return (
     <Box fontStyle="italic" color="text.disabled">
-      <Typography variant="h5">Pojem nemá definici</Typography>
+      <Typography variant="h4">Pojem nemá definici</Typography>
     </Box>
   );
 };

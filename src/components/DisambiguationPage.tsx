@@ -13,11 +13,7 @@ import NumberOfResults from "./NumberOfResults";
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
   const wordLabel = routeQuery.get("label");
-  const {
-    data = [],
-    isSuccess,
-    isLoading,
-  } = useSearch(wordLabel ?? undefined);
+  const { data = [], isSuccess, isLoading } = useSearch(wordLabel ?? undefined);
 
   const [terms, setTerms] = useState<SearchTerm[]>([]);
 
@@ -30,8 +26,6 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel]);
 
-
-
   return (
     <Box flex={1} display="flex" flexDirection="column">
       <DetailHeaderWrapper>
@@ -39,7 +33,7 @@ const DisambiguationPage: React.FC = () => {
           {wordLabel ?? ""}
         </Typography>
       </DetailHeaderWrapper>
-      <WordContent terms={terms} parentLoading={isLoading}/>
+      <WordContent terms={terms} parentLoading={isLoading} />
     </Box>
   );
 };
