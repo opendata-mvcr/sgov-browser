@@ -22,5 +22,6 @@ export const getTerm = async (searchResult: TermBase) => {
 export const useTerm = (searchResult: TermBase) => {
   return useQuery(["term", searchResult.uri], () => getTerm(searchResult), {
     enabled: !!searchResult.uri,
+    notifyOnChangeProps: ["data"],
   });
 };
