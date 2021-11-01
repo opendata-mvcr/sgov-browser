@@ -39,7 +39,7 @@ const SearchResult: React.FC<SearchItem> = (props) => {
           {props.vocabularies.map((item: string) => {
             return (
               <Box mt={1} key={item}>
-                <IriLabel iri={item} variant={"h5"} />
+                <IriLabel iri={item} variant={"h6"} />
               </Box>
             );
           })}
