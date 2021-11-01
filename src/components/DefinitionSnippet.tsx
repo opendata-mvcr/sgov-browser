@@ -4,7 +4,7 @@ import { useTerm } from "../api/TermAPI";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const MAX_LINES = 3;
+const MAX_LINES = 2;
 
 const useStyles = makeStyles((theme) => ({
   overflow: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       right: 0,
       width: "1.8rem",
-      height: "2rem",
+      height: "2.1rem",
       background: theme.palette.text.secondary,
     },
   },
