@@ -13,16 +13,16 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   if (route === "/error") return null;
   return (
     <Container>
-      <SearchCard borderColor={`${theme.palette.primary.main} !important`}>
-        <RouteLink to={route} underline="none">
+      <RouteLink to={route} underline="none">
+        <SearchCard borderColor={`${theme.palette.primary.main} !important`}>
           <DefinitionSnippet
             uri={props.uri}
             vocabulary={props.vocabulary}
             label={props.label}
           />
           <IriLabel iri={props.vocabulary} />
-        </RouteLink>
-      </SearchCard>
+        </SearchCard>
+      </RouteLink>
     </Container>
   );
 };

@@ -33,14 +33,14 @@ const SearchResult: React.FC<SearchItem> = (props) => {
 
   return (
     <Container>
-      <SearchCard borderColor={`${border} !important`}>
-        <RouteLink to={routeProps} underline="none">
+      <RouteLink to={routeProps} underline="none">
+        <SearchCard borderColor={`${border} !important`}>
           <Typography variant="h2"> {props.label}</Typography>
           {props.vocabularies.map((item: string) => {
             return <IriLabel key={item} iri={item} />;
           })}
-        </RouteLink>
-      </SearchCard>
+        </SearchCard>
+      </RouteLink>
     </Container>
   );
 };
