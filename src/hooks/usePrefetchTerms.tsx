@@ -10,7 +10,7 @@ const usePrefetchTerms = (terms: SearchTerm[]) => {
         queryKey: ["term", term.uri],
         queryFn: () => getTerm(term),
         enabled: !!term.uri,
-        notifyOnChangeProps: ["data"],
+        notifyOnChangeProps: ["data"] as "data"[],
       };
     })
   );

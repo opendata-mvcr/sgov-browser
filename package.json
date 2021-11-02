@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ldkit/core": "^0.1.4",
-    "@ldkit/namespaces": "^0.1.4",
-    "@ldkit/rdf": "^0.1.4",
-    "@ldkit/sparql": "^0.1.4",
+    "@ldkit/core": "^0.1.5",
+    "@ldkit/namespaces": "^0.1.5",
+    "@ldkit/rdf": "^0.1.5",
+    "@ldkit/sparql": "^0.1.5",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
@@ -31,7 +31,7 @@
     "react-window": "^1.8.6",
     "react-window-scroller": "^1.0.10",
     "rxjs": "^7.4.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
