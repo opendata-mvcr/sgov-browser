@@ -74,7 +74,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     label = searchInput.current?.getAttribute("aria-activedescendant")
       ? label
       : inputValue;
-
     const item = find<SearchItem>(data, { label: label ?? "" });
     if (!item) {
       history.push(`/search?label=${label}`);
@@ -151,7 +150,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
           searchInput.current?.removeAttribute("aria-activedescendant");
         },
-        onMouseDown: (item: BaseSyntheticEvent) => {
+        onMouseUp: (item: BaseSyntheticEvent) => {
           //When user clicks on the item, it should search for it
           searchInput.current?.setAttribute(
             "aria-activedescendant",
