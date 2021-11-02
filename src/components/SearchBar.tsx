@@ -124,7 +124,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   return (
     <Autocomplete
-      open={true}
       classes={classes}
       onChange={(event: any, newValue: any) => {
         if (newValue !== null) {
