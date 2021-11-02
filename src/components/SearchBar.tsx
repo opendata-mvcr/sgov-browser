@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
@@ -55,6 +61,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
+  const searchInput = useRef(null);
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
@@ -62,6 +69,12 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const history = useHistory();
 
   const onChangeHandler = (label: string | null) => {
+    // This part checks whether a mouse is hovering over a text
+    // @ts-ignore
+    label = searchInput.current?.getAttribute("aria-activedescendant")
+      ? label
+      : inputValue;
+
     const item = find<SearchItem>(data, { label: label ?? "" });
     if (!item) {
       history.push(`/search?label=${label}`);
@@ -111,6 +124,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   return (
     <Autocomplete
+      open={true}
       classes={classes}
       onChange={(event: any, newValue: any) => {
         if (newValue !== null) {
@@ -121,12 +135,21 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
+      ListboxProps={{
+        onMouseOut: (item: any) => {
+          // @ts-ignore
+          searchInput.current?.removeAttribute("aria-activedescendant");
+          if (item.target.attributes.getNamedItem("data-focus"))
+            item.target.attributes.removeNamedItem("data-focus");
+        },
+      }}
       options={data.map((item) => item.label)}
       onInputChange={debouncedChangeHandler}
       renderInput={(params) => (
         <TextField
           {...params}
           placeholder="Zadejte hledané slovo"
+          inputRef={searchInput}
           InputProps={{
             ...params.InputProps,
             endAdornment: endAdornment,
