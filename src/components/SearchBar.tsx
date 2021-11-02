@@ -1,4 +1,5 @@
 import React, {
+  BaseSyntheticEvent,
   ChangeEvent,
   useEffect,
   useMemo,
@@ -61,16 +62,15 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const searchInput = useRef(null);
+  const searchInput = useRef<HTMLElement>(null);
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
 
-  const onChangeHandler = (label: string | null) => {
+  const onChangeHandler = (label: string | null | undefined) => {
     // This part checks whether a mouse is hovering over a text
-    // @ts-ignore
     label = searchInput.current?.getAttribute("aria-activedescendant")
       ? label
       : inputValue;
@@ -136,11 +136,28 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       fullWidth
       freeSolo
       ListboxProps={{
-        onMouseOut: (item: any) => {
-          // @ts-ignore
+        /**
+         * Material UI autocomplete is not behaving as a normal search
+         * It was necessary to add these event listeners
+         * Unfortunately there is currently no other way how to solve it
+         * There are some PRs, but they are still yet to be merged into the package
+         * **/
+        onMouseOut: (item: BaseSyntheticEvent) => {
+          //When user leaves the suggestions, no items should be highlighted and considered active
           searchInput.current?.removeAttribute("aria-activedescendant");
           if (item.target.attributes.getNamedItem("data-focus"))
             item.target.attributes.removeNamedItem("data-focus");
+        },
+        onMouseOver: (item: BaseSyntheticEvent) => {
+          //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
+          searchInput.current?.removeAttribute("aria-activedescendant");
+        },
+        onMouseDown: (item: BaseSyntheticEvent) => {
+          //When user clicks on the item, it should search for it
+          searchInput.current?.setAttribute(
+            "aria-activedescendant",
+            item.target.id
+          );
         },
       }}
       options={data.map((item) => item.label)}
