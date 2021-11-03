@@ -19,4 +19,4 @@ const IriLabel: React.FC<IriItem & TypographyProps> = (props) => {
   return null;
 };
 
-export default React.memo(IriLabel);
+export default IriLabel;

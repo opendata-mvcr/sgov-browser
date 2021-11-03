@@ -1,8 +1,22 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
+import { ReactComponent as NotFound } from "../assets/404.svg";
 
 const ErrorPage: React.FC = () => {
-  return <Typography variant="h1">Stránka neexistuje</Typography>;
+  return (
+    <Box
+      flex={1}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="column"
+    >
+      <NotFound style={{ maxHeight: 330, maxWidth: "80%", marginBottom: 30 }} />
+      <Box pl={3}>
+        <Typography variant="h2">Stránka nebyla nalezena</Typography>
+      </Box>
+    </Box>
+  );
 };
 
 export default ErrorPage;

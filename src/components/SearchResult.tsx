@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@material-ui/core";
 import RouteLink from "./RouteLink";
 import IriLabel from "./IriLabel";
 import { generateTermRoute } from "../utils/Utils";
@@ -33,14 +33,18 @@ const SearchResult: React.FC<SearchItem> = (props) => {
 
   return (
     <Container>
-      <SearchCard borderColor={`${border} !important`}>
-        <RouteLink to={routeProps} underline="none">
-          <Typography variant="h2"> {props.label}</Typography>
+      <RouteLink to={routeProps} underline="none">
+        <SearchCard borderColor={`${border} !important`}>
+          <Typography variant="h4"> {props.label}</Typography>
           {props.vocabularies.map((item: string) => {
-            return <IriLabel key={item} iri={item} />;
+            return (
+              <Box mt={1} key={item}>
+                <IriLabel iri={item} variant={"h6"} />
+              </Box>
+            );
           })}
-        </RouteLink>
-      </SearchCard>
+        </SearchCard>
+      </RouteLink>
     </Container>
   );
 };

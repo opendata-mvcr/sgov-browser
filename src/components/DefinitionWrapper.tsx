@@ -46,7 +46,12 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
               </Box>
               {props.source && (
                 <Box fontStyle="italic" color="text.disabled">
-                  <Typography variant="body1">{props.source}</Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ wordWrap: "break-word" }}
+                  >
+                    {props.source}
+                  </Typography>
                 </Box>
               )}
             </Box>
