@@ -7,23 +7,19 @@ import React, {
   useState,
 } from "react";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete, {
-  createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
-import { useSearch } from "../api/WordsAPI";
+import { useDirectSearch, DirectSearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
-import { SearchItem } from "./SearchResult";
-import { find, debounce } from "lodash";
+import { debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
-const defaultFilterOptions = createFilterOptions();
 
-const filterOptions = (options: any, state: any) => {
-  return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+const filterOptions = (options: DirectSearchResult[], state: any) => {
+  return options.slice(0, OPTIONS_LIMIT) as DirectSearchResult[];
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     color: theme.palette.text.primary,
   },
+  option: {
+    "& em": {
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
+  },
 }));
 const useOtherStyles = makeStyles(() => ({
   icon: {
@@ -66,22 +68,39 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
-  const { data = [], isLoading } = useSearch(inputValue);
+  const { data = [], isLoading } = useDirectSearch(inputValue);
   const history = useHistory();
 
-  const onChangeHandler = (label: string | null | undefined) => {
-    // This part checks whether a mouse is hovering over a text
-    label = searchInput.current?.hasAttribute("aria-activedescendant")
-      ? label
-      : inputValue;
-    const item = find<SearchItem>(data, { label: label ?? "" });
-    if (!item) {
+  const searchResultLabelMap = useMemo(() => {
+    return data.reduce((map, item) => {
+      map.set(item.label.toLocaleLowerCase(), item);
+      return map;
+    }, new Map<string, DirectSearchResult>());
+  }, [data]);
+
+  const onChangeHandler = (option: DirectSearchResult | string | null) => {
+    if (!option) {
+      return;
+    }
+    const label = (() => {
+      if (searchInput.current?.hasAttribute("aria-activedescendant")) {
+        return typeof option === "string" ? option : option.label;
+      } else {
+        return inputValue ? inputValue : "";
+      }
+    })();
+    const matchedOption = searchResultLabelMap.get(label.toLocaleLowerCase());
+    if (!matchedOption) {
+      // user typed a query that does not match any suggested label
       history.push(`/search?label=${label}`);
-    } else if (item.isWord) {
-      history.push(`/disambiguation?label=${label}`);
     } else {
-      const prop = item.items[0];
-      history.push(generateTermRoute(prop));
+      // option selected
+      if (matchedOption.isWord) {
+        history.push(`/disambiguation?label=${matchedOption.label}`);
+      } else {
+        const prop = matchedOption.items[0];
+        history.push(generateTermRoute(prop));
+      }
     }
   };
 
@@ -157,6 +176,11 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
+      options={data}
+      getOptionLabel={(option: DirectSearchResult) => option.label}
+      renderOption={(option: DirectSearchResult) => (
+        <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+      )}
       ListboxProps={{
         /**
          * Material UI autocomplete is not behaving as a normal search
@@ -167,7 +191,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
         onMouseOver: onMouseOver,
         onMouseUp: onMouseUp,
       }}
-      options={data.map((item) => item.label)}
       onInputChange={debouncedChangeHandler}
       renderInput={(params) => (
         <TextField
