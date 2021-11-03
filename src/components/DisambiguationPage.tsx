@@ -13,12 +13,7 @@ import NumberOfResults from "./NumberOfResults";
 const DisambiguationPage: React.FC = () => {
   const routeQuery = useRouteQuery();
   const wordLabel = routeQuery.get("label");
-  const {
-    data = [],
-    isSuccess,
-    isLoading,
-    isError,
-  } = useSearch(wordLabel ?? undefined);
+  const { data = [], isSuccess, isLoading } = useSearch(wordLabel ?? undefined);
 
   const [terms, setTerms] = useState<SearchTerm[]>([]);
 
@@ -31,29 +26,26 @@ const DisambiguationPage: React.FC = () => {
     }
   }, [data, isSuccess, wordLabel]);
 
-  if (isLoading) return <Loader />;
-
-  if (isError) return <Typography variant="h1">Error occurred</Typography>;
-
   return (
     <Box flex={1} display="flex" flexDirection="column">
       <DetailHeaderWrapper>
-        <Typography variant="h1" color="textSecondary">
+        <Typography variant="h3" color="textSecondary">
           {wordLabel ?? ""}
         </Typography>
       </DetailHeaderWrapper>
-      <WordContent terms={terms} />
+      <WordContent terms={terms} parentLoading={isLoading} />
     </Box>
   );
 };
 
 interface WordContentProps {
   terms: SearchTerm[];
+  parentLoading: boolean;
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
   const [isLoading, amount] = usePrefetchTerms(props.terms);
-  if (isLoading) return <Loader />;
+  if (isLoading || props.parentLoading) return <Loader />;
   return (
     <Container>
       <Box pt={2} pb={4}>

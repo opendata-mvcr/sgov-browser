@@ -22,8 +22,18 @@ interface HierarchyProps {
 }
 
 export const Hierarchy: React.FC<HierarchyProps> = (props) => {
-  if (!props.data.parentTerms && !props.data.subTerms.length) return null;
+  const parentTerms = props.data.parentTerms
+    ? props.data.parentTerms.filter((item) => {
+        return item.uri && item.vocabulary;
+      })
+    : [];
+  const subTerms = props.data.subTerms
+    ? props.data.subTerms.filter((item) => {
+        return item.uri && item.vocabulary;
+      })
+    : [];
 
+  if (!parentTerms.length && !subTerms.length) return null;
   const current: TermInfo = {
     uri: props.data.uri,
     label: props.data.label,
@@ -40,17 +50,17 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
           </Box>
           <Box pl={2}>
             <HierarchyParents
-              items={props.data.parentTerms}
+              items={parentTerms}
               level={0}
               vocabularyDefault={current.vocabulary}
             />
             <CurrentTerm
               level={currIndex}
               term={current}
-              connector={props.data.subTerms.length ? <NormalEnd /> : undefined}
+              connector={subTerms.length ? <NormalEnd /> : undefined}
             />
             <HierarchyChildren
-              items={props.data.subTerms}
+              items={subTerms}
               level={currIndex + 1}
               vocabularyDefault={current.vocabulary}
             />
@@ -64,6 +74,7 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
 interface DetailItemWrapperProps {
   title: string;
 }
+
 export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
   return (
     <Container>

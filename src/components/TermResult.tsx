@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchTerm } from "./SearchResult";
-import { Container } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import DefinitionSnippet from "./DefinitionSnippet";
 import RouteLink from "./RouteLink";
 import IriLabel from "./IriLabel";
@@ -13,16 +13,18 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   if (route === "/error") return null;
   return (
     <Container>
-      <SearchCard borderColor={`${theme.palette.primary.main} !important`}>
-        <RouteLink to={route} underline="none">
+      <RouteLink to={route} underline="none">
+        <SearchCard borderColor={`${theme.palette.primary.main} !important`}>
           <DefinitionSnippet
             uri={props.uri}
             vocabulary={props.vocabulary}
             label={props.label}
           />
-          <IriLabel iri={props.vocabulary} />
-        </RouteLink>
-      </SearchCard>
+          <Box mt={1}>
+            <IriLabel iri={props.vocabulary} variant={"h6"} />
+          </Box>
+        </SearchCard>
+      </RouteLink>
     </Container>
   );
 };

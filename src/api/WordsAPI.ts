@@ -32,5 +32,6 @@ const getSearchResult = async (word: string | undefined) => {
 export const useSearch = (word: string | undefined) => {
   return useQuery(["search", word], () => getSearchResult(word), {
     enabled: !!word,
+    notifyOnChangeProps: ["data"] as "data"[],
   });
 };
