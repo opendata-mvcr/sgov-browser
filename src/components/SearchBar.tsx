@@ -71,7 +71,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   const onChangeHandler = (label: string | null | undefined) => {
     // This part checks whether a mouse is hovering over a text
-    label = searchInput.current?.getAttribute("aria-activedescendant")
+    label = searchInput.current?.hasAttribute("aria-activedescendant")
       ? label
       : inputValue;
     const item = find<SearchItem>(data, { label: label ?? "" });
@@ -138,13 +138,19 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
          * Material UI autocomplete is not behaving as a normal search
          * It was necessary to add these event listeners
          * Unfortunately there is currently no other way how to solve it
-         * There are some PRs, but they are still yet to be merged into the package
          * **/
-        onMouseOut: (item: BaseSyntheticEvent) => {
+        onMouseLeave: (item: BaseSyntheticEvent) => {
           //When user leaves the suggestions, no items should be highlighted and considered active
           searchInput.current?.removeAttribute("aria-activedescendant");
-          if (item.target.attributes.getNamedItem("data-focus"))
+          try {
             item.target.attributes.removeNamedItem("data-focus");
+          } catch {
+            //The try-catch might look strange but it is needed for the best performance
+            item.currentTarget.children[0].setAttribute("data-focus", "false");
+            item.currentTarget.children[
+              item.currentTarget.children.length - 1
+            ].setAttribute("data-focus", "false");
+          }
         },
         onMouseOver: (item: BaseSyntheticEvent) => {
           //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
