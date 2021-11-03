@@ -33,14 +33,13 @@ const DisambiguationPage: React.FC = () => {
           {wordLabel ?? ""}
         </Typography>
       </DetailHeaderWrapper>
-      <WordContent terms={terms} parentLoading={isLoading} />
+      <WordContent terms={terms} />
     </Box>
   );
 };
 
 interface WordContentProps {
   terms: SearchTerm[];
-  parentLoading: boolean;
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {

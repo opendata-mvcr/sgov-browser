@@ -1,9 +1,7 @@
 import React, {
-  BaseSyntheticEvent,
   ChangeEvent,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import TextField from "@material-ui/core/TextField";
@@ -64,7 +62,6 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const searchInput = useRef<HTMLInputElement>(null);
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
@@ -82,13 +79,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     if (!option) {
       return;
     }
-    const label = (() => {
-      if (searchInput.current?.hasAttribute("aria-activedescendant")) {
-        return typeof option === "string" ? option : option.label;
-      } else {
-        return searchInput.current?.value ?? "";
-      }
-    })();
+    const label = typeof option === "string" ? option : option.label;
     const matchedOption = searchResultLabelMap.get(label.toLocaleLowerCase());
     if (!matchedOption) {
       // user typed a query that does not match any suggested label
@@ -104,29 +95,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     }
   };
 
-  const onMouseLeave = (item: BaseSyntheticEvent) => {
-    //When user leaves the suggestions, no items should be highlighted and considered active
-    searchInput.current?.removeAttribute("aria-activedescendant");
-    try {
-      item.target.attributes.removeNamedItem("data-focus");
-    } catch {
-      //The try-catch might look strange but it is needed for the best performance
-      item.currentTarget.children[0].setAttribute("data-focus", "false");
-      item.currentTarget.children[
-        item.currentTarget.children.length - 1
-      ].setAttribute("data-focus", "false");
-    }
-  };
-
-  const onMouseOver = (item: BaseSyntheticEvent) => {
-    //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
-    searchInput.current?.removeAttribute("aria-activedescendant");
-  };
-
-  const onMouseUp = (item: BaseSyntheticEvent) => {
-    //When user clicks on the item, it should search for it
-    searchInput.current?.setAttribute("aria-activedescendant", item.target.id);
-  };
 
   const handleChange = useMemo(
     () => (event: ChangeEvent<{}>, newInputValue: string) => {
@@ -183,22 +151,11 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       renderOption={(option: SearchResult) => (
         <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
       )}
-      ListboxProps={{
-        /**
-         * Material UI autocomplete is not behaving as a normal search
-         * It was necessary to add these event listeners
-         * Unfortunately there is currently no other way how to solve it
-         * **/
-        onMouseLeave: onMouseLeave,
-        onMouseOver: onMouseOver,
-        onMouseUp: onMouseUp,
-      }}
       onInputChange={debouncedChangeHandler}
       renderInput={(params) => (
         <TextField
           {...params}
           placeholder="Zadejte hledané slovo"
-          inputRef={searchInput}
           InputProps={{
             ...params.InputProps,
             endAdornment: endAdornment,
