@@ -11,15 +11,15 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { CircularProgress, InputAdornment } from "@material-ui/core";
-import { useDirectSearch, DirectSearchResult } from "../api/WordsAPI";
+import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
 
-const filterOptions = (options: DirectSearchResult[], state: any) => {
-  return options.slice(0, OPTIONS_LIMIT) as DirectSearchResult[];
+const filterOptions = (options: SearchResult[], state: any) => {
+  return options.slice(0, OPTIONS_LIMIT) as SearchResult[];
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -68,17 +68,17 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
-  const { data = [], isLoading } = useDirectSearch(inputValue);
+  const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
 
   const searchResultLabelMap = useMemo(() => {
     return data.reduce((map, item) => {
       map.set(item.label.toLocaleLowerCase(), item);
       return map;
-    }, new Map<string, DirectSearchResult>());
+    }, new Map<string, SearchResult>());
   }, [data]);
 
-  const onChangeHandler = (option: DirectSearchResult | string | null) => {
+  const onChangeHandler = (option: SearchResult | string | null) => {
     if (!option) {
       return;
     }
@@ -177,8 +177,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       fullWidth
       freeSolo
       options={data}
-      getOptionLabel={(option: DirectSearchResult) => option.label}
-      renderOption={(option: DirectSearchResult) => (
+      getOptionLabel={(option: SearchResult) => option.label}
+      renderOption={(option: SearchResult) => (
         <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
       )}
       ListboxProps={{

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Container, Typography } from "@material-ui/core";
 import { useSearch } from "../api/WordsAPI";
 import useRouteQuery from "../hooks/useRouteQuery";
-import SearchResult from "./SearchResult";
+import SearchResultView from "./SearchResult";
 import NoResults from "./NoResults";
 import Loader from "./Loader";
 import LargeSearchBar from "./LargeSearchBar";
@@ -27,15 +27,7 @@ const SearchPage: React.FC = () => {
           <NumberOfResults amount={data.length > 50 ? 50 : data.length} />
           {data.length ? (
             data.slice(0, NUMBER_OF_RESULT).map((item) => {
-              return (
-                <SearchResult
-                  key={item.label}
-                  label={item.label}
-                  isWord={item.isWord}
-                  items={item.items}
-                  vocabularies={item.vocabularies}
-                />
-              );
+              return <SearchResultView key={item.label} {...item} />;
             })
           ) : (
             <NoResults />

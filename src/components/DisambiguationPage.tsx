@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useRouteQuery from "../hooks/useRouteQuery";
-import { useSearch } from "../api/WordsAPI";
+import { useSearch, SearchResult, SearchTerm } from "../api/WordsAPI";
 import _ from "lodash";
 import { Box, Container, Typography } from "@material-ui/core";
-import { SearchItem, SearchTerm } from "./SearchResult";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
-import usePrefetchTerms from "../hooks/usePrefetchTerms";
 import { DetailHeaderWrapper } from "./DetailPageHeader";
 import NumberOfResults from "./NumberOfResults";
 
@@ -19,12 +17,14 @@ const DisambiguationPage: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const item = _.find<SearchItem>(data, { label: wordLabel ?? "" });
+      const item = _.find<SearchResult>(data, { label: wordLabel ?? "" });
       if (item) {
         setTerms(item.items);
       }
     }
   }, [data, isSuccess, wordLabel]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <Box flex={1} display="flex" flexDirection="column">
@@ -44,21 +44,12 @@ interface WordContentProps {
 }
 
 const WordContent: React.FC<WordContentProps> = (props) => {
-  const [isLoading, amount] = usePrefetchTerms(props.terms);
-  if (isLoading || props.parentLoading) return <Loader />;
   return (
     <Container>
       <Box pt={2} pb={4}>
-        <NumberOfResults amount={amount} />
-        {props.terms.map((term: SearchTerm) => {
-          return (
-            <TermResult
-              key={term.uri}
-              uri={term.uri}
-              vocabulary={term.vocabulary}
-              label={term.label}
-            />
-          );
+        <NumberOfResults amount={props.terms.length} />
+        {props.terms.map((term) => {
+          return <TermResult key={term.uri} {...term} />;
         })}
       </Box>
     </Container>

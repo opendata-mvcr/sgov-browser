@@ -1,9 +1,8 @@
 import React from "react";
-import { SearchTerm } from "./SearchResult";
-import { Box, Container } from "@material-ui/core";
+import { SearchTerm } from "../api/WordsAPI";
+import { Box, Container, Typography } from "@material-ui/core";
 import DefinitionSnippet from "./DefinitionSnippet";
 import RouteLink from "./RouteLink";
-import IriLabel from "./IriLabel";
 import { generateTermRoute } from "../utils/Utils";
 import SearchCard from "./SearchCard";
 import theme from "../app/theme";
@@ -15,13 +14,9 @@ const TermResult: React.FC<SearchTerm> = (props) => {
     <Container>
       <RouteLink to={route} underline="none">
         <SearchCard borderColor={`${theme.palette.primary.main} !important`}>
-          <DefinitionSnippet
-            uri={props.uri}
-            vocabulary={props.vocabulary}
-            label={props.label}
-          />
+          <DefinitionSnippet {...props} />
           <Box mt={1}>
-            <IriLabel iri={props.vocabulary} variant={"h6"} />
+            <Typography variant="h6">{props.vocabularyTitle}</Typography>
           </Box>
         </SearchCard>
       </RouteLink>
@@ -29,4 +24,4 @@ const TermResult: React.FC<SearchTerm> = (props) => {
   );
 };
 
-export default React.memo(TermResult);
+export default TermResult;
