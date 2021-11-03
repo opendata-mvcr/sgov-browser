@@ -12,6 +12,6 @@ const getLabel = async (iri: string) => {
 export const useLabel = (iri: string) => {
   return useQuery(["label", iri], () => getLabel(iri), {
     enabled: !!iri,
-    notifyOnChangeProps: ["data"],
+    notifyOnChangeProps: ["data"] as "data"[],
   });
 };

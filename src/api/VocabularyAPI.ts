@@ -24,7 +24,7 @@ export const useVocabulary = (vocabularyUri: string) => {
     () => getVocabulary(vocabularyUri),
     {
       enabled: !!vocabularyUri,
-      notifyOnChangeProps: ["data"],
+      notifyOnChangeProps: ["data"] as "data"[],
     }
   );
 };
