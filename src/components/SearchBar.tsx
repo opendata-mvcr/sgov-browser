@@ -64,7 +64,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const searchInput = useRef<HTMLElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
   const classes = useStyles(props);
   const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
@@ -86,7 +86,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       if (searchInput.current?.hasAttribute("aria-activedescendant")) {
         return typeof option === "string" ? option : option.label;
       } else {
-        return inputValue ? inputValue : "";
+        return searchInput.current?.value ?? "";
       }
     })();
     const matchedOption = searchResultLabelMap.get(label.toLocaleLowerCase());
@@ -177,7 +177,9 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       fullWidth
       freeSolo
       options={data}
-      getOptionLabel={(option: SearchResult) => option.label}
+      getOptionLabel={(option: SearchResult | string) =>
+        typeof option === "string" ? option : option.label
+      }
       renderOption={(option: SearchResult) => (
         <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
       )}
