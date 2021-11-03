@@ -85,6 +85,30 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     }
   };
 
+  const onMouseLeave = (item: BaseSyntheticEvent) => {
+    //When user leaves the suggestions, no items should be highlighted and considered active
+    searchInput.current?.removeAttribute("aria-activedescendant");
+    try {
+      item.target.attributes.removeNamedItem("data-focus");
+    } catch {
+      //The try-catch might look strange but it is needed for the best performance
+      item.currentTarget.children[0].setAttribute("data-focus", "false");
+      item.currentTarget.children[
+        item.currentTarget.children.length - 1
+      ].setAttribute("data-focus", "false");
+    }
+  };
+
+  const onMouseOver = (item: BaseSyntheticEvent) => {
+    //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
+    searchInput.current?.removeAttribute("aria-activedescendant");
+  };
+
+  const onMouseUp = (item: BaseSyntheticEvent) => {
+    //When user clicks on the item, it should search for it
+    searchInput.current?.setAttribute("aria-activedescendant", item.target.id);
+  };
+
   const handleChange = useMemo(
     () => (event: ChangeEvent<{}>, newInputValue: string) => {
       setInputValue(newInputValue);
@@ -139,30 +163,9 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
          * It was necessary to add these event listeners
          * Unfortunately there is currently no other way how to solve it
          * **/
-        onMouseLeave: (item: BaseSyntheticEvent) => {
-          //When user leaves the suggestions, no items should be highlighted and considered active
-          searchInput.current?.removeAttribute("aria-activedescendant");
-          try {
-            item.target.attributes.removeNamedItem("data-focus");
-          } catch {
-            //The try-catch might look strange but it is needed for the best performance
-            item.currentTarget.children[0].setAttribute("data-focus", "false");
-            item.currentTarget.children[
-              item.currentTarget.children.length - 1
-            ].setAttribute("data-focus", "false");
-          }
-        },
-        onMouseOver: (item: BaseSyntheticEvent) => {
-          //When user is only hovering over suggestions, pressing enter should not search for currently highlighted item
-          searchInput.current?.removeAttribute("aria-activedescendant");
-        },
-        onMouseUp: (item: BaseSyntheticEvent) => {
-          //When user clicks on the item, it should search for it
-          searchInput.current?.setAttribute(
-            "aria-activedescendant",
-            item.target.id
-          );
-        },
+        onMouseLeave: onMouseLeave,
+        onMouseOver: onMouseOver,
+        onMouseUp: onMouseUp,
       }}
       options={data.map((item) => item.label)}
       onInputChange={debouncedChangeHandler}
