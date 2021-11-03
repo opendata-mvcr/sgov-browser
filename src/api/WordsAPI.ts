@@ -1,44 +1,9 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 import _ from "lodash";
-import { API } from "../app/variables";
 import { firstValueFrom } from "rxjs";
 import { getSearchQuery, SearchResource } from "./data/search";
 
-const getSearchResult = async (word: string | undefined) => {
-  const { data } = await axios.get(`${API}/search/fts`, {
-    params: { searchString: word },
-  });
-
-  // Groups results with the same label, adds all individual scores and sort the final result
-  // adds isWord flag when there are multiple, only label results are accepted
-  const result = _(data)
-    .filter((item) => {
-      return item.snippetField === "label" && item.uri && item.vocabulary;
-    })
-    .groupBy("label")
-    .map((objs, key) => {
-      return {
-        label: key,
-        total_score: _.sumBy(objs, "score"),
-        items: [...objs],
-        isWord: objs.length !== 1,
-        vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
-      };
-    })
-    .orderBy("total_score", "desc")
-    .value();
-  return result;
-};
-
-export const useSearch = (word: string | undefined) => {
-  return useQuery(["search", word], () => getSearchResult(word), {
-    enabled: !!word,
-    notifyOnChangeProps: ["data"] as "data"[],
-  });
-};
-
-const getDirectSearchResult = async (word: string | undefined) => {
+const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
@@ -51,7 +16,9 @@ const getDirectSearchResult = async (word: string | undefined) => {
     const {
       "@id": uri,
       label,
+      definition,
       vocabulary,
+      vocabularyTitle,
       score,
       snippetField,
       snippetText,
@@ -59,7 +26,9 @@ const getDirectSearchResult = async (word: string | undefined) => {
     return {
       uri,
       label,
+      definition,
       vocabulary,
+      vocabularyTitle,
       score,
       snippetField,
       snippetText,
@@ -79,7 +48,11 @@ const getDirectSearchResult = async (word: string | undefined) => {
         total_score: _.maxBy(objs, "score")?.score,
         items: [...objs],
         isWord: objs.length !== 1,
-        vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
+        // vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
+        vocabularies: objs.reduce((map, item) => {
+          map[item.vocabulary] = item.vocabularyTitle;
+          return map;
+        }, {} as Record<string, string>),
       };
     })
     .orderBy("total_score", "desc")
@@ -88,14 +61,18 @@ const getDirectSearchResult = async (word: string | undefined) => {
   return result;
 };
 
-export type DirectSearchResult = ReturnType<
-  typeof getDirectSearchResult
-> extends Promise<(infer U)[]>
+// Type of a search result object - terms are aggregated by label
+export type SearchResult = ReturnType<typeof getSearchResults> extends Promise<
+  (infer U)[]
+>
   ? U
   : never;
 
-export const useDirectSearch = (word: string | undefined) => {
-  return useQuery(["directsearch", word], () => getDirectSearchResult(word), {
+// Type of a term object as returned by search query
+export type SearchTerm = SearchResult["items"] extends (infer U)[] ? U : never;
+
+export const useSearch = (word: string | undefined) => {
+  return useQuery(["directsearch", word], () => getSearchResults(word), {
     enabled: !!word,
   });
 };

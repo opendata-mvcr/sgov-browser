@@ -1,6 +1,5 @@
 import React from "react";
-import { SearchTerm } from "./SearchResult";
-import { useTerm } from "../api/TermAPI";
+import { SearchTerm } from "../api/WordsAPI";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -29,12 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DefinitionSnippet: React.FC<SearchTerm> = (props) => {
-  const { data = [], isLoading, isSuccess } = useTerm(props);
-  const definition = data.definition?.cs;
+const DefinitionSnippet: React.FC<SearchTerm> = ({ definition }) => {
   const classes = useStyles();
-  if (isLoading) return <Typography variant="h4">Načítání definice</Typography>;
-  if (isSuccess && definition) {
+  if (definition) {
     return (
       <Typography variant="h4" className={classes.overflow}>
         {definition}
