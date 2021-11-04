@@ -6,16 +6,11 @@ interface LargeSearchBarProps {
   searchedText: string | null;
 }
 
-const LargeSearchBar: React.FC<LargeSearchBarProps> = (props) => {
+const LargeSearchBar: React.FC<LargeSearchBarProps> = ({ searchedText }) => {
   return (
     <Box bgcolor="primary.main" py={2}>
       <Container>
-        <SearchBar size="large" />
-        <Box pl={6} pt={2}>
-          <Typography variant="h5" color="textSecondary">
-            Bohužel jsme nenalezli přesný význam slova "{props.searchedText}"
-          </Typography>
-        </Box>
+        <SearchBar size="large" initialValue={searchedText ?? ""} />
       </Container>
     </Box>
   );
