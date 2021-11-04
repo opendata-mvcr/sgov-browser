@@ -2,8 +2,7 @@ import { FixedSizeList as List } from "react-window";
 import React from "react";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Link as RouterLink } from "react-router-dom";
-// @ts-ignore
-import { ReactWindowScroller } from "react-window-scroller";
+import { ReactWindowScroller } from "../utils/ReactWindowScroller";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
@@ -35,6 +34,7 @@ interface VocabularyTermsListProps {
     route: string;
   }[];
 }
+
 const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (
   props
 ) => {

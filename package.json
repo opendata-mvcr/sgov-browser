@@ -29,7 +29,6 @@
     "react-scripts": "4.0.3",
     "react-spinners": "^0.11.0",
     "react-window": "^1.8.6",
-    "react-window-scroller": "^1.0.10",
     "rxjs": "^7.4.0",
     "typescript": "^4.4.4"
   },
