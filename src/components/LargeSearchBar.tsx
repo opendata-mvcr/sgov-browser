@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import SearchBar from "./SearchBar";
 
 interface LargeSearchBarProps {
