@@ -21,11 +21,6 @@ const VocabularySchema = {
     "@id": dcterms.description,
     "@meta": ["@optional"],
   },
-  terms: {
-    "@id": popisDat["obsahuje-pojem"],
-    "@context": VocabularyTermSchema,
-    "@meta": ["@optional", "@array"],
-  },
 } as const;
 
 export type VocabularyInterface = SchemaInterface<typeof VocabularySchema>;

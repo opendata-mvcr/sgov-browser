@@ -7,27 +7,22 @@ import NoResults from "./NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
 import VocabularyTerms from "./VocabularyTerms";
+import ErrorPage from "./ErrorPage";
 
 const VocabularyPage: React.FC = () => {
   const uri = useURLVocabulary();
-  const { data = [], isLoading, isSuccess } = useVocabulary(uri ?? undefined);
+  const { data, isLoading, isSuccess, isError } = useVocabulary(uri);
 
   if (isLoading) return <Loader />;
 
-  // Unfortunately we need to fetch array because of React Query
-  const vocabularyData = data && data.length > 0 ? data[0] : undefined;
-
-  if (!vocabularyData) {
-    // TODO: cover the case when data is null, but the query is success -> nice 404 error page
-    return null;
-  }
+  if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
     return (
       <Box mb={2}>
-        <VocabularyHeader vocabulary={vocabularyData} />
-        <VocabularyDefinition description={vocabularyData.description} />
-        <VocabularyTerms vocabularyIri={vocabularyData["@id"]} />
+        <VocabularyHeader vocabulary={data} />
+        <VocabularyDefinition description={data.description} />
+        <VocabularyTerms vocabularyIri={data["@id"]} />
       </Box>
     );
   }

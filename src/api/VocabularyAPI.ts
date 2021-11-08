@@ -9,7 +9,19 @@ import {
 export const getVocabulary = async (vocabularyIri: string) => {
   const data = await firstValueFrom(Vocabularies.findByIris([vocabularyIri]));
 
-  return data;
+  if (data.length < 1) {
+    // Vocabulary not found
+    throw new Error("404 Vocabulary not found");
+  }
+
+  const item = data[0];
+
+  return {
+    "@id": item["@id"],
+    "@type": item["@type"],
+    label: item.label,
+    description: item.description,
+  };
 };
 
 export const useVocabulary = (vocabularyUri: string) => {
@@ -18,7 +30,7 @@ export const useVocabulary = (vocabularyUri: string) => {
     () => getVocabulary(vocabularyUri),
     {
       enabled: !!vocabularyUri,
-      notifyOnChangeProps: ["data"] as "data"[],
+      notifyOnChangeProps: ["data", "isError"],
     }
   );
 };
@@ -46,7 +58,7 @@ export const useVocabularyTerms = (vocabularyUri: string) => {
     () => getVocabularyTerms(vocabularyUri),
     {
       enabled: !!vocabularyUri,
-      retry: false,
+      notifyOnChangeProps: ["data", "isError"],
     }
   );
 };
