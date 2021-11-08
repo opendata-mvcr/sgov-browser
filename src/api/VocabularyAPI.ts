@@ -7,14 +7,12 @@ import {
 import { API } from "../app/variables";
 import axios from "axios";
 import _ from "lodash";
+import { firstValueFrom } from "rxjs";
+import { Vocabularies } from "./data/vocabularies";
 
-export const getVocabulary = async (vocabularyUri: string) => {
-  const vocabulary = encodeNormalizedName(vocabularyUri);
-  const namespace = getNamespaceUri(vocabularyUri);
-  const route = `${API}/public/vocabularies/${vocabulary}`;
-  const { data } = await axios.get(route, {
-    params: { namespace: namespace },
-  });
+export const getVocabulary = async (vocabularyIri: string) => {
+  const data = await firstValueFrom(Vocabularies.findByIris([vocabularyIri]));
+
   return data;
 };
 

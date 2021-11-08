@@ -4,7 +4,7 @@ import { dcterms, skos } from "@ldkit/namespaces";
 import { context } from "./context";
 import { popisDat } from "./namespaces";
 
-const TermBaseSchema = {
+export const TermBaseSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,
   vocabulary: {
