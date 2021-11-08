@@ -4,6 +4,8 @@ import { DetailItemWrapper } from "./Hierarchy";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactWindowScroller } from "../utils/ReactWindowScroller";
 import { makeStyles } from "@material-ui/core/styles";
+import { VocabularyTermInterface } from "../api/data/vocabularies";
+import { generateTermRoute } from "../utils/Utils";
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -27,18 +29,23 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface VocabularyTermsListProps {
-  terms: {
-    uri: string;
-    vocabulary: string;
-    label: { cs?: string };
-    route: string;
-  }[];
+  vocabularyIri: string;
+  terms: VocabularyTermInterface[];
 }
 
-const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (
-  props
-) => {
+const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
+  vocabularyIri,
+  terms,
+}) => {
   const classes = useStyles();
+
+  const getTermRoute = (term: VocabularyTermInterface) => {
+    return generateTermRoute({
+      uri: term["@id"],
+      vocabulary: vocabularyIri,
+    });
+  };
+
   return (
     <DetailItemWrapper title={"Pojmy"}>
       <ReactWindowScroller>
@@ -49,7 +56,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (
             outerRef={outerRef}
             style={style}
             height={window.innerHeight}
-            itemCount={props.terms.length}
+            itemCount={terms.length}
             itemSize={34}
             onScroll={onScroll}
           >
@@ -57,10 +64,10 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = (
               <div style={style}>
                 <div className={classes.wrapper}>
                   <RouterLink
-                    to={props.terms[index].route}
+                    to={getTermRoute(terms[index])}
                     className={classes.text}
                   >
-                    {props.terms[index].label.cs}
+                    {terms[index].label}
                   </RouterLink>
                 </div>
               </div>

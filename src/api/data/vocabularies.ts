@@ -1,5 +1,7 @@
 import { createResource, SchemaInterface } from "@ldkit/core";
-import { dcterms } from "@ldkit/namespaces";
+import { dcterms, skos } from "@ldkit/namespaces";
+import { namedNode as n } from "@ldkit/rdf";
+import { $ } from "@ldkit/sparql";
 
 import { context } from "./context";
 import { popisDat } from "./namespaces";
@@ -29,3 +31,27 @@ const VocabularySchema = {
 export type VocabularyInterface = SchemaInterface<typeof VocabularySchema>;
 
 export const Vocabularies = createResource(VocabularySchema, context);
+
+export type VocabularyTermInterface = SchemaInterface<
+  typeof VocabularyTermSchema
+>;
+
+export const VocabularyTerms = createResource(VocabularyTermSchema, context);
+
+export const getVocabularyTermsQuery = (vocabularyIri: string) => {
+  const query = $`
+  CONSTRUCT {
+    ?iri a ${n(skos.Concept)} ;
+      ${n(skos.prefLabel)} ?label ;
+      ${n(skos.definition)} ?definition .
+  }
+  WHERE {
+    ?iri a ${n(skos.Concept)} ;
+      ${n(popisDat["je-pojmem-ze-slovníku"])} ${n(vocabularyIri)} ;
+      ${n(skos.prefLabel)} ?label .
+    OPTIONAL { ?iri ${n(skos.definition)} ?definition . }
+  }
+  `.toString();
+
+  return query;
+};

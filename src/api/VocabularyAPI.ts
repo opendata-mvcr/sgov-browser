@@ -8,7 +8,11 @@ import { API } from "../app/variables";
 import axios from "axios";
 import _ from "lodash";
 import { firstValueFrom } from "rxjs";
-import { Vocabularies } from "./data/vocabularies";
+import {
+  getVocabularyTermsQuery,
+  Vocabularies,
+  VocabularyTerms,
+} from "./data/vocabularies";
 
 export const getVocabulary = async (vocabularyIri: string) => {
   const data = await firstValueFrom(Vocabularies.findByIris([vocabularyIri]));
@@ -27,6 +31,14 @@ export const useVocabulary = (vocabularyUri: string) => {
   );
 };
 
+const getVocabularyTerms = async (vocabularyIri: string) => {
+  const data = await firstValueFrom(
+    VocabularyTerms.query(getVocabularyTermsQuery(vocabularyIri))
+  );
+
+  return data;
+};
+
 export const useVocabularyTerms = (vocabularyUri: string) => {
   return useQuery(
     ["vocabularyTerms", vocabularyUri],
@@ -38,7 +50,7 @@ export const useVocabularyTerms = (vocabularyUri: string) => {
   );
 };
 
-export const getVocabularyTerms = async (vocabularyUri: string) => {
+/* export const getVocabularyTerms = async (vocabularyUri: string) => {
   const vocabulary = encodeNormalizedName(vocabularyUri);
   const namespace = getNamespaceUri(vocabularyUri);
   const route = `${API}/public/vocabularies/${vocabulary}/terms`;
@@ -60,3 +72,4 @@ export const getVocabularyTerms = async (vocabularyUri: string) => {
     .value();
   return result;
 };
+ */
