@@ -24,9 +24,18 @@ export const useVocabulary = (vocabularyUri: string) => {
 };
 
 const getVocabularyTerms = async (vocabularyIri: string) => {
-  const data = await firstValueFrom(
+  const dynamicData = await firstValueFrom(
     VocabularyTerms.query(getVocabularyTermsQuery(vocabularyIri))
   );
+
+  // Materialize data to actual JS objects so that we can manipulate it with lodash
+  const data = dynamicData
+    .map((item) => ({
+      "@id": item["@id"],
+      "@type": item["@type"],
+      label: item.label,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   return data;
 };
