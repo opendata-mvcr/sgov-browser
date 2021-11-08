@@ -3,13 +3,10 @@ import { ReactComponent as DefinitionIllustration } from "../assets/definition.s
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DefinitionWrapper from "./DefinitionWrapper";
+import { TermInterface } from "../api/data/terms";
 
 interface DefinitionProps {
-  data: {
-    definition?: { cs: string };
-    sources: string[];
-    vocabulary: string;
-  };
+  term: TermInterface;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -18,12 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TermDefinition: React.FC<DefinitionProps> = (props) => {
+const TermDefinition: React.FC<DefinitionProps> = ({ term }) => {
   const classes = useStyles();
-  const definition = props.data.definition?.cs;
-  const source = props.data.sources !== null ? props.data.sources[0] : "";
 
-  if (!definition && !source) return null;
+  if (!term.definition && !term.source) return null;
 
   const illustration = (
     <Box style={{ position: "relative", height: "100%" }}>
@@ -36,8 +31,8 @@ const TermDefinition: React.FC<DefinitionProps> = (props) => {
   return (
     <DefinitionWrapper
       illustration={illustration}
-      definition={definition}
-      source={source}
+      definition={term.definition}
+      source={term.source}
     />
   );
 };
