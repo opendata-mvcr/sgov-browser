@@ -1,13 +1,29 @@
 import { useQuery } from "react-query";
 import { firstValueFrom } from "rxjs";
 
-import { Terms } from "./data/terms";
+import { TermBaseInterface, Terms } from "./data/terms";
 
 // TODO: remove this interface / move it somewhere else
 export interface TermBase {
   uri: string;
   vocabulary: string;
 }
+
+const materializeVocabulary = (
+  vocabulary: TermBaseInterface["vocabulary"]
+): TermBaseInterface["vocabulary"] => ({
+  "@id": vocabulary["@id"],
+  "@type": vocabulary["@type"],
+  label: vocabulary.label,
+});
+
+const materializeTerm = (term: TermBaseInterface): TermBaseInterface => ({
+  "@id": term["@id"],
+  "@type": term["@type"],
+  label: term.label,
+  definition: term.definition,
+  vocabulary: materializeVocabulary(term.vocabulary),
+});
 
 export const getTerm = async (termIri: string) => {
   const data = await firstValueFrom(Terms.findByIris([termIri]));
@@ -19,6 +35,7 @@ export const getTerm = async (termIri: string) => {
 
   const item = data[0];
 
+  // Materialize data to actual JS objects for React Query support
   return {
     "@id": item["@id"],
     "@type": item["@type"],
@@ -26,9 +43,9 @@ export const getTerm = async (termIri: string) => {
     altLabels: item.altLabels,
     definition: item.definition,
     source: item.source,
-    parentTerms: item.parentTerms,
-    subTerms: item.subTerms,
-    vocabulary: item.vocabulary,
+    parentTerms: item.parentTerms.map(materializeTerm),
+    subTerms: item.subTerms.map(materializeTerm),
+    vocabulary: materializeVocabulary(item.vocabulary),
   };
 };
 
