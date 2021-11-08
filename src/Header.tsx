@@ -12,9 +12,13 @@ const Header: React.FC<HeaderProps> = (props) => {
   return (
     <AppBar position="static" elevation={0}>
       <Toolbar>
-        <NavIcon />
         <RouteLink to="/" variant="h6" color="textSecondary" underline="none">
-          ShowIt
+          <Box display="flex">
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <NavIcon display="block" />
+            </Box>
+            ShowIt
+          </Box>
         </RouteLink>
         {props.showSearch && (
           <Box width={250} ml={10}>

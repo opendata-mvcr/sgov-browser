@@ -2,12 +2,26 @@ import React from "react";
 import { Box, Container, Typography } from "@material-ui/core";
 import opzLogo from "./assets/opz_logo.svg";
 import { ReactComponent as FooterImage } from "./assets/footer_image.svg";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      display: "block",
+    },
+  },
+}));
 
 interface FooterProps {
   showImage?: boolean;
 }
 
 const Footer: React.FC<FooterProps> = (props) => {
+  const classes = useStyles();
+
   return (
     <Box>
       {props.showImage && (
@@ -26,11 +40,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       )}
       <Box bgcolor="primary.main" py={1}>
         <Container maxWidth="lg">
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Box className={classes.wrapper}>
             <Typography variant="body2" color="textSecondary">
               Tato aplikace je udržována v rámci projektu
               <br />
