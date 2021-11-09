@@ -3,7 +3,7 @@ import { createNamespace } from "@ldkit/core";
 export const popisDat = createNamespace({
   iri: "http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/",
   prefix: "popisdat:",
-  terms: ["je-pojmem-ze-slovníku"],
+  terms: ["je-pojmem-ze-slovníku", "slovník"],
 } as const);
 
 export const lucene = createNamespace({

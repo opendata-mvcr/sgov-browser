@@ -5,12 +5,12 @@ import { DetailItemWrapper } from "./Hierarchy";
 import { Typography } from "@material-ui/core";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
 
-interface UriItem {
-  uri: string;
+interface VocabularyTermsProps {
+  vocabularyIri: string;
 }
 
-const VocabularyTerms: React.FC<UriItem> = (props) => {
-  const { data = [], isLoading, isError } = useVocabularyTerms(props.uri);
+const VocabularyTerms: React.FC<VocabularyTermsProps> = ({ vocabularyIri }) => {
+  const { data = [], isLoading, isError } = useVocabularyTerms(vocabularyIri);
 
   if (isError || isLoading) {
     return (
@@ -23,7 +23,9 @@ const VocabularyTerms: React.FC<UriItem> = (props) => {
       </DetailItemWrapper>
     );
   }
-  return <VocabularyTermsListWindow terms={data} />;
+  return (
+    <VocabularyTermsListWindow vocabularyIri={vocabularyIri} terms={data} />
+  );
 };
 
 export default VocabularyTerms;

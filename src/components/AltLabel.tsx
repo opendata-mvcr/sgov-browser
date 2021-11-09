@@ -1,17 +1,19 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import { map } from "lodash";
+import { TermInterface } from "../api/data/terms";
 
 interface AltLabelProps {
-  altLabels?: { cs?: string }[];
+  altLabels: TermInterface["altLabels"];
 }
 
-const AltLabel: React.FC<AltLabelProps> = (props) => {
-  const altLabels = map(props.altLabels, "cs").join(", ");
-  if (!altLabels) return null;
+const AltLabel: React.FC<AltLabelProps> = ({ altLabels }) => {
+  if (!altLabels || altLabels.length < 1) {
+    return null;
+  }
+
   return (
     <Typography variant="h5" color="textSecondary">
-      {altLabels}
+      {altLabels.join(", ")}
     </Typography>
   );
 };

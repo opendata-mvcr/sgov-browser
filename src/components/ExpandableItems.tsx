@@ -1,8 +1,8 @@
 import React from "react";
-import { TermInfo } from "./Hierarchy";
+import { TermBaseInterface } from "../api/data/terms";
 
 export interface ExpandableItemsProps {
-  items: TermInfo[];
+  items: TermBaseInterface[];
   level: number;
   vocabularyDefault: string;
 }

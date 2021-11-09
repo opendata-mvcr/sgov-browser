@@ -4,6 +4,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { NormalEnd } from "./HierarchyItem";
 import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";
+import { TermInterface } from "../api/data/terms";
 
 export interface TermInfo {
   uri: string;
@@ -12,35 +13,16 @@ export interface TermInfo {
 }
 
 interface HierarchyProps {
-  data: {
-    uri: string;
-    vocabulary: string;
-    label: { cs?: string };
-    subTerms: TermInfo[];
-    parentTerms: TermInfo[];
-  };
+  term: TermInterface;
 }
 
-export const Hierarchy: React.FC<HierarchyProps> = (props) => {
-  const parentTerms = props.data.parentTerms
-    ? props.data.parentTerms.filter((item) => {
-        return item.uri && item.vocabulary;
-      })
-    : [];
-  const subTerms = props.data.subTerms
-    ? props.data.subTerms.filter((item) => {
-        return item.uri && item.vocabulary;
-      })
-    : [];
+export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
+  const parentTerms = term.parentTerms ? term.parentTerms : [];
+  const subTerms = term.subTerms ? term.subTerms : [];
 
   if (!parentTerms.length && !subTerms.length) return null;
-  const current: TermInfo = {
-    uri: props.data.uri,
-    label: props.data.label,
-    vocabulary: props.data.vocabulary,
-  };
 
-  const currIndex = props.data.parentTerms ? 1 : 0;
+  const currIndex = term.parentTerms ? 1 : 0;
   return (
     <Container>
       <Box py={2} mb={10} px={2} mt={4}>
@@ -52,17 +34,17 @@ export const Hierarchy: React.FC<HierarchyProps> = (props) => {
             <HierarchyParents
               items={parentTerms}
               level={0}
-              vocabularyDefault={current.vocabulary}
+              vocabularyDefault={term.vocabulary["@id"]}
             />
             <CurrentTerm
               level={currIndex}
-              term={current}
+              term={term}
               connector={subTerms.length ? <NormalEnd /> : undefined}
             />
             <HierarchyChildren
               items={subTerms}
               level={currIndex + 1}
-              vocabularyDefault={current.vocabulary}
+              vocabularyDefault={term.vocabulary["@id"]}
             />
           </Box>
         </Box>

@@ -1,28 +1,21 @@
 import React from "react";
 import AltLabel from "./AltLabel";
-import IriLabel from "./IriLabel";
 import DetailPageHeader from "./DetailPageHeader";
 import RouteLink from "./RouteLink";
 import { generateVocabularyRoute } from "../utils/Utils";
+import { TermInterface } from "../api/data/terms";
 
 export interface DetailHeaderProps {
-  data: {
-    label: { cs: string };
-    altLabels?: { cs?: string }[];
-    uri: string;
-    vocabulary: string;
-  };
+  term: TermInterface;
 }
 
-const TermHeader: React.FC<DetailHeaderProps> = (props) => {
-  const label = props.data.label.cs;
-  const altLabels = props.data.altLabels;
-  const iri = props.data.uri;
-  const vocabulary = props.data.vocabulary;
-  const vocabularyRoute = generateVocabularyRoute(vocabulary);
+const TermHeader: React.FC<DetailHeaderProps> = ({ term }) => {
+  const { "@id": iri, label, altLabels, vocabulary } = term;
+
+  const vocabularyRoute = generateVocabularyRoute(vocabulary["@id"]);
   const above = (
-    <RouteLink to={vocabularyRoute} color="textSecondary">
-      <IriLabel iri={vocabulary} variant="h5" color="textSecondary" />
+    <RouteLink to={vocabularyRoute} variant="h5" color="textSecondary">
+      {vocabulary.label || vocabulary["@id"]}
     </RouteLink>
   );
   const below = <AltLabel altLabels={altLabels} />;

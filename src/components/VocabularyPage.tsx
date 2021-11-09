@@ -7,17 +7,22 @@ import NoResults from "./NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
 import VocabularyTerms from "./VocabularyTerms";
+import ErrorPage from "./ErrorPage";
 
 const VocabularyPage: React.FC = () => {
   const uri = useURLVocabulary();
-  const { data = [], isLoading, isSuccess } = useVocabulary(uri ?? undefined);
+  const { data, isLoading, isSuccess, isError } = useVocabulary(uri);
+
   if (isLoading) return <Loader />;
+
+  if (isError || !data) return <ErrorPage />;
+
   if (isSuccess) {
     return (
       <Box mb={2}>
-        <VocabularyHeader data={data} />
+        <VocabularyHeader vocabulary={data} />
         <VocabularyDefinition description={data.description} />
-        <VocabularyTerms uri={data.uri} />
+        <VocabularyTerms vocabularyIri={data["@id"]} />
       </Box>
     );
   }

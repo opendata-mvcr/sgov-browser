@@ -28,7 +28,7 @@ const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
       >
         <CurrentTermBox square elevation={0}>
           <Typography variant="h6" color="textSecondary">
-            {props.term.label.cs}
+            {props.term.label}
           </Typography>
         </CurrentTermBox>
       </Box>
