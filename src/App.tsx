@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./app/theme";
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline, responsiveFontSizes } from "@material-ui/core";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Router from "./Router";
@@ -16,9 +16,10 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
+  const responsiveTheme = responsiveFontSizes(theme);
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={responsiveTheme}>
         <CssBaseline />
         <Router />
       </ThemeProvider>

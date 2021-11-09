@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       textAlign: "left",
     },
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 }));
 
