@@ -7,8 +7,16 @@ const MAX_LINES = 2;
 
 const useStyles = makeStyles((theme) => ({
   overflow: {
+    //Because we are using dynamic font sizing, we need to know the viewport to scale the snippet accordingly
+    "--fontsize": "1.5625rem",
+    "@media (min-width: 600px)": {
+      "--fontsize": "1.8219rem",
+    },
+    "@media (min-width: 960px)": {
+      "--fontsize": "2.0243rem",
+    },
     position: "relative",
-    maxHeight: `calc(${theme.typography.h4.lineHeight}*${theme.typography.h4.fontSize} * ${MAX_LINES})`,
+    maxHeight: `calc(${theme.typography.h4.lineHeight} * var(--fontsize) * ${MAX_LINES})`,
     overflow: "hidden",
     paddingRight: "1.6rem" /* space for ellipsis */,
     "&::before": {

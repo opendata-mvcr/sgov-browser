@@ -24,7 +24,7 @@ const SuggestedWords: React.FC = () => {
   const classes = useStyles();
 
   //Only for development purposes, need to discuss how to fetch this personalized data
-  const words = ["Budova", "Bytový dům", "Stavba", "Koridor"];
+  const words = ["Agenda", "Budova", "Vozidlo", "Závada"];
 
   return (
     <Container>

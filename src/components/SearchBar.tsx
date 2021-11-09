@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,7 +11,7 @@ import { generateTermRoute } from "../utils/Utils";
 
 const OPTIONS_LIMIT = 7;
 
-const filterOptions = (options: SearchResult[], state: any) => {
+const filterOptions = (options: SearchResult[]) => {
   return options.slice(0, OPTIONS_LIMIT) as SearchResult[];
 };
 
@@ -59,6 +54,7 @@ const useOtherStyles = makeStyles(() => ({
 
 interface SearchBarProps {
   size: "small" | "large";
+  initialValue?: string;
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
@@ -94,7 +90,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       }
     }
   };
-
 
   const handleChange = useMemo(
     () => (event: ChangeEvent<{}>, newInputValue: string) => {
@@ -140,6 +135,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           onChangeHandler(newValue);
         }
       }}
+      defaultValue={props.initialValue}
       filterOptions={filterOptions}
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
@@ -152,6 +148,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
         <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
       )}
       onInputChange={debouncedChangeHandler}
+      ListboxProps={{ style: { maxHeight: "500px" } }}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       textAlign: "left",
     },
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -24,10 +27,9 @@ const HeroSection: React.FC = () => {
     <Box bgcolor="primary.main" py={3} style={{ flex: 1 }}>
       <Container component="section" maxWidth="lg">
         <Grid container justifyContent="center" alignItems="center" spacing={1}>
-          <Grid item md={5}>
+          <Grid item md={5} xs={10}>
             <Typography variant="h1" color="textSecondary" gutterBottom>
-              Hledat význam
-              <br /> není těžké.
+              Hledat význam není těžké.
             </Typography>
             <Typography variant="h2" color="textSecondary">
               Stačí vědět, kde hledat.
@@ -39,7 +41,7 @@ const HeroSection: React.FC = () => {
           <Grid item md={10} xs={12}>
             <SearchBar size="large" />
           </Grid>
-          <Grid item md={10}>
+          <Grid item md={10} xs={12}>
             <SuggestedWords />
           </Grid>
         </Grid>
