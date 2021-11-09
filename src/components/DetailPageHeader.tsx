@@ -20,7 +20,7 @@ const DetailPageHeader: React.FC<DetailPageHeaderProps> = (props) => {
           </Typography>
           {props.belowLabel}
         </Grid>
-        <Grid item md={1} sm={2} xs={3}>
+        <Grid item md={1} sm={2} xs={2}>
           <IRI iri={props.iri} />
         </Grid>
       </Grid>

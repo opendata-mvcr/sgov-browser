@@ -3,19 +3,14 @@ import { ReactComponent as Copy } from "../assets/copy_small.svg";
 import { Box, Button, Tooltip, Typography } from "@material-ui/core";
 
 export interface IriItem {
-    iri: string;
+  iri: string;
 }
 
 const Content = React.forwardRef((props: any, ref: any) => {
   return (
     <Button {...props} ref={ref} fullWidth>
-      <Box
-        flex={1}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Copy style={{ maxHeight: 33 }} />
+      <Box display="flex">
+        <Copy style={{ maxHeight: 33, marginRight: 16 }} />
         <Typography variant="h5" color="textSecondary">
           IRI
         </Typography>
