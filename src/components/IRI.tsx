@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { ReactComponent as Copy } from "../assets/copy_small.svg";
 import { Box, Button, Tooltip, Typography } from "@material-ui/core";
-import { IriItem } from "./IriLabel";
+
+export interface IriItem {
+    iri: string;
+}
 
 const Content = React.forwardRef((props: any, ref: any) => {
   return (
