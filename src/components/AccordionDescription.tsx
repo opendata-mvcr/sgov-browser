@@ -1,24 +1,17 @@
 import React from "react";
-import { TermBase, useTerm } from "../api/TermAPI";
-import { emptyTerm } from "./TermPage";
-import { Box, CircularProgress, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { TermBaseInterface } from "../api/data/terms";
 
-const AccordionDescription: React.FC<TermBase> = (props) => {
-  const { data = [], isLoading, isSuccess } = useTerm(props ?? emptyTerm);
-  if (isLoading) {
-    return (
-      <Box flex={1} display="flex" alignItems="center">
-        <CircularProgress />
-        <Typography>Načítání definice</Typography>
-      </Box>
-    );
-  }
-  const description = data.definition?.cs
-    ? data.definition.cs
-    : "Pojem nemá definici";
-  if (isSuccess) return <Typography>{description}</Typography>;
+interface AccordionDescriptionProps {
+  term: TermBaseInterface;
+}
 
-  return null;
+const AccordionDescription: React.FC<AccordionDescriptionProps> = ({
+  term,
+}) => {
+  const description = term.definition ? term.definition : "Pojem nemá definici";
+
+  return <Typography>{description}</Typography>;
 };
 
 export default AccordionDescription;

@@ -27,4 +27,5 @@ export const context = createContext({
     },
   ],
   fetch: utf8Fetch,
+  language: "cs",
 });

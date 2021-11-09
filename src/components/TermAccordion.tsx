@@ -1,15 +1,14 @@
 import React, { ReactElement, useState } from "react";
-import { Box, FormControl, withStyles } from "@material-ui/core";
+import { Box, FormControl, Typography, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RouteLink from "./RouteLink";
-import { TermInfo } from "./Hierarchy";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";
 import { generateTermRoute } from "../utils/Utils";
-import IriLabel from "./IriLabel";
+import { TermBaseInterface } from "../api/data/terms";
 
 const Accordion = withStyles({
   root: {
@@ -60,14 +59,17 @@ const ExpandIcon = withStyles((theme) => ({
 
 export interface TermAccordionProps {
   level: number;
-  term: TermInfo;
+  term: TermBaseInterface;
   connector?: ReactElement;
   showVocabulary?: boolean;
 }
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const routeProps = generateTermRoute(props.term);
+  const routeProps = generateTermRoute({
+    uri: props.term["@id"],
+    vocabulary: props.term.vocabulary["@id"],
+  });
   return (
     <HierarchyItem level={props.level} connector={props.connector}>
       <Accordion
@@ -78,27 +80,22 @@ export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
         <AccordionSummary expandIcon={<ExpandIcon />}>
           <Box>
             {props.showVocabulary && (
-              <IriLabel
-                iri={props.term.vocabulary}
-                variant="body2"
-                color="textSecondary"
-              />
+              <Typography variant="body2" color="textSecondary">
+                {props.term.vocabulary.label}
+              </Typography>
             )}
             <FormControl
               onClick={(event) => event.stopPropagation()}
               onFocus={(event) => event.stopPropagation()}
             >
               <RouteLink to={routeProps} variant="h6" color="textSecondary">
-                {props.term.label.cs}
+                {props.term.label}
               </RouteLink>
             </FormControl>
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <AccordionDescription
-            uri={props.term.uri}
-            vocabulary={props.term.vocabulary}
-          />
+          <AccordionDescription term={props.term} />
         </AccordionDetails>
       </Accordion>
     </HierarchyItem>
