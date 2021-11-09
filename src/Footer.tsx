@@ -13,6 +13,15 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+  illustration: {
+    position: "absolute",
+    bottom: "-16px",
+    right: "60px",
+    maxHeight: 115,
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
+  },
 }));
 
 interface FooterProps {
@@ -27,14 +36,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       {props.showImage && (
         <Container>
           <Box style={{ position: "relative", marginTop: 100 }}>
-            <FooterImage
-              style={{
-                position: "absolute",
-                bottom: "-16px",
-                right: "60px",
-                maxHeight: 115,
-              }}
-            />
+            <FooterImage className={classes.illustration} />
           </Box>
         </Container>
       )}
