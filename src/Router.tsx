@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import Layout from "./Layout";
 import HeroSection from "./components/HeroSection";
 import SearchPage from "./components/SearchPage";
@@ -8,10 +14,28 @@ import ErrorPage from "./components/ErrorPage";
 import DisambiguationPage from "./components/DisambiguationPage";
 import TermPage from "./components/TermPage";
 import VocabularyPage from "./components/VocabularyPage";
+import { PUBLIC_PATH } from "./app/variables";
+
+const InitialLocationFix: React.FC = () => {
+  // This is a workaround for a bug in React Router that does not work well
+  // with a basename on initial load
+  // See https://github.com/remix-run/react-router/issues/6536
+  const location = useLocation();
+  const history = useHistory();
+  // The replace should happen only once since we strip it only if it contains something more than /
+  if (PUBLIC_PATH.length > 1 && location.pathname.startsWith(PUBLIC_PATH)) {
+    history.replace({
+      pathname: location.pathname.substring(PUBLIC_PATH.length),
+      search: location.search,
+    });
+  }
+  return null;
+};
 
 const Router: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <InitialLocationFix />
       <ScrollToTop />
       <Layout>
         <Switch>
