@@ -8,6 +8,7 @@ import { Hierarchy } from "./Hierarchy";
 import useURLTerm from "../hooks/useURLTerm";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
+import EmptyTerm from "./EmptyTerm";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
@@ -18,15 +19,26 @@ const TermPage: React.FC = () => {
   if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
-    return (
-      <Box mb={2}>
-        <TermHeader term={data} />
+    //Term is considered to be "empty" when no information is displayed apart from the header
+    //TODO: Have some helper function which will map all of these. This is not really maintainable
+    const emptyTerm =
+      !data.parentTerms.length && !data.subTerms.length && !data.definition && !data.source;
+    const content = emptyTerm ? (
+      <EmptyTerm />
+    ) : (
+      <>
         <TermDefinition term={data} />
         <Hierarchy term={data} />
+      </>
+    );
+    return (
+      <Box>
+        <TermHeader term={data} />
+        {content}
       </Box>
     );
   }
+
   return <NoResults />;
 };
-
 export default TermPage;
