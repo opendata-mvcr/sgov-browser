@@ -9,6 +9,7 @@ import useURLTerm from "../hooks/useURLTerm";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 import EmptyTerm from "./EmptyTerm";
+import { isTermEmpty } from "../utils/TermUtils";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
@@ -19,11 +20,7 @@ const TermPage: React.FC = () => {
   if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
-    //Term is considered to be "empty" when no information is displayed apart from the header
-    //TODO: Have some helper function which will map all of these. This is not really maintainable
-    const emptyTerm =
-      !data.parentTerms.length && !data.subTerms.length && !data.definition && !data.source;
-    const content = emptyTerm ? (
+    const content = isTermEmpty(data) ? (
       <EmptyTerm />
     ) : (
       <>
