@@ -3,7 +3,7 @@ import React from "react";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactWindowScroller } from "../utils/ReactWindowScroller";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { VocabularyTermInterface } from "../api/data/vocabularies";
 import { generateTermRoute } from "../utils/Utils";
 

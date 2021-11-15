@@ -3,7 +3,7 @@ import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
 import SuggestedWords from "./SuggestedWords";
 import SearchBar from "./SearchBar";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   heroImage: {
@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   heroWrapper: {
     textAlign: "right",
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down("lg")]: {
       textAlign: "left",
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },

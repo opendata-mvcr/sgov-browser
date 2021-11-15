@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchTerm } from "../api/WordsAPI";
 import { Box, Typography } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 
 const MAX_LINES = 2;
 

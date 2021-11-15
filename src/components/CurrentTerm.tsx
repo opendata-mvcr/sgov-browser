@@ -1,7 +1,7 @@
 import React from "react";
 import HierarchyItem from "./HierarchyItem";
 import { Box, Paper, Typography } from "@mui/material";
-import withStyles from '@mui/styles/withStyles';
+import withStyles from "@mui/styles/withStyles";
 import { TermAccordionProps } from "./TermAccordion";
 
 const CurrentTermBox = withStyles((theme) => ({

@@ -1,4 +1,4 @@
-import { createTheme, adaptV4Theme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
 const primary = "#00BC58";
 const secondary = "#3F3D56";
@@ -6,7 +6,7 @@ const primaryText = "#000000";
 const secondaryText = "#FFFFFF";
 const lightText = "#797979";
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   palette: {
     primary: {
       main: primary,
@@ -33,6 +33,6 @@ const theme = createTheme(adaptV4Theme({
       fontSize: 40,
     },
   },
-}));
+});
 
 export default theme;

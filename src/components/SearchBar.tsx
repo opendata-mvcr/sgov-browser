@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete from '@mui/material/Autocomplete';
-import makeStyles from '@mui/styles/makeStyles';
+import Autocomplete from "@mui/material/Autocomplete";
+import makeStyles from "@mui/styles/makeStyles";
 import SearchIcon from "@mui/icons-material/Search";
-import { CircularProgress, InputAdornment } from "@mui/material";
+import { CircularProgress, InputAdornment, styled } from "@mui/material";
 import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
@@ -23,7 +23,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: props.size === "large" ? 26 : 16,
     height: props.size === "large" ? 63 : 38,
     backgroundColor: "#fcfcfb",
-    paddingLeft: props.size === "large" ? theme.spacing(6) : theme.spacing(1),
+    paddingTop: "0px !important",
+    paddingBottom: "0px !important",
+    paddingLeft:
+      props.size === "large"
+        ? `${theme.spacing(6)} !important`
+        : `${theme.spacing(1)} !important`,
     paddingRight:
       props.size === "large"
         ? `${theme.spacing(6)} !important`
@@ -33,8 +38,18 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#fff",
     },
   }),
+  input: {
+    paddingTop: "0px !important",
+    paddingBottom: "0px !important",
+  },
   paper: {
     color: theme.palette.text.primary,
+  },
+  option: {
+    "& em": {
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
   },
 }));
 const useOtherStyles = makeStyles(() => ({
@@ -50,6 +65,20 @@ interface SearchBarProps {
   size: "small" | "large";
   initialValue?: string;
 }
+
+const InputTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "white",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+    },
+  },
+});
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
@@ -138,15 +167,15 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       getOptionLabel={(option: SearchResult | string) =>
         typeof option === "string" ? option : option.label
       }
-      renderOption={(props, option,{selected}) => (
-          <li {...props}>
-            <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
-          </li>
+      renderOption={(props, option: SearchResult, { selected }) => (
+        <li {...props}>
+          <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+        </li>
       )}
       onInputChange={debouncedChangeHandler}
       ListboxProps={{ style: { maxHeight: "500px" } }}
       renderInput={(params) => (
-        <TextField
+        <InputTextField
           {...params}
           placeholder="Zadejte hledané slovo"
           InputProps={{
