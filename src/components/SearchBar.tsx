@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import { CircularProgress, InputAdornment } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
+import Autocomplete from '@mui/material/Autocomplete';
+import makeStyles from '@mui/styles/makeStyles';
+import SearchIcon from "@mui/icons-material/Search";
+import { CircularProgress, InputAdornment } from "@mui/material";
 import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: props.size === "large" ? theme.spacing(6) : theme.spacing(1),
     paddingRight:
       props.size === "large"
-        ? `${theme.spacing(6)}px !important`
-        : `${theme.spacing(1)}px !important`,
+        ? `${theme.spacing(6)} !important`
+        : `${theme.spacing(1)} !important`,
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     "&:hover": {
       backgroundColor: "#fff",
@@ -35,12 +35,6 @@ const useStyles = makeStyles((theme) => ({
   }),
   paper: {
     color: theme.palette.text.primary,
-  },
-  option: {
-    "& em": {
-      fontStyle: "normal",
-      fontWeight: 700,
-    },
   },
 }));
 const useOtherStyles = makeStyles(() => ({
@@ -144,8 +138,10 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       getOptionLabel={(option: SearchResult | string) =>
         typeof option === "string" ? option : option.label
       }
-      renderOption={(option: SearchResult) => (
-        <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+      renderOption={(props, option,{selected}) => (
+          <li {...props}>
+            <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+          </li>
       )}
       onInputChange={debouncedChangeHandler}
       ListboxProps={{ style: { maxHeight: "500px" } }}
@@ -156,7 +152,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           InputProps={{
             ...params.InputProps,
             endAdornment: endAdornment,
-            disableUnderline: true,
           }}
         />
       )}

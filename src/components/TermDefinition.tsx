@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
-import { Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import DefinitionWrapper from "./DefinitionWrapper";
 import { TermInterface } from "../api/data/terms";
 

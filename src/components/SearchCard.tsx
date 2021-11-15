@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, BoxProps, styled } from "@material-ui/core";
+import { Box, BoxProps, styled } from "@mui/material";
 
 const SearchCard: React.FC<BoxProps> = (props) => {
   const Wrapper = styled(Box)(({ theme }) => ({

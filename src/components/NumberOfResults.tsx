@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 
 const messageHelper = (length: number) => {
   if (length === 1) return `Nalezen ${length} výsledek`;

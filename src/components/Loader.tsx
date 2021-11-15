@@ -1,7 +1,7 @@
 import React from "react";
 import { DotLoader } from "react-spinners";
 import theme from "../app/theme";
-import { Box, Typography, TypographyProps } from "@material-ui/core";
+import { Box, Typography, TypographyProps } from "@mui/material";
 
 interface LoaderProps {
   size?: number;

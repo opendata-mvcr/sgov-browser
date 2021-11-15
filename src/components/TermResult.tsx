@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchTerm } from "../api/WordsAPI";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import DefinitionSnippet from "./DefinitionSnippet";
 import RouteLink from "./RouteLink";
 import { generateTermRoute } from "../utils/Utils";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch, SearchResult, SearchTerm } from "../api/WordsAPI";
 import _ from "lodash";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
 import { DetailHeaderWrapper } from "./DetailPageHeader";

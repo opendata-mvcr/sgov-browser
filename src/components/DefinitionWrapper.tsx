@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
-import { Box, BoxProps, Container, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Box, BoxProps, Container, Grid, Typography } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 
 interface DefinitionWrapperProps {
   definition?: string;
@@ -19,7 +19,7 @@ const defaultProps = {
 
 const useStyles = makeStyles((theme) => ({
   definitionImageWrapper: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       display: "none",
     },
   },

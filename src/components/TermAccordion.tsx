@@ -1,9 +1,10 @@
 import React, { ReactElement, useState } from "react";
-import { Box, FormControl, Typography, withStyles } from "@material-ui/core";
-import MuiAccordion from "@material-ui/core/Accordion";
-import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
-import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Box, FormControl, Typography } from "@mui/material";
+import withStyles from '@mui/styles/withStyles';
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RouteLink from "./RouteLink";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";

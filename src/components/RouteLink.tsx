@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, LinkProps } from "@material-ui/core";
+import { Link, LinkProps } from "@mui/material";
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,

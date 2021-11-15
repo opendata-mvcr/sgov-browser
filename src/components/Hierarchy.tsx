@@ -1,6 +1,6 @@
 import React from "react";
 import CurrentTerm from "./CurrentTerm";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import { NormalEnd } from "./HierarchyItem";
 import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";

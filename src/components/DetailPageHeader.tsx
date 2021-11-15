@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Box, Container, Grid, Typography } from "@material-ui/core";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import IRI from "./IRI";
 
 interface DetailPageHeaderProps {

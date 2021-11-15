@@ -1,15 +1,15 @@
 import React from "react";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import opzLogo from "./assets/opz_logo.svg";
 import { ReactComponent as FooterImage } from "./assets/footer_image.svg";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       display: "block",
     },
   },
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: "-16px",
     right: "60px",
     maxHeight: 115,
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       display: "none",
     },
   },

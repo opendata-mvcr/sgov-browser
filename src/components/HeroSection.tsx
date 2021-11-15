@@ -1,9 +1,9 @@
-import { Box, Container, Grid, Typography } from "@material-ui/core";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
 import SuggestedWords from "./SuggestedWords";
 import SearchBar from "./SearchBar";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   heroImage: {
@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   heroWrapper: {
     textAlign: "right",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('lg')]: {
       textAlign: "left",
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       display: "none",
     },
   },
