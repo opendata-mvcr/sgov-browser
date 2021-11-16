@@ -7,33 +7,7 @@ const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
-  const dynamicData = await firstValueFrom(
-    SearchResource.query(getSearchQuery(word))
-  );
-
-  // Materialize data to actual JS objects so that we can manipulate it with lodash
-  const data = dynamicData.map((item) => {
-    const {
-      "@id": uri,
-      label,
-      definition,
-      vocabulary,
-      vocabularyTitle,
-      score,
-      snippetField,
-      snippetText,
-    } = item;
-    return {
-      uri,
-      label,
-      definition,
-      vocabulary,
-      vocabularyTitle,
-      score,
-      snippetField,
-      snippetText,
-    };
-  });
+  const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
 
   // Groups results with the same label
   // adds isWord flag when there are multiple
@@ -50,7 +24,7 @@ const getSearchResults = async (word: string | undefined) => {
         isWord: objs.length !== 1,
         // vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
         vocabularies: objs.reduce((map, item) => {
-          map[item.vocabulary] = item.vocabularyTitle;
+          map[item.vocabulary.$id] = item.vocabulary.title;
           return map;
         }, {} as Record<string, string>),
       };

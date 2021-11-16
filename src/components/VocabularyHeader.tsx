@@ -17,7 +17,7 @@ interface DetailVocabularyHeaderProps {
 const VocabularyHeader: React.FC<DetailVocabularyHeaderProps> = ({
   vocabulary,
 }) => {
-  const { data = [], isLoading } = useVocabularyTerms(vocabulary["@id"]);
+  const { data = [], isLoading } = useVocabularyTerms(vocabulary.$id);
   const above = (
     <Typography variant="h5" color="textSecondary">
       {isLoading
@@ -30,7 +30,7 @@ const VocabularyHeader: React.FC<DetailVocabularyHeaderProps> = ({
     <DetailPageHeader
       aboveLabel={above}
       label={vocabulary.label}
-      iri={vocabulary["@id"]}
+      iri={vocabulary.$id}
     />
   );
 };

@@ -41,8 +41,8 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
 
   const getTermRoute = (term: VocabularyTermInterface) => {
     return generateTermRoute({
-      uri: term["@id"],
-      vocabulary: vocabularyIri,
+      $id: term.$id,
+      vocabulary: { $id: vocabularyIri },
     });
   };
 
