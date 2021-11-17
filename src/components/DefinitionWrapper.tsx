@@ -1,6 +1,12 @@
 import React, { ReactElement } from "react";
-import { Box, BoxProps, Container, Grid, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import {
+  Box,
+  BoxProps,
+  Container,
+  Grid,
+  styled,
+  Typography,
+} from "@mui/material";
 
 interface DefinitionWrapperProps {
   definition?: string;
@@ -16,19 +22,15 @@ const defaultProps = {
   borderRadius: "16px",
 };
 
-const useStyles = makeStyles((theme) => ({
-  definitionImageWrapper: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
+const IllustrationWrapper = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
   },
 }));
 
 const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
   props
 ) => {
-  const classes = useStyles();
-
   return (
     <Container>
       <Box px={2} mt={4}>
@@ -56,9 +58,9 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
               )}
             </Box>
           </Grid>
-          <Grid item sm={2} className={classes.definitionImageWrapper}>
+          <IllustrationWrapper item sm={2}>
             {props.illustration}
-          </Grid>
+          </IllustrationWrapper>
         </Grid>
       </Box>
     </Container>

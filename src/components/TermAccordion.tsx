@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { Box, FormControl, Typography } from "@mui/material";
+import {Box, FormControl, styled, Typography} from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -28,6 +28,23 @@ const Accordion = withStyles({
   expanded: {},
 })(MuiAccordion);
 
+/**const Accordion = styled(MuiAccordion)(({ theme }) => ({
+  "&.MuiAccordion-root": {
+    border: "1px solid rgba(0, 0, 0, .125)",
+    boxShadow: "none",
+    "&:not(:last-child)": {
+      borderBottom: 0,
+    },
+    "&:before": {
+      display: "none",
+    },
+    "&.Mui-expanded": {
+      margin: "auto",
+    },
+  },
+  "&.Mui-expanded":{}
+}));**/
+
 const AccordionSummary = withStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.primary.main,
@@ -45,6 +62,24 @@ const AccordionSummary = withStyles((theme) => ({
   },
   expanded: {},
 }))(MuiAccordionSummary);
+
+/**const AccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
+  "&.MuiAccordionSummary-root": {
+    backgroundColor: theme.palette.primary.main,
+    borderBottom: "1px solid rgba(0, 0, 0, .125)",
+    marginBottom: -1,
+    minHeight: 56,
+    "&.Mui-expanded": {
+      minHeight: 56,
+    },
+  },
+  "&.MuiAccordionSummary-content": {
+    '& .Mui-expanded': {
+      margin: "12px 0 !important",
+    },
+  },
+  "&.Mui-expanded":{}
+}));**/
 
 const AccordionDetails = withStyles((theme) => ({
   root: {

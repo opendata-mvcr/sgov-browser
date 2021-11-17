@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useRouteQuery from "../hooks/useRouteQuery";
 import { useSearch, SearchResult, SearchTerm } from "../api/WordsAPI";
-import _ from "lodash";
+import {find} from "lodash";
 import { Box, Container, Typography } from "@mui/material";
 import TermResult from "./TermResult";
 import Loader from "./Loader";
@@ -17,7 +17,7 @@ const DisambiguationPage: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const item = _.find<SearchResult>(data, { label: wordLabel ?? "" });
+      const item = find<SearchResult>(data, { label: wordLabel ?? "" });
       if (item) {
         setTerms(item.items);
       }

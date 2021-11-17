@@ -15,6 +15,8 @@ const filterOptions = (options: SearchResult[]) => {
   return options.slice(0, OPTIONS_LIMIT) as SearchResult[];
 };
 
+//TODO: Remove makeStyles -> do styled() instead
+
 const useStyles = makeStyles((theme) => ({
   inputRoot: (props: SearchBarProps) => ({
     border: "1px solid #e2e2e1",
@@ -52,14 +54,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const useOtherStyles = makeStyles(() => ({
-  icon: {
-    color: "gray",
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-}));
 
 interface SearchBarProps {
   size: "small" | "large";
@@ -80,9 +74,15 @@ const InputTextField = styled(TextField)({
   },
 });
 
+const MagnifyingGlass = styled(SearchIcon)({
+  color: "gray",
+  "&:hover": {
+    cursor: "pointer",
+  },
+});
+
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
-  const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
@@ -137,9 +137,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       {isLoading ? (
         <CircularProgress color="inherit" size={20} />
       ) : (
-        <SearchIcon
+        <MagnifyingGlass
           fontSize={props.size === "small" ? "medium" : "large"}
-          className={otherClasses.icon}
           onClick={() => {
             if (!(inputValue === undefined || inputValue === "")) {
               onChangeHandler(inputValue);

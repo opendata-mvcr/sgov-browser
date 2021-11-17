@@ -1,35 +1,27 @@
 import React from "react";
-import { Box, Container, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import { Box, Container, styled, Typography } from "@mui/material";
 import RouteLink from "./RouteLink";
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: "flex",
-    flexDirection: "row",
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
-    },
-  },
-  item: {
-    marginRight: theme.spacing(3),
+const Wrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  flexGrow: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: theme.spacing(3),
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
   },
 }));
 
 const SuggestedWords: React.FC = () => {
-  const classes = useStyles();
-
   //Only for development purposes, need to discuss how to fetch this personalized data
   const words = ["Agenda", "Budova", "Vozidlo", "Závada"];
 
   return (
     <Container>
-      <Box className={classes.wrapper}>
-        <Typography variant="h6" className={classes.item} color="textSecondary">
+      <Wrapper>
+        <Typography variant="h6" sx={{ mr: 3 }} color="textSecondary">
           Navrhovaná slova:
         </Typography>
 
@@ -37,14 +29,14 @@ const SuggestedWords: React.FC = () => {
           <RouteLink
             key={word}
             to={`/search?label=${word}`}
-            className={classes.item}
+            sx={{ mr: 3 }}
             color="textSecondary"
             variant="h6"
           >
             {word}
           </RouteLink>
         ))}
-      </Box>
+      </Wrapper>
     </Container>
   );
 };

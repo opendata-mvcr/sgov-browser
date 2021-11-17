@@ -6,12 +6,6 @@ import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";
 import { TermInterface } from "../api/data/terms";
 
-export interface TermInfo {
-  uri: string;
-  label: { cs?: string };
-  vocabulary: string;
-}
-
 interface HierarchyProps {
   term: TermInterface;
 }
