@@ -1,6 +1,12 @@
 import React, { ReactElement } from "react";
-import { Box, BoxProps, Container, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Box,
+  BoxProps,
+  Container,
+  Grid,
+  styled,
+  Typography,
+} from "@mui/material";
 
 interface DefinitionWrapperProps {
   definition?: string;
@@ -9,27 +15,22 @@ interface DefinitionWrapperProps {
 }
 
 const defaultProps = {
-  borderColor: "primary.main",
   minHeight: 144,
   px: 3,
   py: 2,
   border: 2,
-  borderRadius: 16,
+  borderRadius: "16px",
 };
 
-const useStyles = makeStyles((theme) => ({
-  definitionImageWrapper: {
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
+const IllustrationWrapper = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
   },
 }));
 
 const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
   props
 ) => {
-  const classes = useStyles();
-
   return (
     <Container>
       <Box px={2} mt={4}>
@@ -37,6 +38,7 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
           <Grid item sm={10} xs={12}>
             <Box
               {...defaultProps}
+              sx={{ borderColor: "primary.main" }}
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -56,9 +58,9 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
               )}
             </Box>
           </Grid>
-          <Grid item sm={2} className={classes.definitionImageWrapper}>
+          <IllustrationWrapper item sm={2}>
             {props.illustration}
-          </Grid>
+          </IllustrationWrapper>
         </Grid>
       </Box>
     </Container>

@@ -13,13 +13,13 @@ export const TermBaseSchema = {
       "@type": popisDat["slovník"],
       label: {
         "@id": dcterms.title,
-        "@meta": ["@optional"],
+        "@optional": true,
       },
     },
   },
   definition: {
     "@id": skos.definition,
-    "@meta": "@optional",
+    "@optional": true,
   },
 } as const;
 
@@ -27,20 +27,23 @@ const TermSchema = {
   ...TermBaseSchema,
   altLabels: {
     "@id": skos.altLabel,
-    "@meta": ["@array", "@optional"],
+    "@optional": true,
+    "@array": true,
   },
   source: {
     "@id": dcterms.source,
-    "@meta": ["@optional"],
+    "@optional": true,
   },
   parentTerms: {
     "@id": skos.broader,
-    "@meta": ["@array", "@optional"],
+    "@optional": true,
+    "@array": true,
     "@context": TermBaseSchema,
   },
   subTerms: {
     "@id": skos.narrower,
-    "@meta": ["@array", "@optional"],
+    "@optional": true,
+    "@array": true,
     "@context": TermBaseSchema,
   },
 } as const;

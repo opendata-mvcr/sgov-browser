@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { useTerm } from "../api/TermAPI";
 import NoResults from "./NoResults";
 import TermHeader from "./TermHeader";
@@ -13,7 +13,7 @@ import { isTermEmpty } from "../utils/TermUtils";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
-  const { data, isLoading, isSuccess, isError } = useTerm(term.uri);
+  const { data, isLoading, isSuccess, isError } = useTerm(term.$id);
 
   if (isLoading) return <Loader />;
 

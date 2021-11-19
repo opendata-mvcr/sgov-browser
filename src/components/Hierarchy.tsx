@@ -1,16 +1,10 @@
 import React from "react";
 import CurrentTerm from "./CurrentTerm";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import { NormalEnd } from "./HierarchyItem";
 import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";
 import { TermInterface } from "../api/data/terms";
-
-export interface TermInfo {
-  uri: string;
-  label: { cs?: string };
-  vocabulary: string;
-}
 
 interface HierarchyProps {
   term: TermInterface;
@@ -34,7 +28,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
             <HierarchyParents
               items={parentTerms}
               level={0}
-              vocabularyDefault={term.vocabulary["@id"]}
+              vocabularyDefault={term.vocabulary.$id}
             />
             <CurrentTerm
               level={currIndex}
@@ -44,7 +38,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
             <HierarchyChildren
               items={subTerms}
               level={currIndex + 1}
-              vocabularyDefault={term.vocabulary["@id"]}
+              vocabularyDefault={term.vocabulary.$id}
             />
           </Box>
         </Box>

@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import { CircularProgress, InputAdornment } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import makeStyles from "@mui/styles/makeStyles";
+import SearchIcon from "@mui/icons-material/Search";
+import { CircularProgress, InputAdornment, styled } from "@mui/material";
 import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
@@ -15,6 +15,10 @@ const filterOptions = (options: SearchResult[]) => {
   return options.slice(0, OPTIONS_LIMIT) as SearchResult[];
 };
 
+//TODO: Remove makeStyles -> do styled() instead
+//For now it doesn't behave as expected with styled()
+//I will try fixing in the future, but I don't want to delay the PR any further
+
 const useStyles = makeStyles((theme) => ({
   inputRoot: (props: SearchBarProps) => ({
     border: "1px solid #e2e2e1",
@@ -23,16 +27,25 @@ const useStyles = makeStyles((theme) => ({
     fontSize: props.size === "large" ? 26 : 16,
     height: props.size === "large" ? 63 : 38,
     backgroundColor: "#fcfcfb",
-    paddingLeft: props.size === "large" ? theme.spacing(6) : theme.spacing(1),
+    paddingTop: "0px !important",
+    paddingBottom: "0px !important",
+    paddingLeft:
+      props.size === "large"
+        ? `${theme.spacing(6)} !important`
+        : `${theme.spacing(1)} !important`,
     paddingRight:
       props.size === "large"
-        ? `${theme.spacing(6)}px !important`
-        : `${theme.spacing(1)}px !important`,
+        ? `${theme.spacing(6)} !important`
+        : `${theme.spacing(1)} !important`,
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     "&:hover": {
       backgroundColor: "#fff",
     },
   }),
+  input: {
+    paddingTop: "0px !important",
+    paddingBottom: "0px !important",
+  },
   paper: {
     color: theme.palette.text.primary,
   },
@@ -43,23 +56,35 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const useOtherStyles = makeStyles(() => ({
-  icon: {
-    color: "gray",
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-}));
 
 interface SearchBarProps {
   size: "small" | "large";
   initialValue?: string;
 }
 
+const InputTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "white",
+    },
+    "&:hover fieldset": {
+      borderColor: "white",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "white",
+    },
+  },
+});
+
+const MagnifyingGlass = styled(SearchIcon)({
+  color: "gray",
+  "&:hover": {
+    cursor: "pointer",
+  },
+});
+
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
-  const otherClasses = useOtherStyles();
   const [inputValue, setInputValue] = useState<string | undefined>();
   const { data = [], isLoading } = useSearch(inputValue);
   const history = useHistory();
@@ -114,9 +139,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       {isLoading ? (
         <CircularProgress color="inherit" size={20} />
       ) : (
-        <SearchIcon
+        <MagnifyingGlass
           fontSize={props.size === "small" ? "medium" : "large"}
-          className={otherClasses.icon}
           onClick={() => {
             if (!(inputValue === undefined || inputValue === "")) {
               onChangeHandler(inputValue);
@@ -144,19 +168,20 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       getOptionLabel={(option: SearchResult | string) =>
         typeof option === "string" ? option : option.label
       }
-      renderOption={(option: SearchResult) => (
-        <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+      renderOption={(props, option: SearchResult, { selected }) => (
+        <li {...props}>
+          <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+        </li>
       )}
       onInputChange={debouncedChangeHandler}
       ListboxProps={{ style: { maxHeight: "500px" } }}
       renderInput={(params) => (
-        <TextField
+        <InputTextField
           {...params}
           placeholder="Zadejte hledané slovo"
           InputProps={{
             ...params.InputProps,
             endAdornment: endAdornment,
-            disableUnderline: true,
           }}
         />
       )}

@@ -1,4 +1,4 @@
-import { createTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
 const primary = "#00BC58";
 const secondary = "#3F3D56";

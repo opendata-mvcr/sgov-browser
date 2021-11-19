@@ -2,7 +2,7 @@ import React from "react";
 import { useVocabularyTerms } from "../api/VocabularyAPI";
 import Loader from "./Loader";
 import { DetailItemWrapper } from "./Hierarchy";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
 
 interface VocabularyTermsProps {

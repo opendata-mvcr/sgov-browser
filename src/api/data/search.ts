@@ -1,16 +1,26 @@
 import { SchemaInterface, createResource } from "@ldkit/core";
-import { xsd, skos, dcterms } from "@ldkit/namespaces";
+import { xsd, skos, dcterms, ldkit } from "@ldkit/namespaces";
 import { namedNode as n, literal as l } from "@ldkit/rdf";
 import { $ } from "@ldkit/sparql";
 import { lucene, luceneInstance, popisDat } from "./namespaces";
 import { context } from "./context";
 
+const VocabularySchema = {
+  "@type": skos.Concept,
+  title: dcterms.title,
+};
+
 const SearchSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,
-  definition: skos.definition,
-  vocabulary: popisDat["je-pojmem-ze-slovníku"],
-  vocabularyTitle: dcterms.title,
+  definition: {
+    "@id": skos.definition,
+    "@optional": true,
+  },
+  vocabulary: {
+    "@id": popisDat["je-pojmem-ze-slovníku"],
+    "@context": VocabularySchema,
+  },
   snippetField: lucene.snippetField,
   snippetText: lucene.snippetText,
   score: {
@@ -45,14 +55,14 @@ export const getSearchQuery = (text: string) => {
 
   const query = $`
 CONSTRUCT {
-  ?entity a ${n(skos.Concept)} ;
+  ?entity a ${n(skos.Concept)} , ${n(ldkit.Resource)} ;
           ${n(skos.prefLabel)} ?label ;
           ${n(skos.definition)} ?definition ;
           ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary ;
-          ${n(dcterms.title)} ?vocabularyTitle ;
           ${n(lucene.snippetText)} ?snippetText ;
           ${n(lucene.snippetField)} ?snippetField ;
           ${n(lucene.score)} ?score .
+  ?vocabulary ${n(dcterms.title)} ?vocabularyTitle .
 } WHERE {
   SELECT DISTINCT ?entity ?label ?definition ?vocabulary ?vocabularyTitle ?snippetField ?snippetText ?score {
     { ?search a ${n(luceneInstance.label_index)} } 

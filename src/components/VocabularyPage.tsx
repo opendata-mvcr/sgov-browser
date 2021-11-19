@@ -2,7 +2,7 @@ import React from "react";
 import useURLVocabulary from "../hooks/useURLVocabulary";
 import { useVocabulary } from "../api/VocabularyAPI";
 import Loader from "./Loader";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import NoResults from "./NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
@@ -22,7 +22,7 @@ const VocabularyPage: React.FC = () => {
       <Box mb={2}>
         <VocabularyHeader vocabulary={data} />
         <VocabularyDefinition description={data.description} />
-        <VocabularyTerms vocabularyIri={data["@id"]} />
+        <VocabularyTerms vocabularyIri={data.$id} />
       </Box>
     );
   }
