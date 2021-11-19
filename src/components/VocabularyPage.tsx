@@ -2,7 +2,7 @@ import React from "react";
 import useURLVocabulary from "../hooks/useURLVocabulary";
 import { useVocabulary } from "../api/VocabularyAPI";
 import Loader from "./Loader";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import NoResults from "./NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";

@@ -1,28 +1,20 @@
-import { Box, Container, Grid, Typography } from "@material-ui/core";
+import { Box, Container, Grid, styled, Typography } from "@mui/material";
 import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
 import SuggestedWords from "./SuggestedWords";
 import SearchBar from "./SearchBar";
-import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  heroImage: {
-    width: "80%",
-    maxHeight: 330,
+const HeroWrapper = styled(Grid)(({ theme }) => ({
+  textAlign: "right",
+  [theme.breakpoints.down("lg")]: {
+    textAlign: "left",
   },
-  heroWrapper: {
-    textAlign: "right",
-    [theme.breakpoints.down("md")]: {
-      textAlign: "left",
-    },
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
   },
 }));
 
 const HeroSection: React.FC = () => {
-  const classes = useStyles();
   return (
     <Box bgcolor="primary.main" py={3} style={{ flex: 1 }}>
       <Container component="section" maxWidth="lg">
@@ -35,9 +27,14 @@ const HeroSection: React.FC = () => {
               Stačí vědět, kde hledat.
             </Typography>
           </Grid>
-          <Grid item md={4} className={classes.heroWrapper}>
-            <Hero className={classes.heroImage} />
-          </Grid>
+          <HeroWrapper item md={4}>
+            <Hero
+              style={{
+                width: "80%",
+                maxHeight: 330,
+              }}
+            />
+          </HeroWrapper>
           <Grid item md={10} xs={12}>
             <SearchBar size="large" />
           </Grid>
