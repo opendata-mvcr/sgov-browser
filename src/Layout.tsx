@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Box, styled } from "@material-ui/core";
+import { Box, styled } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 const FullSizedBox = styled(Box)({
