@@ -8,6 +8,8 @@ import { Hierarchy } from "./Hierarchy";
 import useURLTerm from "../hooks/useURLTerm";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
+import EmptyTerm from "./EmptyTerm";
+import { isTermEmpty } from "../utils/TermUtils";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
@@ -18,15 +20,22 @@ const TermPage: React.FC = () => {
   if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
-    return (
-      <Box mb={2}>
-        <TermHeader term={data} />
+    const content = isTermEmpty(data) ? (
+      <EmptyTerm />
+    ) : (
+      <>
         <TermDefinition term={data} />
         <Hierarchy term={data} />
+      </>
+    );
+    return (
+      <Box>
+        <TermHeader term={data} />
+        {content}
       </Box>
     );
   }
+
   return <NoResults />;
 };
-
 export default TermPage;
