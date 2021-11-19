@@ -7,6 +7,8 @@ import makeStyles from "@mui/styles/makeStyles";
 import { VocabularyTermInterface } from "../api/data/vocabularies";
 import { generateTermRoute } from "../utils/Utils";
 
+//Unfortunately the makeStyles performs better than styled
+//Even though makeStyles is considered legacy, I would leave it here for now
 const useStyles = makeStyles(() => ({
   wrapper: {
     borderBottom: "1px solid #e0e0e0",

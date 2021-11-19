@@ -16,6 +16,8 @@ const filterOptions = (options: SearchResult[]) => {
 };
 
 //TODO: Remove makeStyles -> do styled() instead
+//For now it doesn't behave as expected with styled()
+//I will try fixing in the future, but I don't want to delay the PR any further
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: (props: SearchBarProps) => ({

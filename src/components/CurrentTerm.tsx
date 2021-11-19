@@ -1,18 +1,18 @@
 import React from "react";
 import HierarchyItem from "./HierarchyItem";
-import {Box, Paper, styled, Typography} from "@mui/material";
+import { Box, Paper, styled, Typography } from "@mui/material";
 import { TermAccordionProps } from "./TermAccordion";
 
 const CurrentTermBox = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.secondary.main,
-    marginBottom: -1,
-    minHeight: 56,
-    display: "flex",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(7),
-    alignItems: "center",
-    paddingTop: 12,
-    paddingBottom: 12,
+  backgroundColor: theme.palette.secondary.main,
+  marginBottom: -1,
+  minHeight: 56,
+  display: "flex",
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(7),
+  alignItems: "center",
+  paddingTop: 12,
+  paddingBottom: 12,
 }));
 
 const CurrentTerm: React.FC<TermAccordionProps> = (props) => {
