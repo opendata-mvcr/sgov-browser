@@ -13,9 +13,9 @@ const HierarchyChildren: React.FC<ExpandableItemsProps> = (props) => {
           <TermAccordion
             level={props.level}
             term={item}
-            key={item["@id"]}
+            key={item.$id}
             connector={connector}
-            showVocabulary={props.vocabularyDefault !== item.vocabulary["@id"]}
+            showVocabulary={props.vocabularyDefault !== item.vocabulary.$id}
           />
         );
       })}

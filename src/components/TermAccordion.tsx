@@ -70,10 +70,7 @@ export interface TermAccordionProps {
 
 export const TermAccordion: React.FC<TermAccordionProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const routeProps = generateTermRoute({
-    uri: props.term["@id"],
-    vocabulary: props.term.vocabulary["@id"],
-  });
+  const routeProps = generateTermRoute(props.term);
   return (
     <HierarchyItem level={props.level} connector={props.connector}>
       <Accordion

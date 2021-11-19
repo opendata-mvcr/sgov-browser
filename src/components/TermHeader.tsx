@@ -10,12 +10,12 @@ export interface DetailHeaderProps {
 }
 
 const TermHeader: React.FC<DetailHeaderProps> = ({ term }) => {
-  const { "@id": iri, label, altLabels, vocabulary } = term;
+  const { $id, label, altLabels, vocabulary } = term;
 
-  const vocabularyRoute = generateVocabularyRoute(vocabulary["@id"]);
+  const vocabularyRoute = generateVocabularyRoute(vocabulary.$id);
   const above = (
     <RouteLink to={vocabularyRoute} variant="h5" color="textSecondary">
-      {vocabulary.label || vocabulary["@id"]}
+      {vocabulary.label || vocabulary.$id}
     </RouteLink>
   );
   const below = <AltLabel altLabels={altLabels} />;
@@ -25,7 +25,7 @@ const TermHeader: React.FC<DetailHeaderProps> = ({ term }) => {
       aboveLabel={above}
       label={label}
       belowLabel={below}
-      iri={iri}
+      iri={$id}
     />
   );
 };

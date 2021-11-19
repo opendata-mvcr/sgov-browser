@@ -11,7 +11,7 @@ import ErrorPage from "./ErrorPage";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
-  const { data, isLoading, isSuccess, isError } = useTerm(term.uri);
+  const { data, isLoading, isSuccess, isError } = useTerm(term.$id);
 
   if (isLoading) return <Loader />;
 

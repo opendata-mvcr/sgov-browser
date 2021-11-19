@@ -28,7 +28,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
             <HierarchyParents
               items={parentTerms}
               level={0}
-              vocabularyDefault={term.vocabulary["@id"]}
+              vocabularyDefault={term.vocabulary.$id}
             />
             <CurrentTerm
               level={currIndex}
@@ -38,7 +38,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
             <HierarchyChildren
               items={subTerms}
               level={currIndex + 1}
-              vocabularyDefault={term.vocabulary["@id"]}
+              vocabularyDefault={term.vocabulary.$id}
             />
           </Box>
         </Box>

@@ -11,8 +11,10 @@ const useURLTerm = () => {
   //It is necessary to create the uri here (it is used for caching)
   const uri = createTermUri(vocabularyName, termName, namespace);
   const result: TermBase = {
-    uri: uri,
-    vocabulary: `${namespace}${vocabularyName}`,
+    $id: uri,
+    vocabulary: {
+      $id: `${namespace}${vocabularyName}`,
+    },
   };
 
   return result;

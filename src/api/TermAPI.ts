@@ -3,50 +3,20 @@ import { firstValueFrom } from "rxjs";
 
 import { TermBaseInterface, Terms } from "./data/terms";
 
-// TODO: remove this interface / move it somewhere else
-export interface TermBase {
-  uri: string;
-  vocabulary: string;
-}
-
-const materializeVocabulary = (
-  vocabulary: TermBaseInterface["vocabulary"]
-): TermBaseInterface["vocabulary"] => ({
-  "@id": vocabulary["@id"],
-  "@type": vocabulary["@type"],
-  label: vocabulary.label,
-});
-
-const materializeTerm = (term: TermBaseInterface): TermBaseInterface => ({
-  "@id": term["@id"],
-  "@type": term["@type"],
-  label: term.label,
-  definition: term.definition,
-  vocabulary: materializeVocabulary(term.vocabulary),
-});
+// This is a supertype of TermBaseInterface containing term id and vocabulary id
+export type TermBase = Pick<TermBaseInterface, "$id"> & {
+  vocabulary: Pick<TermBaseInterface["vocabulary"], "$id">;
+};
 
 export const getTerm = async (termIri: string) => {
-  const data = await firstValueFrom(Terms.findByIris([termIri]));
+  const data = await firstValueFrom(Terms.findByIri(termIri));
 
-  if (data.length < 1) {
+  if (!data) {
     // Term not found
     throw new Error("404 Term not found");
   }
 
-  const item = data[0];
-
-  // Materialize data to actual JS objects for React Query support
-  return {
-    "@id": item["@id"],
-    "@type": item["@type"],
-    label: item.label,
-    altLabels: item.altLabels,
-    definition: item.definition,
-    source: item.source,
-    parentTerms: item.parentTerms.map(materializeTerm),
-    subTerms: item.subTerms.map(materializeTerm),
-    vocabulary: materializeVocabulary(item.vocabulary),
-  };
+  return data;
 };
 
 export const useTerm = (termIri: string) => {

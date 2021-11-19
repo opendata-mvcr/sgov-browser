@@ -7,21 +7,14 @@ import {
 } from "./data/vocabularies";
 
 export const getVocabulary = async (vocabularyIri: string) => {
-  const data = await firstValueFrom(Vocabularies.findByIris([vocabularyIri]));
+  const data = await firstValueFrom(Vocabularies.findByIri(vocabularyIri));
 
-  if (data.length < 1) {
+  if (!data) {
     // Vocabulary not found
     throw new Error("404 Vocabulary not found");
   }
 
-  const item = data[0];
-
-  return {
-    "@id": item["@id"],
-    "@type": item["@type"],
-    label: item.label,
-    description: item.description,
-  };
+  return data;
 };
 
 export const useVocabulary = (vocabularyUri: string) => {
@@ -36,18 +29,11 @@ export const useVocabulary = (vocabularyUri: string) => {
 };
 
 const getVocabularyTerms = async (vocabularyIri: string) => {
-  const dynamicData = await firstValueFrom(
+  const data = await firstValueFrom(
     VocabularyTerms.query(getVocabularyTermsQuery(vocabularyIri))
   );
 
-  // Materialize data to actual JS objects so that we can manipulate it with lodash
-  const data = dynamicData
-    .map((item) => ({
-      "@id": item["@id"],
-      "@type": item["@type"],
-      label: item.label,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  data.sort((a, b) => a.label.localeCompare(b.label));
 
   return data;
 };

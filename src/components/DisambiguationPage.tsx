@@ -48,7 +48,7 @@ const WordContent: React.FC<WordContentProps> = (props) => {
       <Box pt={2} pb={4}>
         <NumberOfResults amount={props.terms.length} />
         {props.terms.map((term) => {
-          return <TermResult key={term.uri} {...term} />;
+          return <TermResult key={term.$id} {...term} />;
         })}
       </Box>
     </Container>

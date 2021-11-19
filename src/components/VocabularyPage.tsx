@@ -22,7 +22,7 @@ const VocabularyPage: React.FC = () => {
       <Box mb={2}>
         <VocabularyHeader vocabulary={data} />
         <VocabularyDefinition description={data.description} />
-        <VocabularyTerms vocabularyIri={data["@id"]} />
+        <VocabularyTerms vocabularyIri={data.$id} />
       </Box>
     );
   }

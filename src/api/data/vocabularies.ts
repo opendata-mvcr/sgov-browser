@@ -1,5 +1,5 @@
 import { createResource, SchemaInterface } from "@ldkit/core";
-import { dcterms, skos } from "@ldkit/namespaces";
+import { dcterms, skos, ldkit } from "@ldkit/namespaces";
 import { namedNode as n } from "@ldkit/rdf";
 import { $ } from "@ldkit/sparql";
 
@@ -19,7 +19,7 @@ const VocabularySchema = {
   },
   description: {
     "@id": dcterms.description,
-    "@meta": ["@optional"],
+    "@optional": true,
   },
 } as const;
 
@@ -36,7 +36,7 @@ export const VocabularyTerms = createResource(VocabularyTermSchema, context);
 export const getVocabularyTermsQuery = (vocabularyIri: string) => {
   const query = $`
   CONSTRUCT {
-    ?iri a ${n(skos.Concept)} ;
+    ?iri a ${n(skos.Concept)} , ${n(ldkit.Resource)} ;
       ${n(skos.prefLabel)} ?label ;
       ${n(skos.definition)} ?definition .
   }
