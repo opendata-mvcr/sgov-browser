@@ -49,7 +49,12 @@
     ]
   },
   "browserslist": [
-    "> 0.5%, last 2 versions, Firefox ESR, not dead, not IE 11, maintained node versions"
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not IE 11",
+    "maintained node versions"
   ],
   "devDependencies": {
     "prettier": "2.3.2"

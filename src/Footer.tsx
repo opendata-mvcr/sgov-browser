@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Grid, styled, Typography } from "@mui/material";
+import { Box, Container, styled, Typography } from "@mui/material";
 import opzLogo from "./assets/opz_logo.svg";
 import { ReactComponent as FooterImage } from "./assets/footer_image.svg";
 
