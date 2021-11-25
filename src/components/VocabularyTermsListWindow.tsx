@@ -18,7 +18,6 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     fontSize: "1.25rem",
-    fontFamily: "Poppins,sans-serif",
     fontWeight: 500,
     lineHeight: "1.6",
     display: "block",
