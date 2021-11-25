@@ -21,7 +21,7 @@ const SuggestedWords: React.FC = () => {
   return (
     <Container>
       <Wrapper>
-        <Typography variant="h6" sx={{ mr: 3 }} color="textSecondary">
+        <Typography variant="h5" sx={{ mr: 3 }} color="textSecondary">
           Navrhovaná slova:
         </Typography>
 
@@ -31,7 +31,7 @@ const SuggestedWords: React.FC = () => {
             to={`/search?label=${word}`}
             sx={{ mr: 3 }}
             color="textSecondary"
-            variant="h6"
+            variant="h5"
           >
             {word}
           </RouteLink>
