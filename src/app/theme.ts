@@ -26,8 +26,6 @@ const theme = createTheme({
     fontFamily: [
       "-apple-system",
       "BlinkMacSystemFont",
-      '"Open Sans"',
-      "sans-serif",
       '"Segoe UI"',
       "Roboto",
       '"Helvetica Neue"',
