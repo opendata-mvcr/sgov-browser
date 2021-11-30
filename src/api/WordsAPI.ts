@@ -22,6 +22,8 @@ const getSearchResults = async (word: string | undefined) => {
         total_score: _.maxBy(objs, "score")?.score,
         items: [...objs],
         isWord: objs.length !== 1,
+        isMatchInDefinition: objs[0].snippetField === "definition",
+        snippetText: objs[0].snippetText,
         // vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
         vocabularies: objs.reduce((map, item) => {
           map[item.vocabulary.$id] = item.vocabulary.title;
