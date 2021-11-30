@@ -8,6 +8,7 @@ import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
 import { generateTermRoute } from "../utils/Utils";
+import { generateStyledSnippet } from "../utils/TermUtils";
 
 const OPTIONS_LIMIT = 7;
 
@@ -170,7 +171,21 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       }
       renderOption={(props, option: SearchResult, { selected }) => (
         <li {...props}>
-          <div dangerouslySetInnerHTML={{ __html: option.displayText }}></div>
+          <div
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+            dangerouslySetInnerHTML={{
+              __html:
+                option.displayText +
+                generateStyledSnippet(
+                  option.snippetText,
+                  option.isMatchInDefinition
+                ),
+            }}
+          />
         </li>
       )}
       onInputChange={debouncedChangeHandler}

@@ -69,7 +69,7 @@ CONSTRUCT {
     UNION 
     { ?search a ${n(luceneInstance.defcom_index)} }
     ?search ${n(lucene.query)} ${l(wildcardString)} ;
-            ${n(lucene.snippetSize)} 2000 ;
+            ${n(lucene.snippetSize)} 80 ;
             ${n(lucene.entities)} ?entity . 
     GRAPH ?g {
       ?entity a ${n(skos.Concept)} ;
