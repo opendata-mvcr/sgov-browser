@@ -23,8 +23,11 @@ const getSearchResults = async (word: string | undefined) => {
         items: [...objs],
         isWord: objs.length !== 1,
         isMatchInDefinition: objs[0].snippetField === "definition",
-        snippetText: objs[0].snippetText,
-        // vocabularies: _.map(_.uniqBy(objs, "vocabulary"), "vocabulary"),
+        //When there is multiple matches, we cannot decide which snippet to show
+        snippetText:
+          objs.length !== 1
+            ? "<em>Nalezeno více shod</em>"
+            : objs[0].snippetText,
         vocabularies: objs.reduce((map, item) => {
           map[item.vocabulary.$id] = item.vocabulary.title;
           return map;
