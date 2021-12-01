@@ -92,7 +92,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   const searchResultLabelMap = useMemo(() => {
     return data.reduce((map, item) => {
-      map.set(item.label.toLocaleLowerCase(), item);
+      map.set(item.label, item);
       return map;
     }, new Map<string, SearchResult>());
   }, [data]);
@@ -102,7 +102,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       return;
     }
     const label = typeof option === "string" ? option : option.label;
-    const matchedOption = searchResultLabelMap.get(label.toLocaleLowerCase());
+    const matchedOption = searchResultLabelMap.get(label);
     if (!matchedOption) {
       // user typed a query that does not match any suggested label
       history.push(`/search?label=${label}`);

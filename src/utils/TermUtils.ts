@@ -16,7 +16,7 @@ export const generateStyledSnippet = (
 ) => {
   if (!isMatchInDefinition) return "";
   // If snippet is shorter than defined lucene length, there is no need for the ellipses at the end
-  return snippetText.length < 80
+  return snippetText.length < 100
     ? `<i> - ${snippetText}</i>`
     : `<i> - ${snippetText}</i>&hellip;`;
 };
