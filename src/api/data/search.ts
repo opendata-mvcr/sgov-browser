@@ -97,3 +97,50 @@ CONSTRUCT {
 
   return query;
 };
+
+//Even though, this method might look very similar to the method above
+//I think it is better to have them separated => more control over scoring and we ensure the required data type very easily
+export const getVocabularySearchQuery = (text: string) => {
+  const wildcardString = getWildcardString(text);
+  const exactMatchString = getExactMatchString(text);
+
+  const query = $`
+CONSTRUCT {
+  ?entity a ${n(popisDat["slovník"])} , ${n(ldkit.Resource)} ;
+          ${n(dcterms.title)} ?label ;
+          ${n(dcterms.description)} ?definition ;
+          ${n(lucene.snippetText)} ?snippetText ;
+          ${n(lucene.snippetField)} ?snippetField ;
+          ${n(lucene.score)} ?score .
+} WHERE {
+  SELECT DISTINCT ?entity ?label ?definition ?snippetField ?snippetText ?score {
+    { ?search a ${n(luceneInstance.label_index)} } 
+    UNION 
+    { ?search a ${n(luceneInstance.defcom_index)} }
+    ?search ${n(lucene.query)} ${l(wildcardString)} ;
+            ${n(lucene.snippetSize)} 100 ;
+            ${n(lucene.entities)} ?entity . 
+    GRAPH ?g {
+      ?entity a ${n(popisDat["slovník"])} ;
+              ${n(dcterms.title)} ?label .
+    }
+    OPTIONAL { ?entity ${n(dcterms.description)} ?definition . }
+    ?entity ${n(lucene.score)} ?initScore ;
+            ${n(lucene.snippets)} _:s .
+    _:s ${n(lucene.snippetText)} ?snippetText ;
+        ${n(lucene.snippetField)} ?snippetField .
+    FILTER (lang(?label) = "cs")
+    BIND(IF(lcase(str(?snippetText)) = lcase(str(${l(
+      exactMatchString
+    )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
+    text
+  )}), IF(?snippetField = "title", ?initScore * 1.5, ?initScore), ?initScore)) as ?exactMatchScore)
+    BIND(IF(?snippetField = "title", ?exactMatchScore * 2, IF(?snippetField = "description", ?exactMatchScore * 1.2, ?exactMatchScore)) as ?score)
+  }
+  ORDER BY desc(?score)
+  LIMIT 100
+}
+`.toString();
+
+  return query;
+};

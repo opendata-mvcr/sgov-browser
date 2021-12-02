@@ -1,14 +1,16 @@
 import { useQuery } from "react-query";
 import _ from "lodash";
 import { firstValueFrom } from "rxjs";
-import { getSearchQuery, SearchResource } from "./data/search";
+import {getSearchQuery, getVocabularySearchQuery, SearchResource} from "./data/search";
+import {Vocabularies} from "./data/vocabularies";
 
 const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
   const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
-
+  const vocabularyData = await firstValueFrom(Vocabularies.query(getVocabularySearchQuery(word)))
+  console.log(vocabularyData);
   // Groups results with the same label
   // adds isWord flag when there are multiple
   const result = _(data)
