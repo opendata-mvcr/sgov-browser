@@ -6,7 +6,7 @@ import { lucene, luceneInstance, popisDat } from "./namespaces";
 import { context } from "./context";
 
 const VocabularySchema = {
-  "@type": skos.Concept,
+  "@type": popisDat["slovník"],
   title: dcterms.title,
 };
 
@@ -29,9 +29,31 @@ const SearchSchema = {
   },
 } as const;
 
+const VocabularySearchSchema = {
+  "@type": popisDat["slovník"],
+  label: {
+    "@id": dcterms.title,
+  },
+  description: {
+    "@id": dcterms.description,
+    "@optional": true,
+  },
+  snippetField: lucene.snippetField,
+  snippetText: lucene.snippetText,
+  score: {
+    "@id": lucene.score,
+    "@type": xsd.double,
+  },
+} as const;
+
 export type SearchInterface = SchemaInterface<typeof SearchSchema>;
 
 export const SearchResource = createResource(SearchSchema, context);
+
+export const VocabularySearchResource = createResource(
+  VocabularySearchSchema,
+  context
+);
 
 // Search query utils
 const getWildcardString = (text: string) => {

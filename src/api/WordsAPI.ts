@@ -1,29 +1,36 @@
 import { useQuery } from "react-query";
 import _ from "lodash";
 import { firstValueFrom } from "rxjs";
-import {getSearchQuery, getVocabularySearchQuery, SearchResource} from "./data/search";
-import {Vocabularies} from "./data/vocabularies";
+import {
+  getSearchQuery,
+  getVocabularySearchQuery,
+  SearchResource,
+  VocabularySearchResource,
+} from "./data/search";
+import { skos } from "@ldkit/namespaces";
 
 const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
   const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
-  const vocabularyData = await firstValueFrom(Vocabularies.query(getVocabularySearchQuery(word)))
-  console.log(vocabularyData);
+  const vocabularyData = await firstValueFrom(
+    VocabularySearchResource.query(getVocabularySearchQuery(word))
+  );
   // Groups results with the same label
   // adds isWord flag when there are multiple
   const result = _(data)
     .groupBy("label")
     .map((objs, key) => {
       return {
+        type: objs.length === 1 ? objs[0].$type : [skos.Collection],
         label: key,
         // include text with highlighted search string, should be the same for all objects with the same label
         displayText:
           objs[0].snippetField === "label" ? objs[0].snippetText : key,
         total_score: _.maxBy(objs, "score")?.score,
         items: [...objs],
-        isWord: objs.length !== 1,
+        //isWord: objs.length !== 1,
         isMatchInDefinition: objs[0].snippetField === "definition",
         //When there is multiple matches, we cannot decide which snippet to show
         snippetText:
@@ -36,10 +43,31 @@ const getSearchResults = async (word: string | undefined) => {
         }, {} as Record<string, string>),
       };
     })
-    .orderBy("total_score", "desc")
     .value();
 
-  return result;
+  //Because we have vocabulary results separated from the other results, we can modify whatever property we want
+  const result2 = _(vocabularyData)
+    .map((item) => {
+      return {
+        type: item.$type,
+        label: item.label,
+        displayText: item.label,
+        total_score: item.score,
+        items: [],
+        // isWord: false,
+        isMatchInDefinition: item.snippetField === "description",
+        snippetText: item.snippetText,
+        vocabularies: {
+          id: `${item.$id}`,
+        },
+      };
+    })
+    .value();
+
+  result.push(...result2);
+
+  const finalResult = _.orderBy(result, "total_score", "desc");
+  return finalResult;
 };
 
 // Type of a search result object - terms are aggregated by label
