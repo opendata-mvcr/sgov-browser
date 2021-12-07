@@ -7,8 +7,8 @@ import { CircularProgress, InputAdornment, styled } from "@mui/material";
 import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
-import { generateTermRoute } from "../utils/Utils";
-import { generateStyledSnippet } from "../utils/TermUtils";
+import SearchBarResult from "./SearchBarResult";
+import { generateRoute } from "../utils/SearchUtil";
 
 const OPTIONS_LIMIT = 7;
 
@@ -107,13 +107,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       // user typed a query that does not match any suggested label
       history.push(`/search?label=${label}`);
     } else {
-      // option selected
-      if (matchedOption.isWord) {
-        history.push(`/disambiguation?label=${matchedOption.label}`);
-      } else {
-        const prop = matchedOption.items[0];
-        history.push(generateTermRoute(prop));
-      }
+      const route = generateRoute({ ...matchedOption });
+      history.push(route);
     }
   };
 
@@ -171,21 +166,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       }
       renderOption={(props, option: SearchResult, { selected }) => (
         <li {...props}>
-          <div
-            style={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-            dangerouslySetInnerHTML={{
-              __html:
-                option.displayText +
-                generateStyledSnippet(
-                  option.snippetText,
-                  option.isMatchInDefinition
-                ),
-            }}
-          />
+          <SearchBarResult key={option.displayText} {...option} />
         </li>
       )}
       onInputChange={debouncedChangeHandler}
