@@ -35,7 +35,8 @@ const TypeIcon: React.FC<TypeIconProps> = ({ type, width, height }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      mr={1}
+      alignSelf="center"
+      mr={2}
       style={{ minHeight: 30, minWidth: 30, maxHeight: 30, maxWidth: 30 }}
     >
       {icon}

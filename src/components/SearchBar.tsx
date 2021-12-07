@@ -7,10 +7,8 @@ import { CircularProgress, InputAdornment, styled } from "@mui/material";
 import { useSearch, SearchResult } from "../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
-import { generateTermRoute, generateVocabularyRoute } from "../utils/Utils";
-import { popisDat } from "../api/data/namespaces";
 import SearchBarResult from "./SearchBarResult";
-import { skos } from "@ldkit/namespaces";
+import { generateRoute } from "../utils/SearchUtil";
 
 const OPTIONS_LIMIT = 7;
 
@@ -109,16 +107,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       // user typed a query that does not match any suggested label
       history.push(`/search?label=${label}`);
     } else {
-      if (matchedOption.type.includes(popisDat["slovník"])) {
-        history.push(generateVocabularyRoute(matchedOption.vocabularies["id"]));
-      }
-      // option selected
-      else if (matchedOption.type.includes(skos.Collection)) {
-        history.push(`/disambiguation?label=${matchedOption.label}`);
-      } else {
-        const prop = matchedOption.items[0];
-        history.push(generateTermRoute(prop));
-      }
+      const route = generateRoute({ ...matchedOption });
+      history.push(route);
     }
   };
 

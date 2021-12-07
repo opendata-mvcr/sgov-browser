@@ -30,7 +30,6 @@ const getSearchResults = async (word: string | undefined) => {
           objs[0].snippetField === "label" ? objs[0].snippetText : key,
         total_score: _.maxBy(objs, "score")?.score,
         items: [...objs],
-        //isWord: objs.length !== 1,
         isMatchInDefinition: objs[0].snippetField === "definition",
         //When there is multiple matches, we cannot decide which snippet to show
         snippetText:
@@ -45,16 +44,15 @@ const getSearchResults = async (word: string | undefined) => {
     })
     .value();
 
-  //Because we have vocabulary results separated from the other results, we can modify whatever property we want
+  //Because we have vocabulary results separated from the other results, we also need to map them
   const result2 = _(vocabularyData)
     .map((item) => {
       return {
         type: item.$type,
         label: item.label,
-        displayText: item.label,
+        displayText: item.snippetText,
         total_score: item.score,
         items: [],
-        // isWord: false,
         isMatchInDefinition: item.snippetField === "description",
         snippetText: item.snippetText,
         vocabularies: {
@@ -64,9 +62,10 @@ const getSearchResults = async (word: string | undefined) => {
     })
     .value();
 
+  //Merging two results together
   result.push(...result2);
-
   const finalResult = _.orderBy(result, "total_score", "desc");
+
   return finalResult;
 };
 

@@ -13,7 +13,6 @@ const SearchBarResult: React.FC<SearchResult> = ({
   return (
     <Box display="flex" width="100%">
       <TypeIcon type={type} height={20} width={17} />
-      {/**TODO: center the text**/}
       <div
         style={{
           whiteSpace: "nowrap",

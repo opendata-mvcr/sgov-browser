@@ -120,8 +120,12 @@ CONSTRUCT {
   return query;
 };
 
-//Even though, this method might look very similar to the method above
-//I think it is better to have them separated => more control over scoring and we ensure the required data type very easily
+/**
+ * Very similar to getSearchQuery -> searches only for vocabularies
+ * Main differences: different CONSTRUCT (diff namespaces, missing graph nodes),
+ *                   vocabularies have different namespaces for labels and definitions, different snippet size
+ * Since I need it to be complaint with the ldkit schema I had to have these two methods separated
+ * If there is better solution, please let me know **/
 export const getVocabularySearchQuery = (text: string) => {
   const wildcardString = getWildcardString(text);
   const exactMatchString = getExactMatchString(text);
@@ -140,7 +144,7 @@ CONSTRUCT {
     UNION 
     { ?search a ${n(luceneInstance.defcom_index)} }
     ?search ${n(lucene.query)} ${l(wildcardString)} ;
-            ${n(lucene.snippetSize)} 100 ;
+            ${n(lucene.snippetSize)} 2000 ;
             ${n(lucene.entities)} ?entity . 
     GRAPH ?g {
       ?entity a ${n(popisDat["slovník"])} ;
