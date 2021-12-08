@@ -2,11 +2,15 @@ import { useQuery } from "react-query";
 import { firstValueFrom } from "rxjs";
 import {
   getVocabularyTermsQuery,
+  HIDDEN_VOCABULARY,
   Vocabularies,
   VocabularyTerms,
 } from "./data/vocabularies";
 
 export const getVocabulary = async (vocabularyIri: string) => {
+  //If user is trying to fetch hidden vocabulary, immediately return null -> no retries from React Query
+  if (vocabularyIri === HIDDEN_VOCABULARY) return null;
+
   const data = await firstValueFrom(Vocabularies.findByIri(vocabularyIri));
 
   if (!data) {
@@ -34,7 +38,6 @@ const getVocabularyTerms = async (vocabularyIri: string) => {
   );
 
   data.sort((a, b) => a.label.localeCompare(b.label));
-
   return data;
 };
 
