@@ -4,6 +4,7 @@ import { namedNode as n, literal as l } from "@ldkit/rdf";
 import { $ } from "@ldkit/sparql";
 import { lucene, luceneInstance, popisDat } from "./namespaces";
 import { context } from "./context";
+import { HIDDEN_VOCABULARY } from "./vocabularies";
 
 const VocabularySchema = {
   "@type": popisDat["slovník"],
@@ -105,6 +106,7 @@ CONSTRUCT {
     _:s ${n(lucene.snippetText)} ?snippetText ;
         ${n(lucene.snippetField)} ?snippetField .
     FILTER (lang(?label) = "cs")
+    FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})
     BIND(IF(lcase(str(?snippetText)) = lcase(str(${l(
       exactMatchString
     )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
@@ -156,6 +158,7 @@ CONSTRUCT {
     _:s ${n(lucene.snippetText)} ?snippetText ;
         ${n(lucene.snippetField)} ?snippetField .
     FILTER (lang(?label) = "cs")
+    FILTER (?entity != ${n(HIDDEN_VOCABULARY)})
     BIND(IF(lcase(str(?snippetText)) = lcase(str(${l(
       exactMatchString
     )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(

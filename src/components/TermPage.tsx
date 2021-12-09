@@ -13,7 +13,7 @@ import { isTermEmpty } from "../utils/TermUtils";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
-  const { data, isLoading, isSuccess, isError } = useTerm(term.$id);
+  const { data, isLoading, isSuccess, isError } = useTerm(term);
 
   if (isLoading) return <Loader />;
 
