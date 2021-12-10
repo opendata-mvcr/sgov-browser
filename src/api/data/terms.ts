@@ -50,17 +50,34 @@ const TermSchema = {
   },
 } as const;
 
+const TermRelationsSchema = {
+  "@type": skos.Concept,
+  domain: {
+    "@id": rdfs.domain,
+    "@array": true,
+    "@optional": true,
+  },
+  range: {
+    "@id": rdfs.range,
+    "@array": true,
+    "@optional": true,
+  }
+} as const;
+
 export type TermInterface = SchemaInterface<typeof TermSchema>;
 
 export type TermBaseInterface = SchemaInterface<typeof TermBaseSchema>;
 
 export const Terms = createResource(TermSchema, context);
 
+export const TermsRelationsResource = createResource(TermRelationsSchema, context);
+
 export const getTermRelationsQuery = (termIri: string) => {
   const query = $`
 CONSTRUCT{ 
-  ?domain ${n(rdfs.domain)} ?term .
-  ?range ${n(rdfs.range)} ?term .
+  ?term a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
+  ?term ${n(rdfs.domain)} ?domain .
+  ?term ${n(rdfs.range)} ?range .
 }
 WHERE {
   BIND(${n(termIri)} as ?term)

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { firstValueFrom } from "rxjs";
 
-import {getTermRelationsQuery, TermBaseInterface, Terms} from "./data/terms";
+import {getTermRelationsQuery, TermBaseInterface, Terms, TermsRelationsResource} from "./data/terms";
 import { HIDDEN_VOCABULARY } from "./data/vocabularies";
 
 // This is a supertype of TermBaseInterface containing term id and vocabulary id
@@ -15,6 +15,8 @@ export const getTerm = async (term: TermBase) => {
 
   const data = await firstValueFrom(Terms.findByIri(term.$id));
  // console.log(getTermRelationsQuery(term.$id));
+  const data1 = await firstValueFrom(TermsRelationsResource.query(getTermRelationsQuery(term.$id)));
+  console.log(data1);
   if (!data) {
     // Term not found
     throw new Error("404 Term not found");
