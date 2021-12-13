@@ -1,5 +1,5 @@
 import { createResource, SchemaInterface } from "@ldkit/core";
-import { dcterms, ldkit, skos } from "@ldkit/namespaces";
+import {dcterms, ldkit, skos} from "@ldkit/namespaces";
 
 import { context } from "./context";
 import {owl, popisDat, rdfs, zSgovPojem} from "./namespaces";
@@ -64,6 +64,7 @@ const TermRelationsSchema = {
   }
 } as const;
 
+
 export type TermInterface = SchemaInterface<typeof TermSchema>;
 
 export type TermBaseInterface = SchemaInterface<typeof TermBaseSchema>;
@@ -91,6 +92,12 @@ WHERE {
   UNION {
     ?range ${n(rdfs.range)} ?term .
   }
+  UNION{
+  ?domain ${n(zSgovPojem["má-vztažený-prvek-1"])} ?term .
+  }
+  UNION{
+   ?range ${n(zSgovPojem["má-vztažený-prvek-2"])} ?term.
+  }
   UNION {
     ?range ${n(rdfs.subClassOf)} ?rangeRestriction . 
     ?rangeRestriction ${n(owl.someValuesFrom)} ?term ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
@@ -100,3 +107,33 @@ WHERE {
 
   return query;
 };
+
+export const getPropertyRelationsQuery = (propertyIri: string) => {
+  const query = $`
+CONSTRUCT{ 
+  ?domain a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
+  ?domain ${n(rdfs.domain)} ?term .
+  ?range ${n(rdfs.range)} ?term2 .
+}
+WHERE {
+  BIND(${n(propertyIri)} as ?domain)
+  BIND(${n(propertyIri)} as ?range)
+  {
+    ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
+    ?domainRestriction ${n(owl.someValuesFrom)} ?term ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
+  }
+  UNION{
+    ?domain ${n(rdfs.domain)} ?term .
+  }
+  UNION {
+    ?range ${n(rdfs.range)} ?term2 .
+  }
+  UNION {
+    ?range ${n(rdfs.subClassOf)} ?rangeRestriction . 
+    ?rangeRestriction ${n(owl.someValuesFrom)} ?term2 ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
+  }
+}
+  `.toString();
+
+  return query;
+}
