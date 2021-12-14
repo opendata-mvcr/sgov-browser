@@ -1,8 +1,8 @@
 import React from "react";
-import { generateStyledSnippet } from "../utils/TermUtils";
-import { SearchResult } from "../api/WordsAPI";
+import { generateStyledSnippet } from "../../utils/TermUtils";
+import { SearchResult } from "../../api/WordsAPI";
 import { Box } from "@mui/material";
-import TypeIcon from "./TypeIcon";
+import TypeIcon from "../TypeIcon";
 
 const SearchBarResult: React.FC<SearchResult> = ({
   displayText,

@@ -5,11 +5,11 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import RouteLink from "./RouteLink";
+import RouteLink from "../RouteLink";
 import AccordionDescription from "./AccordionDescription";
 import HierarchyItem from "./HierarchyItem";
-import { generateTermRoute } from "../utils/Utils";
-import { TermBaseInterface } from "../api/data/terms";
+import { generateTermRoute } from "../../utils/Utils";
+import { TermBaseInterface } from "../../api/data/terms";
 
 //TODO: Remove withStyles -> do styled() instead
 //For now it doesn't behave as expected with styled()

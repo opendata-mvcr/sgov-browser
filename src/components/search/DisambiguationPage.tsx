@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import useRouteQuery from "../hooks/useRouteQuery";
-import { useSearch, SearchResult, SearchTerm } from "../api/WordsAPI";
+import useRouteQuery from "../../hooks/useRouteQuery";
+import { useSearch, SearchResult, SearchTerm } from "../../api/WordsAPI";
 import { find } from "lodash";
 import { Box, Container, Typography } from "@mui/material";
-import TermResult from "./TermResult";
-import Loader from "./Loader";
-import { DetailHeaderWrapper } from "./DetailPageHeader";
+import TermResult from "../terms/TermResult";
+import Loader from "../Loader";
+import { DetailHeaderWrapper } from "../detail_common/DetailPageHeader";
 import NumberOfResults from "./NumberOfResults";
 
 const DisambiguationPage: React.FC = () => {

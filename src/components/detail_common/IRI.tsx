@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ReactComponent as Copy } from "../assets/copy_small.svg";
+import { ReactComponent as Copy } from "../../assets/copy_small.svg";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 
 export interface IriItem {

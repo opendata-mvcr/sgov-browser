@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ReactComponent as Empty } from "../assets/empty.svg";
+import { ReactComponent as Empty } from "../../assets/empty.svg";
 
 const NoResults: React.FC = () => {
   return (

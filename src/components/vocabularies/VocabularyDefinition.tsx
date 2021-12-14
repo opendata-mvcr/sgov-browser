@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ReactComponent as DefinitionIllustration } from "../assets/definition2.svg";
-import DefinitionWrapper from "./DefinitionWrapper";
+import { ReactComponent as DefinitionIllustration } from "../../assets/definition2.svg";
+import DefinitionWrapper from "../detail_common/DefinitionWrapper";
 
 interface VocabularyDefinitionProps {
   description?: string;

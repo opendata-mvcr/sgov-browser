@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Container, Typography } from "@mui/material";
-import { useSearch } from "../api/WordsAPI";
-import useRouteQuery from "../hooks/useRouteQuery";
+import { useSearch } from "../../api/WordsAPI";
+import useRouteQuery from "../../hooks/useRouteQuery";
 import SearchResultView from "./SearchResult";
 import NoResults from "./NoResults";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import LargeSearchBar from "./LargeSearchBar";
 import NumberOfResults from "./NumberOfResults";
 

@@ -4,7 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { NormalEnd } from "./HierarchyItem";
 import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";
-import { TermInterface } from "../api/data/terms";
+import { TermInterface } from "../../api/data/terms";
 
 interface HierarchyProps {
   term: TermInterface;

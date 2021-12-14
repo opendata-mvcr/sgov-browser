@@ -1,7 +1,7 @@
 import React from "react";
-import { useVocabularyTerms } from "../api/VocabularyAPI";
-import Loader from "./Loader";
-import { DetailItemWrapper } from "./Hierarchy";
+import { useVocabularyTerms } from "../../api/VocabularyAPI";
+import Loader from "../Loader";
+import { DetailItemWrapper } from "../terms/Hierarchy";
 import { Typography } from "@mui/material";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
 

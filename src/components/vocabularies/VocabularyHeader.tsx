@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import DetailPageHeader from "./DetailPageHeader";
-import { useVocabularyTerms } from "../api/VocabularyAPI";
-import { VocabularyInterface } from "../api/data/vocabularies";
+import DetailPageHeader from "../detail_common/DetailPageHeader";
+import { useVocabularyTerms } from "../../api/VocabularyAPI";
+import { VocabularyInterface } from "../../api/data/vocabularies";
 
 const countHelper = (length: number) => {
   if (length === 1) return "pojem";

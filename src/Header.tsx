@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import React from "react";
 import { ReactComponent as NavIcon } from "./assets/navIcon.svg";
-import SearchBar from "./components/SearchBar";
+import SearchBar from "./components/search/SearchBar";
 import RouteLink from "./components/RouteLink";
 
 interface HeaderProps {

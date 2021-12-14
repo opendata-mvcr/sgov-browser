@@ -1,13 +1,13 @@
 import React from "react";
-import useURLVocabulary from "../hooks/useURLVocabulary";
-import { useVocabulary } from "../api/VocabularyAPI";
-import Loader from "./Loader";
+import useURLVocabulary from "../../hooks/useURLVocabulary";
+import { useVocabulary } from "../../api/VocabularyAPI";
+import Loader from "../Loader";
 import { Box } from "@mui/material";
-import NoResults from "./NoResults";
+import NoResults from "../search/NoResults";
 import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
 import VocabularyTerms from "./VocabularyTerms";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "../ErrorPage";
 
 const VocabularyPage: React.FC = () => {
   const uri = useURLVocabulary();
