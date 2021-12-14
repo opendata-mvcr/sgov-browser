@@ -6,6 +6,11 @@ import {owl, popisDat, rdfs, zSgovPojem} from "./namespaces";
 import { $ } from "@ldkit/sparql";
 import { namedNode as n } from "@ldkit/rdf";
 
+const RelationItemSchema = {
+  "@type": skos.Concept,
+  label: skos.prefLabel,
+} as const;
+
 export const TermBaseSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,
@@ -56,13 +61,17 @@ const TermRelationsSchema = {
     "@id": rdfs.domain,
     "@array": true,
     "@optional": true,
+    "@context": RelationItemSchema,
   },
   range: {
     "@id": rdfs.range,
     "@array": true,
     "@optional": true,
+    "@context": RelationItemSchema,
   }
 } as const;
+
+
 
 const TermTypesSchema = {
   "@type": skos.Concept,
@@ -89,29 +98,37 @@ export const getTermRelationsQuery = (termIri: string) => {
 CONSTRUCT{ 
   ?term a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
   ?term ${n(rdfs.domain)} ?domain .
+  ?domain a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label .
   ?term ${n(rdfs.range)} ?range .
+  ?range a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
 }
 WHERE {
   BIND(${n(termIri)} as ?term)
   {
     ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
     ?domainRestriction ${n(owl.someValuesFrom)} ?term ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
+    ?domain ${n(skos.prefLabel)} ?label .
   }
   UNION{
     ?domain ${n(rdfs.domain)} ?term .
+    ?domain ${n(skos.prefLabel)} ?label .
   }
   UNION {
     ?range ${n(rdfs.range)} ?term .
+    ?range ${n(skos.prefLabel)} ?label2 .
   }
   UNION{
   ?domain ${n(zSgovPojem["má-vztažený-prvek-1"])} ?term .
+  ?domain ${n(skos.prefLabel)} ?label .
   }
   UNION{
    ?range ${n(zSgovPojem["má-vztažený-prvek-2"])} ?term.
+   ?range ${n(skos.prefLabel)} ?label2 .
   }
   UNION {
     ?range ${n(rdfs.subClassOf)} ?rangeRestriction . 
     ?rangeRestriction ${n(owl.someValuesFrom)} ?term ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
+    ?range ${n(skos.prefLabel)} ?label2 .
   }
   
 }
@@ -125,7 +142,9 @@ export const getPropertyRelationsQuery = (propertyIri: string) => {
 CONSTRUCT{ 
   ?domain a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
   ?domain ${n(rdfs.domain)} ?term .
+  ?term a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label .
   ?range ${n(rdfs.range)} ?term2 .
+  ?term2 a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
 }
 WHERE {
   BIND(${n(propertyIri)} as ?domain)
@@ -133,16 +152,20 @@ WHERE {
   {
     ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
     ?domainRestriction ${n(owl.someValuesFrom)} ?term ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
+    ?term ${n(skos.prefLabel)} ?label .
   }
   UNION{
     ?domain ${n(rdfs.domain)} ?term .
+    ?term ${n(skos.prefLabel)} ?label .
   }
   UNION {
     ?range ${n(rdfs.range)} ?term2 .
+    ?term2 ${n(skos.prefLabel)} ?label2 .
   }
   UNION {
     ?range ${n(rdfs.subClassOf)} ?rangeRestriction . 
     ?rangeRestriction ${n(owl.someValuesFrom)} ?term2 ; ${n(owl.onProperty)} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
+    ?term2 ${n(skos.prefLabel)} ?label2 .
   }
 }
   `.toString();
