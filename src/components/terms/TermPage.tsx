@@ -10,6 +10,7 @@ import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
 import EmptyTerm from "./EmptyTerm";
 import { isTermEmpty } from "../../utils/TermUtils";
+import Relations from "./Relations";
 
 const TermPage: React.FC = () => {
   const term = useURLTerm();
@@ -20,12 +21,14 @@ const TermPage: React.FC = () => {
   if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
+      //TODO: Change isTermEmpty to work with relations
     const content = isTermEmpty(data) ? (
       <EmptyTerm />
     ) : (
       <>
         <TermDefinition term={data} />
         <Hierarchy term={data} />
+        <Relations term={data}/>
       </>
     );
     return (

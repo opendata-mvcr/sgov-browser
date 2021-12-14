@@ -29,7 +29,7 @@ export const luceneInstance = createNamespace({
 export const owl = createNamespace({
   iri: "http://www.w3.org/2002/07/owl#",
   prefix: "owl:",
-  terms: ["someValuesFrom", "onProperty"],
+  terms: ["someValuesFrom", "onProperty","ObjectProperty"],
 } as const);
 
 export const zSgovPojem = createNamespace({

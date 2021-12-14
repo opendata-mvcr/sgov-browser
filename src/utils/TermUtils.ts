@@ -8,6 +8,7 @@ export const isTermEmpty = (term: TermInterface) => {
     !term.definition &&
     !term.source
   );
+
 };
 
 export const generateStyledSnippet = (
