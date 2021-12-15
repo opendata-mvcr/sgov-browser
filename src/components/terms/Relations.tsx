@@ -21,9 +21,9 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
     return (
       <DetailItemWrapper title="Vztahy">
         {term.$type.includes(owl.ObjectProperty) ? (
-          <PropertyRelations relations={data}/>
+          <PropertyRelations relations={data} currentTerm={term}/>
         ) : (
-          <TermRelations relations={data}/>
+          <TermRelations relations={data} currentTerm={term}/>
         )}
       </DetailItemWrapper>
     );

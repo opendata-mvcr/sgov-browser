@@ -12,6 +12,7 @@ import {
 } from "./data/terms";
 import { HIDDEN_VOCABULARY } from "./data/vocabularies";
 import { owl } from "./data/namespaces";
+import {SearchResult} from "./WordsAPI";
 
 // This is a supertype of TermBaseInterface containing term id and vocabulary id
 export type TermBase = Pick<TermBaseInterface, "$id"> & {
@@ -55,6 +56,14 @@ export const getRelations = async (term: TermInterface) => {
     );
   }
 };
+
+export type RelationResult = ReturnType<typeof getRelations> extends Promise<
+        (infer U)[]
+        >
+    ? U
+    : never;
+
+export type RelationTermResult = RelationResult["range"] extends (infer U)[] ? U : never;
 
 export const useTerm = (term: TermBase) => {
   return useQuery(["term", term.$id], () => getTerm(term), {

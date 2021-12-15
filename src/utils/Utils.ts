@@ -40,6 +40,19 @@ export const generateTermRoute = (term: TermBase) => {
     return "/error";
   }
 };
+//TODO: Relations issue: This is just a workaround, make schemas complaint with each other
+export const generateTermRouteFromIris = (term: string, vocabulary: string) => {
+  //Exception is checked because some terms don't have vocabulary (don't know how is that possible)
+  try {
+    return `/vocabularies/${getNameFromUri(
+        vocabulary
+    )}/terms/${getNameFromUri(term)}?namespace=${getNamespaceUri(
+        vocabulary
+    )}/`;
+  } catch {
+    return "/error";
+  }
+};
 
 export const generateVocabularyRoute = (vocabularyUri: string) => {
   const name = getNameFromUri(vocabularyUri);
