@@ -5,7 +5,6 @@ import { context } from "./context";
 import { owl, popisDat, rdfs, zSgovPojem } from "./namespaces";
 import { $ } from "@ldkit/sparql";
 import { namedNode as n } from "@ldkit/rdf";
-//TODO: Relations issue: Maybe modify the vocabulary prop
 const RelationItemSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { TermInterface, TermRelationsInterface } from "../../api/data/terms";
 import { CurrentRelationTerm, RelationTerm } from "./RelationTerm";
 

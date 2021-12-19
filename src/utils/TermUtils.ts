@@ -2,7 +2,6 @@ import { TermInterface } from "../api/data/terms";
 
 //Checks whether term consists only of information which is displayed in the header (TermPage)
 export const isTermEmpty = (term: TermInterface) => {
-  //TODO: Relations issue: This absolutely needs to be rewritten to check if relations are present
   return (
     !term.parentTerms.length &&
     !term.subTerms.length &&

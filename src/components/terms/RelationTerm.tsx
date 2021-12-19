@@ -2,24 +2,12 @@ import React from "react";
 import { Box, Paper, styled, Typography } from "@mui/material";
 import { RelationTermResult } from "../../api/TermAPI";
 import RouteLink from "../RouteLink";
-import { generateTermRouteFromIris } from "../../utils/Utils";
+import { generateTermRoute } from "../../utils/Utils";
 
-//TODO: Relations issue: Solve passing parameters to styled
-
-const TermBox = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  marginBottom: -1,
-  minHeight: 56,
-  display: "flex",
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(7),
-  alignItems: "center",
-  paddingTop: 12,
-  paddingBottom: 12,
-}));
-
-const CurrentTermBox = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
+const StyledTerm = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== 'current',
+})<{ current?: boolean; }>(({ theme, current }) => ({
+  backgroundColor: current ? theme.palette.secondary.main : theme.palette.primary.main,
   marginBottom: -1,
   minHeight: 56,
   display: "flex",
@@ -33,9 +21,9 @@ const CurrentTermBox = styled(Paper)(({ theme }) => ({
 interface RelationTermProps {
   data: RelationTermResult;
 }
-
+//TODO: Relations issue: The components are very similar, maybe try to make it more reusable?
 export const RelationTerm: React.FC<RelationTermProps> = ({ data }) => {
-  const routeProps = generateTermRouteFromIris(data.$id, data.vocabulary.$id);
+  const routeProps = generateTermRoute(data);
   return (
     <Box
       bgcolor="primary.main"
@@ -44,11 +32,11 @@ export const RelationTerm: React.FC<RelationTermProps> = ({ data }) => {
         boxShadow: "none",
       }}
     >
-      <TermBox square elevation={0}>
+      <StyledTerm current={false} square elevation={0}>
         <RouteLink to={routeProps} variant="h6" color="textSecondary">
           {data.label}
         </RouteLink>
-      </TermBox>
+      </StyledTerm>
     </Box>
   );
 };
@@ -62,11 +50,11 @@ export const CurrentRelationTerm: React.FC<RelationTermProps> = ({ data }) => {
         boxShadow: "none",
       }}
     >
-      <CurrentTermBox square elevation={0}>
+      <StyledTerm current={true} square elevation={0}>
         <Typography variant="h6" color="textSecondary">
           {data.label}
         </Typography>
-      </CurrentTermBox>
+      </StyledTerm>
     </Box>
   );
 };

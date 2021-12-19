@@ -8,8 +8,6 @@ import { Hierarchy } from "./Hierarchy";
 import useURLTerm from "../../hooks/useURLTerm";
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
-import EmptyTerm from "./EmptyTerm";
-import { isTermEmpty } from "../../utils/TermUtils";
 import Relations from "./Relations";
 
 const TermPage: React.FC = () => {
@@ -21,20 +19,13 @@ const TermPage: React.FC = () => {
   if (isError || !data) return <ErrorPage />;
 
   if (isSuccess) {
-      //TODO: Change isTermEmpty to work with relations
-    const content = isTermEmpty(data) ? (
-      <EmptyTerm />
-    ) : (
-      <>
-        <TermDefinition term={data} />
-        <Hierarchy term={data} />
-        <Relations term={data}/>
-      </>
-    );
     return (
       <Box>
         <TermHeader term={data} />
-        {content}
+        <TermDefinition term={data} />
+        <Hierarchy term={data} />
+        {/**Relations component checks if the term is empty, because it is the last one**/}
+        <Relations term={data} />
       </Box>
     );
   }
