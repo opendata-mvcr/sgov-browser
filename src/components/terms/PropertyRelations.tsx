@@ -28,7 +28,7 @@ const PropertyRelations: React.FC<PropertyRelationsProps> = ({
             $id: currentTerm.$id,
             label: currentTerm.label,
             $type: currentTerm.$type,
-            vocabulary: currentTerm.vocabulary.$id,
+            vocabulary: currentTerm.vocabulary,
           }}
         />
       </Box>

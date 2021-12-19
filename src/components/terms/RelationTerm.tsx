@@ -35,7 +35,7 @@ interface RelationTermProps {
 }
 
 export const RelationTerm: React.FC<RelationTermProps> = ({ data }) => {
-  const routeProps = generateTermRouteFromIris(data.$id, data.vocabulary);
+  const routeProps = generateTermRouteFromIris(data.$id, data.vocabulary.$id);
   return (
     <Box
       bgcolor="primary.main"
