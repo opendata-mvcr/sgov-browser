@@ -5,13 +5,14 @@ import {
   getPropertyRelationsQuery,
   getTermRelationsQuery,
   getTermTypeQuery,
-  TermBaseInterface, TermInterface,
+  TermBaseInterface,
+  TermInterface,
   Terms,
   TermsRelationsResource,
   TermsTypes,
 } from "./data/terms";
 import { HIDDEN_VOCABULARY } from "./data/vocabularies";
-import { owl } from "./data/namespaces";
+import { isProperty } from "../utils/TermUtils";
 
 // This is a supertype of TermBaseInterface containing term id and vocabulary id
 export type TermBase = Pick<TermBaseInterface, "$id"> & {
@@ -43,26 +44,26 @@ export const getTerm = async (term: TermBase) => {
 };
 
 export const getRelations = async (term: TermInterface) => {
-  if(term.$type.includes(owl.ObjectProperty))
-  {
+  if (isProperty(term)) {
     return await firstValueFrom(
-        TermsRelationsResource.query(getPropertyRelationsQuery(term.$id))
+      TermsRelationsResource.query(getPropertyRelationsQuery(term.$id))
     );
-  }
-  else{
+  } else {
     return await firstValueFrom(
-        TermsRelationsResource.query(getTermRelationsQuery(term.$id))
+      TermsRelationsResource.query(getTermRelationsQuery(term.$id))
     );
   }
 };
 
 export type RelationResult = ReturnType<typeof getRelations> extends Promise<
-        (infer U)[]
-        >
-    ? U
-    : never;
+  (infer U)[]
+>
+  ? U
+  : never;
 
-export type RelationTermResult = RelationResult["range"] extends (infer U)[] ? U : never;
+export type RelationTermResult = RelationResult["range"] extends (infer U)[]
+  ? U
+  : never;
 
 export const useTerm = (term: TermBase) => {
   return useQuery(["term", term.$id], () => getTerm(term), {

@@ -5,6 +5,7 @@ import { context } from "./context";
 import { owl, popisDat, rdfs, zSgovPojem } from "./namespaces";
 import { $ } from "@ldkit/sparql";
 import { namedNode as n } from "@ldkit/rdf";
+import { HIDDEN_VOCABULARY } from "./vocabularies";
 const RelationItemSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,
@@ -165,6 +166,8 @@ WHERE {
     ?vocabulary2 ${n(dcterms.title)} ?title2 .
 
   }
+  FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})
+  FILTER (?vocabulary2 != ${n(HIDDEN_VOCABULARY)})
   
 }
   `.toString();
@@ -175,53 +178,54 @@ WHERE {
 export const getPropertyRelationsQuery = (propertyIri: string) => {
   const query = $`
 CONSTRUCT{ 
-  ?domain a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
-  ?domain ${n(rdfs.domain)} ?term .
-  ?term a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label .
-  ?term ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
-  ?range ${n(rdfs.range)} ?term2 .
-  ?term2 a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
-  ?term2 ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
+  ?term a ${n(skos.Concept)} ; a ${n(ldkit.Resource)} .
+  ?term ${n(rdfs.domain)} ?domain .
+  ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+  ?domain a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label .
+  ?term ${n(rdfs.range)} ?range .
+  ?range ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
+  ?range a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
   ?vocabulary ${n(dcterms.title)} ?title .
   ?vocabulary2 ${n(dcterms.title)} ?title2 .
 }
 WHERE {
-  BIND(${n(propertyIri)} as ?domain)
-  BIND(${n(propertyIri)} as ?range)
+  BIND(${n(propertyIri)} as ?term)
   {
-    ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
-    ?domainRestriction ${n(owl.someValuesFrom)} ?term ; ${n(
+    ?term ${n(rdfs.subClassOf)} ?domainRestriction . 
+    ?domainRestriction ${n(owl.someValuesFrom)} ?domain ; ${n(
     owl.onProperty
   )} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
-    ?term ${n(skos.prefLabel)} ?label .
-    ?term ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+    ?domain ${n(skos.prefLabel)} ?label .
+    ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
     ?vocabulary ${n(dcterms.title)} ?title .
 
   }
   UNION{
-    ?domain ${n(rdfs.domain)} ?term .
-    ?term ${n(skos.prefLabel)} ?label .
-    ?term ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+    ?term ${n(rdfs.domain)} ?domain .
+    ?domain ${n(skos.prefLabel)} ?label .
+    ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
     ?vocabulary ${n(dcterms.title)} ?title .
 
   }
   UNION {
-    ?range ${n(rdfs.range)} ?term2 .
-    ?term2 ${n(skos.prefLabel)} ?label2 .
-    ?term2 ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
+    ?term ${n(rdfs.range)} ?range .
+    ?range ${n(skos.prefLabel)} ?label2 .
+    ?range ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
     ?vocabulary2 ${n(dcterms.title)} ?title2 .
 
   }
   UNION {
-    ?range ${n(rdfs.subClassOf)} ?rangeRestriction . 
-    ?rangeRestriction ${n(owl.someValuesFrom)} ?term2 ; ${n(
+    ?term ${n(rdfs.subClassOf)} ?rangeRestriction . 
+    ?rangeRestriction ${n(owl.someValuesFrom)} ?range ; ${n(
     owl.onProperty
   )} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
-    ?term2 ${n(skos.prefLabel)} ?label2 .
-    ?term2 ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
+    ?range ${n(skos.prefLabel)} ?label2 .
+    ?range ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary2 .
     ?vocabulary2 ${n(dcterms.title)} ?title2 .
 
   }
+  FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})
+  FILTER (?vocabulary2 != ${n(HIDDEN_VOCABULARY)})
 }
   `.toString();
 

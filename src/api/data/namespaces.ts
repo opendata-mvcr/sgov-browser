@@ -29,13 +29,13 @@ export const luceneInstance = createNamespace({
 export const owl = createNamespace({
   iri: "http://www.w3.org/2002/07/owl#",
   prefix: "owl:",
-  terms: ["someValuesFrom", "onProperty","ObjectProperty"],
+  terms: ["someValuesFrom", "onProperty", "ObjectProperty"],
 } as const);
 
 export const zSgovPojem = createNamespace({
   iri: "https://slovník.gov.cz/základní/pojem/",
   prefix: "z-sgov-pojem:",
-  terms: ["má-vztažený-prvek-1", "má-vztažený-prvek-2"],
+  terms: ["má-vztažený-prvek-1", "má-vztažený-prvek-2", "typ-vztahu"],
 } as const);
 
 export const rdfs = createNamespace({

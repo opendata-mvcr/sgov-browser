@@ -1,42 +1,36 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { TermInterface, TermRelationsInterface } from "../../api/data/terms";
-import { CurrentRelationTerm, RelationTerm } from "./RelationTerm";
+import React, { ReactElement } from "react";
+import {Box, Typography} from "@mui/material";
+import { TermInterface } from "../../api/data/terms";
+import { CurrentRelationTerm } from "./RelationTerm";
+import RelationConnector from "./RelationConnector";
 
-interface TermRelationsProps {
-  relations: TermRelationsInterface[];
+export interface RelationsItemProps {
   currentTerm: TermInterface;
+  domains: ReactElement[];
+  ranges: ReactElement[];
 }
 
-const TermRelations: React.FC<TermRelationsProps> = ({
-  relations,
+const TermRelations: React.FC<RelationsItemProps> = ({
+  domains,
   currentTerm,
+  ranges,
 }) => {
-  const ranges = relations[0].range.map((item) => {
-    return <RelationTerm data={item} />;
-  });
-  const domains = relations[0].domain.map((item) => {
-    return <RelationTerm data={item} />;
-  });
+  
   return (
     <Box>
       {domains.length !== 0 && (
         <Box display="flex">
-          <Box flex={1}>
-            <CurrentRelationTerm
-              data={currentTerm}
-            />
+          <Box flex={2}>
+            <CurrentRelationTerm data={currentTerm} />
           </Box>
-          <Box flex={1}>{domains}</Box>
+          <Box flex={2}>{domains}</Box>
         </Box>
       )}
       {ranges.length !== 0 && (
         <Box display="flex">
-          <Box flex={1}>{ranges}</Box>
-          <Box flex={1}>
-            <CurrentRelationTerm
-              data={currentTerm}
-            />
+          <Box flex={2}>{ranges}</Box>
+          <Box flex={2}>
+            <CurrentRelationTerm data={currentTerm} />
           </Box>
         </Box>
       )}
