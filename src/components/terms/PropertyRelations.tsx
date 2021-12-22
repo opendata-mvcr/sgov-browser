@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { CurrentRelationTerm } from "./RelationTerm";
+import { Box } from "@mui/material";
+import { CurrentRelationTerm } from "./RelationItem";
 import { RelationsItemProps } from "./TermRelations";
-import RelationConnector from "./RelationConnector";
 
 const PropertyRelations: React.FC<RelationsItemProps> = ({
   domains,

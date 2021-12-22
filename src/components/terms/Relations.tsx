@@ -7,7 +7,7 @@ import TermRelations from "./TermRelations";
 import PropertyRelations from "./PropertyRelations";
 import { isProperty, isTermEmpty } from "../../utils/TermUtils";
 import EmptyTerm from "./EmptyTerm";
-import { RelationTerm } from "./RelationTerm";
+import { RelationItem } from "./RelationItem";
 
 interface RelationsProperty {
   term: TermInterface;
@@ -23,7 +23,7 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
   if (isSuccess) {
     const ranges = data[0].range.map((item) => {
       return (
-        <RelationTerm
+        <RelationItem
           data={item}
           showVocabulary={term.vocabulary.$id !== item.vocabulary.$id}
           key={item.$id}
@@ -33,7 +33,7 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
 
     const domains = data[0].domain.map((item) => {
       return (
-        <RelationTerm
+        <RelationItem
           data={item}
           showVocabulary={term.vocabulary.$id !== item.vocabulary.$id}
           key={item.$id}
@@ -57,4 +57,5 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
   }
   return null;
 };
+
 export default Relations;

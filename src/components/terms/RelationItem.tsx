@@ -12,8 +12,9 @@ const StyledTerm = styled(Paper, {
     : theme.palette.primary.main,
   marginBottom: -1,
   minHeight: 56,
+  minWidth: 165,
   paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(7),
+  paddingRight: theme.spacing(2),
   alignItems: "center",
   paddingTop: 12,
   paddingBottom: 12,
@@ -34,30 +35,39 @@ interface RelationTermProps {
   showVocabulary?: boolean;
 }
 
-export const RelationTerm: React.FC<RelationTermProps> = ({
+export const RelationItem: React.FC<RelationTermProps> = ({
   data,
   showVocabulary,
 }) => {
   const routeProps = generateTermRoute(data);
   return (
-    <BoxWrapper current={false}>
-      <StyledTerm current={false} square elevation={0}>
-        {showVocabulary && (
-          <Typography variant="body2" color="textSecondary">
-            {data.vocabulary.label}
-          </Typography>
-        )}
-        <RouteLink to={routeProps} variant="h6" color="textSecondary">
-          {data.label}
-        </RouteLink>
-      </StyledTerm>
-    </BoxWrapper>
+    <Box flex={1} display={"flex"}>
+      <Box flex={2}>
+        <BoxWrapper current={false}>
+          <StyledTerm current={false} square elevation={0}>
+            {showVocabulary && (
+              <Typography variant="body2" color="textSecondary">
+                {data.vocabulary.label}
+              </Typography>
+            )}
+            <RouteLink to={routeProps} variant="h6" color="textSecondary">
+              {data.label}
+            </RouteLink>
+          </StyledTerm>
+        </BoxWrapper>
+      </Box>
+    </Box>
   );
 };
 
-export const CurrentRelationTerm: React.FC<RelationTermProps> = ({ data }) => {
+interface CurrentRelationTermProps {
+  data: RelationTermResult;
+}
+export const CurrentRelationTerm: React.FC<CurrentRelationTermProps> = ({
+  data,
+}) => {
   return (
-    <BoxWrapper current={true}>
+    <BoxWrapper current={true} flex={1}>
       <StyledTerm current={true} square elevation={0}>
         <Typography variant="h6" color="textSecondary">
           {data.label}
