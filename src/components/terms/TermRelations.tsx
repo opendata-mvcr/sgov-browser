@@ -3,6 +3,7 @@ import { Box, styled } from "@mui/material";
 import { TermInterface } from "../../api/data/terms";
 import { CurrentRelationTerm } from "./RelationItem";
 import RelationConnector from "./RelationConnector";
+import { calculateConnector, calculateReverseConnector } from "./Relations";
 
 export interface RelationsItemProps {
   currentTerm: TermInterface;
@@ -70,43 +71,11 @@ const TermRelations: React.FC<RelationsItemProps> = ({
   });
 
   return (
-    <Box>
+    <Box mt={1}>
       {domains.length !== 0 && domainRows}
       {ranges.length !== 0 && rangeRows}
     </Box>
   );
-};
-
-const calculateConnector = (index: number, size: number) => {
-  if (size === 1) {
-    return <RelationConnector type="straight" />;
-  }
-  if (size > 1 && index === 0) {
-    return <RelationConnector type="tline" />;
-  }
-  if (size > 1 && index + 1 !== size) {
-    return <RelationConnector type="hline" />;
-  }
-  if (size > 1 && index + 1 === size) {
-    return <RelationConnector type="lline" />;
-  }
-  return <></>;
-};
-
-const calculateReverseConnector = (index: number, size: number) => {
-  if (size === 1) {
-    return <RelationConnector type="straight" />;
-  }
-  if (size > 1 && index === 0) {
-    return <RelationConnector type="r_tline" />;
-  }
-  if (size > 1 && index + 1 !== size) {
-    return <RelationConnector type="r_hline" />;
-  }
-  if (size > 1 && index + 1 === size) {
-    return <RelationConnector type="r_lline" />;
-  }
-  return <></>;
 };
 
 export default TermRelations;

@@ -35,7 +35,12 @@ export const owl = createNamespace({
 export const zSgovPojem = createNamespace({
   iri: "https://slovník.gov.cz/základní/pojem/",
   prefix: "z-sgov-pojem:",
-  terms: ["má-vztažený-prvek-1", "má-vztažený-prvek-2", "typ-vztahu"],
+  terms: [
+    "má-vztažený-prvek-1",
+    "má-vztažený-prvek-2",
+    "typ-vztahu",
+    "typ-vlastnosti",
+  ],
 } as const);
 
 export const rdfs = createNamespace({
