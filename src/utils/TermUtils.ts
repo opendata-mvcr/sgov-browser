@@ -11,10 +11,12 @@ export const isTermEmpty = (term: TermInterface) => {
   );
 };
 
+//Useful for deciding which query to use
 export const isProperty = (term: TermInterface) => {
   return (
     term.$type.includes(owl.ObjectProperty) ||
-    term.$type.includes(zSgovPojem["typ-vztahu"])
+    term.$type.includes(zSgovPojem["typ-vztahu"]) ||
+    term.$type.includes(zSgovPojem["typ-vlastnosti"])
   );
 };
 

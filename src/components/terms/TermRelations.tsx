@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { Box, styled } from "@mui/material";
 import { TermInterface } from "../../api/data/terms";
 import { CurrentRelationTerm } from "./RelationItem";
-import RelationConnector from "./RelationConnector";
 import { calculateConnector, calculateReverseConnector } from "./Relations";
 
 export interface RelationsItemProps {

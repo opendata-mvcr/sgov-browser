@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, styled, Typography } from "@mui/material";
-import { CurrentRelationTerm, RelationItem } from "./RelationItem";
-import { RelationsItemProps } from "./TermRelations";
-import RelationConnector from "./RelationConnector";
+import { Box, styled } from "@mui/material";
+import { CurrentRelationTerm } from "./RelationItem";
+import TermRelations, { RelationsItemProps } from "./TermRelations";
 import { calculateConnector, calculateReverseConnector } from "./Relations";
 
 const TermBox = styled(Box)(({ theme }) => ({
@@ -20,6 +19,15 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
   ranges,
   currentTerm,
 }) => {
+  if (domains.length === 0 || ranges.length === 0)
+    return (
+      <TermRelations
+        currentTerm={currentTerm}
+        domains={ranges}
+        ranges={domains}
+      />
+    );
+
   const firstRow =
     domains.length && ranges.length ? (
       <Box flex={1} display="flex" alignItems="center" justifyContent="center">

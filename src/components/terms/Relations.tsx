@@ -13,7 +13,7 @@ import RelationConnector from "./RelationConnector";
 interface RelationsProperty {
   term: TermInterface;
 }
-//TODO: FIX if term is typ-vlastnosti
+
 const Relations: React.FC<RelationsProperty> = ({ term }) => {
   const { data, isLoading, isSuccess } = useRelations(term);
   if (isLoading) return <Loader />;
@@ -42,19 +42,29 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
       );
     });
 
-    return (
-      <DetailItemWrapper title="Vztahy">
-        {isProperty(term) ? (
-          <PropertyRelations
-            domains={domains}
-            ranges={ranges}
-            currentTerm={term}
-          />
-        ) : (
-          <TermRelations domains={domains} ranges={ranges} currentTerm={term} />
-        )}
-      </DetailItemWrapper>
-    );
+    let content;
+    //Need to decide which visualisation is gonna be shown
+    if (isProperty(term) && (domains.length === 0 || ranges.length === 0)) {
+      //If the property query was used but the data doesn't contain domains and ranges, show the TermRelations visualisation
+      //typical for typ-vlastnosti
+      content = (
+        <TermRelations currentTerm={term} domains={ranges} ranges={domains} />
+      );
+    } else if (isProperty(term)) {
+      content = (
+        <PropertyRelations
+          domains={domains}
+          ranges={ranges}
+          currentTerm={term}
+        />
+      );
+    } else {
+      content = (
+        <TermRelations domains={domains} ranges={ranges} currentTerm={term} />
+      );
+    }
+
+    return <DetailItemWrapper title="Vztahy">{content}</DetailItemWrapper>;
   }
   return null;
 };
