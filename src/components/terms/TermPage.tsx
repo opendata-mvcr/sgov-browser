@@ -13,12 +13,15 @@ import Relations from "./Relations";
 const TermPage: React.FC = () => {
   const term = useURLTerm();
   const { data, isLoading, isSuccess, isError } = useTerm(term);
-  const { isSuccess: rIsSuccess, isLoading: rIsLoading } = useRelations(
-    data ?? undefined
-  );
+  //This hook is here to show the page when the relations are loaded
+  const {
+    isSuccess: rIsSuccess,
+    isLoading: rIsLoading,
+    isError: rIsError,
+  } = useRelations(data ?? undefined);
   if (isLoading || rIsLoading) return <Loader />;
 
-  if (isError || !data) return <ErrorPage />;
+  if (isError || rIsError || !data) return <ErrorPage />;
 
   if (rIsSuccess || isSuccess) {
     return (

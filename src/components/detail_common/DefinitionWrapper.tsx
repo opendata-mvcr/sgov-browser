@@ -28,11 +28,17 @@ const IllustrationWrapper = styled(Grid)(({ theme }) => ({
   },
 }));
 
+const Wrapper = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    marginBottom: "36px",
+  },
+}));
+
 const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
   props
 ) => {
   return (
-    <Container>
+    <Wrapper>
       <Box px={2} mt={4}>
         <Grid container>
           <Grid item sm={10} xs={12}>
@@ -63,7 +69,7 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
           </IllustrationWrapper>
         </Grid>
       </Box>
-    </Container>
+    </Wrapper>
   );
 };
 
