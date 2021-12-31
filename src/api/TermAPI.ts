@@ -7,6 +7,7 @@ import {
   getTermTypeQuery,
   TermBaseInterface,
   TermInterface,
+  TermRelationsInterface,
   Terms,
   TermsRelationsResource,
   TermsTypes,
@@ -43,7 +44,12 @@ export const getTerm = async (term: TermBase) => {
   return data;
 };
 
-export const getRelations = async (term: TermInterface) => {
+export const getRelations = async (
+  term: TermInterface | undefined
+): Promise<TermRelationsInterface[]> => {
+  if (typeof term === "undefined") {
+    return Promise.reject("Invalid term");
+  }
   if (isProperty(term)) {
     return await firstValueFrom(
       TermsRelationsResource.query(getPropertyRelationsQuery(term.$id))
@@ -72,9 +78,9 @@ export const useTerm = (term: TermBase) => {
   });
 };
 
-export const useRelations = (term: TermInterface) => {
-  return useQuery(["relations", term.$id], () => getRelations(term), {
-    enabled: !!term.$id,
+export const useRelations = (term: TermInterface | undefined) => {
+  return useQuery(["relations", term?.$id], () => getRelations(term), {
+    enabled: !!term,
     notifyOnChangeProps: ["data", "isError"],
   });
 };

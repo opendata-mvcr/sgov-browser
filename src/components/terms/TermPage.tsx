@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { useTerm } from "../../api/TermAPI";
+import { useRelations, useTerm } from "../../api/TermAPI";
 import NoResults from "../search/NoResults";
 import TermHeader from "./TermHeader";
 import TermDefinition from "./TermDefinition";
@@ -13,12 +13,14 @@ import Relations from "./Relations";
 const TermPage: React.FC = () => {
   const term = useURLTerm();
   const { data, isLoading, isSuccess, isError } = useTerm(term);
-
-  if (isLoading) return <Loader />;
+  const { isSuccess: rIsSuccess, isLoading: rIsLoading } = useRelations(
+    data ?? undefined
+  );
+  if (isLoading || rIsLoading) return <Loader />;
 
   if (isError || !data) return <ErrorPage />;
 
-  if (isSuccess) {
+  if (rIsSuccess || isSuccess) {
     return (
       <Box>
         <TermHeader term={data} />
