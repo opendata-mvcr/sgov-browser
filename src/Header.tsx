@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props) => {
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="sticky" elevation={0}>
       <Toolbar>
         <RouteLink to="/" variant="h6" color="textSecondary" underline="none">
           <Box display="flex">
