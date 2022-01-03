@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import CurrentTerm from "./CurrentTerm";
 import { Box, Container, Typography } from "@mui/material";
 import { NormalEnd } from "./HierarchyItem";
@@ -49,6 +49,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
 
 interface DetailItemWrapperProps {
   title: string;
+  secondaryElement?: ReactElement;
 }
 
 export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
@@ -56,8 +57,11 @@ export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
     <Container>
       <Box py={2} mb={2} px={2} mt={4}>
         <Box borderLeft={4} pr={6} borderColor="primary.main">
-          <Box pl={4}>
-            <Typography variant="h5">{props.title}</Typography>
+          <Box display="flex">
+            <Box pl={4}>
+              <Typography variant="h5">{props.title}</Typography>
+            </Box>
+            <Box>{props.secondaryElement}</Box>
           </Box>
           <Box pl={4}>{props.children}</Box>
         </Box>

@@ -1,11 +1,13 @@
 import { FixedSizeList as List } from "react-window";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { DetailItemWrapper } from "./Hierarchy";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactWindowScroller } from "../utils/ReactWindowScroller";
 import makeStyles from "@mui/styles/makeStyles";
 import { VocabularyTermInterface } from "../api/data/vocabularies";
 import { generateTermRoute } from "../utils/Utils";
+import { Box, TextField } from "@mui/material";
+import { generateStyledSnippet } from "../utils/TermUtils";
 
 //Unfortunately the makeStyles performs better than styled
 //Even though makeStyles is considered legacy, I would leave it here for now
@@ -26,6 +28,10 @@ const useStyles = makeStyles(() => ({
     textOverflow: "ellipsis",
     textDecoration: "underline",
     color: "#000000",
+    "& em": {
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
   },
 }));
 
@@ -34,11 +40,49 @@ interface VocabularyTermsListProps {
   terms: VocabularyTermInterface[];
 }
 
+function split_at_index(value: string, index: number, length: number) {
+  return [
+    value.substring(0, index),
+    value.substring(index, index + length),
+    value.substring(index + length),
+  ];
+}
+
+const getHighlightedTex = (text: string, termText: string) => {
+  let searchedText = text.toLowerCase();
+  let original = termText.toLowerCase();
+  let index = original.indexOf(searchedText);
+  let splitted = split_at_index(termText, index, text.length);
+  if (splitted[0] || splitted[1])
+    return `${splitted[0]}<em>${splitted[1]}</em>${splitted[2]}`;
+  else return termText;
+};
+
 const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   vocabularyIri,
   terms,
 }) => {
   const classes = useStyles();
+  const [name, setName] = useState("");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+  const filteredTerms = useMemo(() => {
+    return terms
+      .filter((term) => {
+        if (name === "") return true;
+        else {
+          return term.label.toLowerCase().includes(name.toLowerCase());
+        }
+      })
+      .map((term) => {
+        return {
+          $id: term.$id,
+          $type: term.$type,
+          label: getHighlightedTex(name, term.label),
+        };
+      });
+  }, [terms, name]);
 
   const getTermRoute = (term: VocabularyTermInterface) => {
     return generateTermRoute({
@@ -47,8 +91,20 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
     });
   };
 
+  const filter = (
+    <Box ml={2}>
+      <TextField
+        id="filter"
+        value={name}
+        onChange={handleChange}
+        size={"small"}
+        fullWidth
+      />
+    </Box>
+  );
+
   return (
-    <DetailItemWrapper title={"Pojmy"}>
+    <DetailItemWrapper title={"Pojmy"} secondaryElement={filter}>
       <ReactWindowScroller>
         {({ ref, outerRef, style, onScroll }: any) => (
           <List
@@ -57,7 +113,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
             outerRef={outerRef}
             style={style}
             height={window.innerHeight}
-            itemCount={terms.length}
+            itemCount={filteredTerms.length}
             itemSize={34}
             onScroll={onScroll}
           >
@@ -65,10 +121,14 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
               <div style={style}>
                 <div className={classes.wrapper}>
                   <RouterLink
-                    to={getTermRoute(terms[index])}
+                    to={getTermRoute(filteredTerms[index])}
                     className={classes.text}
                   >
-                    {terms[index].label}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: filteredTerms[index].label,
+                      }}
+                    />
                   </RouterLink>
                 </div>
               </div>
