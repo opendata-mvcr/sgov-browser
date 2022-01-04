@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Box, styled } from "@mui/material";
 import { TermInterface } from "../../api/data/terms";
 import { CurrentRelationTerm } from "./RelationItem";
-import { calculateConnector, calculateReverseConnector } from "./Relations";
+import { calculateConnector } from "./Relations";
 
 export interface RelationsItemProps {
   currentTerm: TermInterface;
@@ -32,7 +32,7 @@ const TermRelations: React.FC<RelationsItemProps> = ({
           <TermBox>
             <CurrentRelationTerm data={currentTerm} />
           </TermBox>
-          <Box flex={1}>{calculateConnector(index, domains.length)}</Box>
+          <Box flex={1}>{calculateConnector(index, domains.length, false)}</Box>
           <TermBox>{item}</TermBox>
         </Box>
       );
@@ -40,7 +40,7 @@ const TermRelations: React.FC<RelationsItemProps> = ({
       return (
         <Box display="flex" key={item.key}>
           <TermBox />
-          <Box flex={1}>{calculateConnector(index, domains.length)}</Box>
+          <Box flex={1}>{calculateConnector(index, domains.length, false)}</Box>
           <TermBox>{item}</TermBox>
         </Box>
       );
@@ -52,7 +52,7 @@ const TermRelations: React.FC<RelationsItemProps> = ({
       return (
         <Box display="flex" key={item.key}>
           <TermBox>{item}</TermBox>
-          <Box flex={1}>{calculateReverseConnector(index, ranges.length)}</Box>
+          <Box flex={1}>{calculateConnector(index, ranges.length, true)}</Box>
           <TermBox>
             <CurrentRelationTerm data={currentTerm} />
           </TermBox>
@@ -62,7 +62,7 @@ const TermRelations: React.FC<RelationsItemProps> = ({
       return (
         <Box display="flex" key={item.key}>
           <TermBox>{item}</TermBox>
-          <Box flex={1}>{calculateReverseConnector(index, ranges.length)}</Box>
+          <Box flex={1}>{calculateConnector(index, ranges.length, true)}</Box>
           <TermBox />
         </Box>
       );

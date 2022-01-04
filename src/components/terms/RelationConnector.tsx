@@ -15,12 +15,13 @@ interface RelationConnectorProps {
 const RelationConnector: React.FC<RelationConnectorProps> = ({ type }) => {
   let connector;
   if (type === "straight") connector = <StraightLine />;
-  if (type === "tline") connector = <TLine />;
-  if (type === "hline") connector = <HLine />;
-  if (type === "lline") connector = <LLine />;
-  if (type === "r_hline") connector = <ReverseHLine />;
-  if (type === "r_lline") connector = <ReverseLLine />;
-  if (type === "r_tline") connector = <ReverseTLine />;
+  else if (type === "tline") connector = <TLine />;
+  else if (type === "hline") connector = <HLine />;
+  else if (type === "lline") connector = <LLine />;
+  else if (type === "r_hline") connector = <ReverseHLine />;
+  else if (type === "r_lline") connector = <ReverseLLine />;
+  else if (type === "r_tline") connector = <ReverseTLine />;
+  else return null;
 
   return (
     <Box display="flex" flex={1} style={{ height: "100%" }}>

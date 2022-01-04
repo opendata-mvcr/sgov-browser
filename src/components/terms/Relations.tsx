@@ -69,36 +69,22 @@ const Relations: React.FC<RelationsProperty> = ({ term }) => {
   return null;
 };
 
-export const calculateConnector = (index: number, size: number) => {
+export const calculateConnector = (
+  index: number,
+  size: number,
+  reverse: boolean
+) => {
+  let type = reverse ? "r_" : "";
   if (size === 1) {
-    return <RelationConnector type="straight" />;
+    type = "straight";
+  } else if (size > 1 && index === 0) {
+    type += "tline";
+  } else if (size > 1 && index + 1 !== size) {
+    type += "hline";
+  } else if (size > 1 && index + 1 === size) {
+    type += "lline";
   }
-  if (size > 1 && index === 0) {
-    return <RelationConnector type="tline" />;
-  }
-  if (size > 1 && index + 1 !== size) {
-    return <RelationConnector type="hline" />;
-  }
-  if (size > 1 && index + 1 === size) {
-    return <RelationConnector type="lline" />;
-  }
-  return <></>;
-};
-
-export const calculateReverseConnector = (index: number, size: number) => {
-  if (size === 1) {
-    return <RelationConnector type="straight" />;
-  }
-  if (size > 1 && index === 0) {
-    return <RelationConnector type="r_tline" />;
-  }
-  if (size > 1 && index + 1 !== size) {
-    return <RelationConnector type="r_hline" />;
-  }
-  if (size > 1 && index + 1 === size) {
-    return <RelationConnector type="r_lline" />;
-  }
-  return <></>;
+  return <RelationConnector type={type} />;
 };
 
 export default Relations;
