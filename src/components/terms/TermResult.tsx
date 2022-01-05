@@ -1,11 +1,11 @@
 import React from "react";
-import { SearchTerm } from "../api/WordsAPI";
+import { SearchTerm } from "../../api/WordsAPI";
 import { Box, Container, Typography } from "@mui/material";
-import DefinitionSnippet from "./DefinitionSnippet";
-import RouteLink from "./RouteLink";
-import { generateTermRoute } from "../utils/Utils";
-import SearchCard from "./SearchCard";
-import theme from "../app/theme";
+import DefinitionSnippet from "../search/DefinitionSnippet";
+import RouteLink from "../RouteLink";
+import { generateTermRoute } from "../../utils/Utils";
+import SearchCard from "../search/SearchCard";
+import theme from "../../app/theme";
 
 const TermResult: React.FC<SearchTerm> = (props) => {
   const route = generateTermRoute(props);

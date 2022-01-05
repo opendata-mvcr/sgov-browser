@@ -1,8 +1,8 @@
 import React from "react";
-import { ReactComponent as DefinitionIllustration } from "../assets/definition.svg";
+import { ReactComponent as DefinitionIllustration } from "../../assets/definition.svg";
 import { Box } from "@mui/material";
-import DefinitionWrapper from "./DefinitionWrapper";
-import { TermInterface } from "../api/data/terms";
+import DefinitionWrapper from "../detail_common/DefinitionWrapper";
+import { TermInterface } from "../../api/data/terms";
 
 interface DefinitionProps {
   term: TermInterface;

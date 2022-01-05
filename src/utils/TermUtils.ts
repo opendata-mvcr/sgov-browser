@@ -1,4 +1,5 @@
 import { TermInterface } from "../api/data/terms";
+import { owl, zSgovPojem } from "../api/data/namespaces";
 
 //Checks whether term consists only of information which is displayed in the header (TermPage)
 export const isTermEmpty = (term: TermInterface) => {
@@ -7,6 +8,15 @@ export const isTermEmpty = (term: TermInterface) => {
     !term.subTerms.length &&
     !term.definition &&
     !term.source
+  );
+};
+
+//Useful for deciding which query to use
+export const isProperty = (term: TermInterface) => {
+  return (
+    term.$type.includes(owl.ObjectProperty) ||
+    term.$type.includes(zSgovPojem["typ-vztahu"]) ||
+    term.$type.includes(zSgovPojem["typ-vlastnosti"])
   );
 };
 

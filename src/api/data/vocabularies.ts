@@ -8,7 +8,6 @@ import { popisDat } from "./namespaces";
 import { TermBaseSchema } from "./terms";
 
 export const HIDDEN_VOCABULARY = "https://slovník.gov.cz/základní";
-
 const VocabularyTermSchema = {
   "@type": TermBaseSchema["@type"],
   label: TermBaseSchema.label,

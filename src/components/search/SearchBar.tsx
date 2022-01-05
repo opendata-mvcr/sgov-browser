@@ -4,11 +4,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import SearchIcon from "@mui/icons-material/Search";
 import { CircularProgress, InputAdornment, styled } from "@mui/material";
-import { useSearch, SearchResult } from "../api/WordsAPI";
+import { useSearch, SearchResult } from "../../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
 import SearchBarResult from "./SearchBarResult";
-import { generateRoute } from "../utils/SearchUtil";
+import { generateRoute } from "../../utils/SearchUtil";
 
 const OPTIONS_LIMIT = 7;
 

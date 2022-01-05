@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { TermInterface } from "../api/data/terms";
+import { TermInterface } from "../../api/data/terms";
 
 interface AltLabelProps {
   altLabels: TermInterface["altLabels"];

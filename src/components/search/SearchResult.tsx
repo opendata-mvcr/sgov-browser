@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Container, styled, Typography } from "@mui/material";
-import RouteLink from "./RouteLink";
+import RouteLink from "../RouteLink";
 import SearchCard from "./SearchCard";
-import theme from "../app/theme";
-import { SearchResult } from "../api/WordsAPI";
-import { generateStyledSnippet } from "../utils/TermUtils";
-import { popisDat } from "../api/data/namespaces";
-import TypeIcon from "./TypeIcon";
-import { generateRoute } from "../utils/SearchUtil";
-import MaxLineText from "./MaxLineText";
+import theme from "../../app/theme";
+import { SearchResult } from "../../api/WordsAPI";
+import { generateStyledSnippet } from "../../utils/TermUtils";
+import { popisDat } from "../../api/data/namespaces";
+import TypeIcon from "../TypeIcon";
+import { generateRoute } from "../../utils/SearchUtil";
+import MaxLineText from "../MaxLineText";
 
 const HighlightedText = styled(Typography)(({ theme }) => ({
   whiteSpace: "nowrap",
