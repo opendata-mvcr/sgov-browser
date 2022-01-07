@@ -25,3 +25,26 @@ export const luceneInstance = createNamespace({
   prefix: "luceneinstance:",
   terms: ["label_index", "defcom_index"],
 } as const);
+
+export const owl = createNamespace({
+  iri: "http://www.w3.org/2002/07/owl#",
+  prefix: "owl:",
+  terms: ["someValuesFrom", "onProperty", "ObjectProperty"],
+} as const);
+
+export const zSgovPojem = createNamespace({
+  iri: "https://slovník.gov.cz/základní/pojem/",
+  prefix: "z-sgov-pojem:",
+  terms: [
+    "má-vztažený-prvek-1",
+    "má-vztažený-prvek-2",
+    "typ-vztahu",
+    "typ-vlastnosti",
+  ],
+} as const);
+
+export const rdfs = createNamespace({
+  iri: "http://www.w3.org/2000/01/rdf-schema#",
+  prefix: "rdfs:",
+  terms: ["domain", "range", "subClassOf"],
+} as const);

@@ -1,7 +1,7 @@
 import React from "react";
-import { SearchTerm } from "../api/WordsAPI";
+import { SearchTerm } from "../../api/WordsAPI";
 import { Box, Typography } from "@mui/material";
-import MaxLineText from "./MaxLineText";
+import MaxLineText from "../MaxLineText";
 
 const DefinitionSnippet: React.FC<SearchTerm> = ({ definition }) => {
   if (definition) {

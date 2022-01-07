@@ -1,13 +1,11 @@
 import { FixedSizeList as List } from "react-window";
 import React, { useMemo, useState } from "react";
-import { DetailItemWrapper } from "./Hierarchy";
 import { Link as RouterLink } from "react-router-dom";
-import { ReactWindowScroller } from "../utils/ReactWindowScroller";
+import { ReactWindowScroller } from "../../utils/ReactWindowScroller";
 import makeStyles from "@mui/styles/makeStyles";
-import { VocabularyTermInterface } from "../api/data/vocabularies";
-import { generateTermRoute } from "../utils/Utils";
-import { Box, TextField } from "@mui/material";
-import { generateStyledSnippet } from "../utils/TermUtils";
+import { VocabularyTermInterface } from "../../api/data/vocabularies";
+import { generateTermRoute } from "../../utils/Utils";
+import DetailItemWrapper from "../detail_common/DetailItemWrapper";
 
 //Unfortunately the makeStyles performs better than styled
 //Even though makeStyles is considered legacy, I would leave it here for now

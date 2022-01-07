@@ -1,9 +1,9 @@
 import React from "react";
-import AltLabel from "./AltLabel";
-import DetailPageHeader from "./DetailPageHeader";
-import RouteLink from "./RouteLink";
-import { generateVocabularyRoute } from "../utils/Utils";
-import { TermInterface } from "../api/data/terms";
+import AltLabel from "../detail_common/AltLabel";
+import DetailPageHeader from "../detail_common/DetailPageHeader";
+import RouteLink from "../RouteLink";
+import { generateVocabularyRoute } from "../../utils/Utils";
+import { TermInterface } from "../../api/data/terms";
 
 export interface DetailHeaderProps {
   term: TermInterface;

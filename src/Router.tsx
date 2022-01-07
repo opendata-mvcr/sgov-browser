@@ -8,12 +8,12 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import HeroSection from "./components/HeroSection";
-import SearchPage from "./components/SearchPage";
+import SearchPage from "./components/search/SearchPage";
 import ScrollToTop from "./ScrollToTop";
 import ErrorPage from "./components/ErrorPage";
-import DisambiguationPage from "./components/DisambiguationPage";
-import TermPage from "./components/TermPage";
-import VocabularyPage from "./components/VocabularyPage";
+import DisambiguationPage from "./components/search/DisambiguationPage";
+import TermPage from "./components/terms/TermPage";
+import VocabularyPage from "./components/vocabularies/VocabularyPage";
 import { PUBLIC_PATH } from "./app/variables";
 
 const InitialLocationFix: React.FC = () => {

@@ -2,7 +2,7 @@ import { Box, Container, Grid, styled, Typography } from "@mui/material";
 import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
 import SuggestedWords from "./SuggestedWords";
-import SearchBar from "./SearchBar";
+import SearchBar from "./search/SearchBar";
 
 const HeroWrapper = styled(Grid)(({ theme }) => ({
   textAlign: "right",

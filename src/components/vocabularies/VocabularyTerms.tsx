@@ -1,9 +1,9 @@
 import React from "react";
-import { useVocabularyTerms } from "../api/VocabularyAPI";
-import Loader from "./Loader";
-import { DetailItemWrapper } from "./Hierarchy";
+import { useVocabularyTerms } from "../../api/VocabularyAPI";
+import Loader from "../Loader";
 import { Typography } from "@mui/material";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
+import DetailItemWrapper from "../detail_common/DetailItemWrapper";
 
 interface VocabularyTermsProps {
   vocabularyIri: string;

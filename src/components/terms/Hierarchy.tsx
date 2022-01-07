@@ -4,7 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { NormalEnd } from "./HierarchyItem";
 import HierarchyParents from "./HierarchyParents";
 import HierarchyChildren from "./HierarchyChildren";
-import { TermInterface } from "../api/data/terms";
+import { TermInterface } from "../../api/data/terms";
 
 interface HierarchyProps {
   term: TermInterface;
@@ -16,7 +16,7 @@ export const Hierarchy: React.FC<HierarchyProps> = ({ term }) => {
 
   if (!parentTerms.length && !subTerms.length) return null;
 
-  const currIndex = term.parentTerms ? 1 : 0;
+  const currIndex = term.parentTerms.length ? 1 : 0;
   return (
     <Container>
       <Box py={2} mb={2} px={2} mt={4}>
