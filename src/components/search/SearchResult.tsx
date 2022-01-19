@@ -11,7 +11,18 @@ import { generateRoute } from "../../utils/SearchUtil";
 import MaxLineText from "../MaxLineText";
 
 const HighlightedText = styled(Typography)(({ theme }) => ({
+  //For some reason the line height becomes an issue while working with dynamic font sizes
+  //We set the line height dynamically to solve disappearing bottom part of texts while using hidden when overflow happens
+  "--fontsize": "1.5625rem",
+  "--slightShift": "0.2rem",
+  "@media (min-width: 600px)": {
+    "--fontsize": "1.8219rem",
+  },
+  "@media (min-width: 900px)": {
+    "--fontsize": "2.0243rem",
+  },
   whiteSpace: "nowrap",
+  lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)) + var(--slightShift))`,
   overflow: "hidden",
   textOverflow: "ellipsis",
   "& em": {
