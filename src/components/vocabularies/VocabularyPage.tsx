@@ -22,7 +22,7 @@ const VocabularyPage: React.FC = () => {
 
   if (isError || !data || vIsError) return <ErrorPage />;
 
-  if (vIsSuccess || isSuccess) {
+  if (vIsSuccess && isSuccess) {
     return (
       <Box mb={2}>
         <VocabularyHeader vocabulary={data} />
