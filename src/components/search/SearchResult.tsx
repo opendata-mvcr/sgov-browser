@@ -11,18 +11,26 @@ import { generateRoute } from "../../utils/SearchUtil";
 import MaxLineText from "../MaxLineText";
 
 const HighlightedText = styled(Typography)(({ theme }) => ({
-  //For some reason the line height becomes an issue while working with dynamic font sizes
-  //We set the line height dynamically to solve disappearing bottom part of texts while using hidden when overflow happens
-  "--fontsize": "1.5625rem",
-  "--slightShift": "0.2rem",
+  "--fontsize": "1.6982rem",
   "@media (min-width: 600px)": {
-    "--fontsize": "1.8219rem",
+    "--fontsize": "1.9576rem",
   },
   "@media (min-width: 900px)": {
-    "--fontsize": "2.0243rem",
+    "--fontsize": "2.16rem",
   },
+  lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)))`,
   whiteSpace: "nowrap",
-  lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)) + var(--slightShift))`,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  "& em": {
+    fontStyle: "normal",
+    fontWeight: 600,
+  },
+}));
+
+const HighlightedTextDefinition = styled(Typography)(({ theme }) => ({
+  alignSelf: "start",
+  whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
   "& em": {
@@ -77,7 +85,7 @@ const SearchResultView: React.FC<SearchResult> = ({
 
           {isMatchInDefinition && (
             <Box mt={1}>
-              <HighlightedText
+              <HighlightedTextDefinition
                 variant="h5"
                 dangerouslySetInnerHTML={{
                   __html: generateStyledSnippet(

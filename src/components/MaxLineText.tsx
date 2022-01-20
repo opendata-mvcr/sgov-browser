@@ -6,17 +6,15 @@ interface MaxLineTextProp {
 }
 const MaxLineText: React.FC<TypographyProps & MaxLineTextProp> = (props) => {
   const Text = styled(Typography)(({ theme }) => ({
-    "--fontsize": "1.5625rem",
-    //When using dynamic font sizes the line height becomes an issue, we add slight boost to the line height with this var
-    "--slightShift": "0.1rem",
+    "--fontsize": "1.5982rem",
     "@media (min-width: 600px)": {
-      "--fontsize": "1.8219rem",
+      "--fontsize": "1.8576rem",
     },
     "@media (min-width: 900px)": {
-      "--fontsize": "2.0243rem",
+      "--fontsize": "2.06rem",
     },
     position: "relative",
-    maxHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize) * ${props.maxlines}) + var(--slightShift))`,
+    maxHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize) * ${props.maxlines}) )`,
     overflow: "hidden",
     paddingRight: "1.6rem" /* space for ellipsis */,
     "&::before": {
