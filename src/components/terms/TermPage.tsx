@@ -5,14 +5,19 @@ import NoResults from "../search/NoResults";
 import TermHeader from "./TermHeader";
 import TermDefinition from "./TermDefinition";
 import { Hierarchy } from "./Hierarchy";
-import useURLTerm from "../../hooks/useURLTerm";
 import Loader from "../Loader";
 import ErrorPage from "../ErrorPage";
 import Relations from "./Relations";
+import useRouteQuery from "../../hooks/useRouteQuery";
+import { generateTermBase } from "../../utils/Utils";
 
 const TermPage: React.FC = () => {
-  const term = useURLTerm();
-  const { data, isLoading, isSuccess, isError } = useTerm(term);
+  const routeQuery = useRouteQuery();
+  const termIRI = routeQuery.get("iri") ?? "";
+
+  const { data, isLoading, isSuccess, isError } = useTerm(
+    generateTermBase(termIRI)
+  );
   //This hook is here to show the page when the relations are loaded
   const {
     isSuccess: rIsSuccess,

@@ -1,5 +1,4 @@
 import React from "react";
-import useURLVocabulary from "../../hooks/useURLVocabulary";
 import { useVocabulary } from "../../api/VocabularyAPI";
 import Loader from "../Loader";
 import { Box } from "@mui/material";
@@ -8,10 +7,12 @@ import VocabularyHeader from "./VocabularyHeader";
 import VocabularyDefinition from "./VocabularyDefinition";
 import VocabularyTerms from "./VocabularyTerms";
 import ErrorPage from "../ErrorPage";
+import useRouteQuery from "../../hooks/useRouteQuery";
 
 const VocabularyPage: React.FC = () => {
-  const uri = useURLVocabulary();
-  const { data, isLoading, isSuccess, isError } = useVocabulary(uri);
+  const routeQuery = useRouteQuery();
+  const vocabularyIRI = routeQuery.get("iri") ?? "";
+  const { data, isLoading, isSuccess, isError } = useVocabulary(vocabularyIRI);
 
   if (isLoading) return <Loader />;
 
