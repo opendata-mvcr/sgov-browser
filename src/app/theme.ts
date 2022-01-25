@@ -26,7 +26,7 @@ const theme = createTheme({
     fontFamily: [
       "-apple-system",
       "BlinkMacSystemFont",
-      '"Segoe UI"',
+      '"Segoe UI Light"',
       "Roboto",
       '"Helvetica Neue"',
       "Arial",
@@ -36,11 +36,9 @@ const theme = createTheme({
       '"Segoe UI Symbol"',
     ].join(","),
     h1: {
-      fontWeight: 600,
       fontSize: 60,
     },
     h2: {
-      fontWeight: 400,
       fontSize: 40,
     },
   },

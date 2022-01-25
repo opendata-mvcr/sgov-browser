@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     fontSize: "1.25rem",
-    fontWeight: 500,
+    // fontWeight: 500,
     lineHeight: "1.6",
     display: "block",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    textDecoration: "underline",
+    textDecoration: "none",
     color: "#000000",
   },
 }));

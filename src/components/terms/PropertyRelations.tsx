@@ -76,7 +76,9 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
       <Box display="flex">{firstRow}</Box>
       {(domainRows.length > 1 || rangeRows.length > 1) && (
         <Box display="flex">
-          <Box flex={4}>{domainRows}</Box>
+          <Box flex={4} minWidth={199}>
+            {domainRows}
+          </Box>
           <Box flex={1} style={{ visibility: "hidden" }}>
             <CurrentRelationTerm data={currentTerm} />
           </Box>
