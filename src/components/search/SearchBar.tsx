@@ -105,7 +105,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     const matchedOption = searchResultLabelMap.get(label);
     if (!matchedOption) {
       // user typed a query that does not match any suggested label
-      history.push(`/search?label=${label}`);
+      history.push(`/hledat?label=${label}`);
     } else {
       const route = generateRoute({ ...matchedOption });
       history.push(route);
