@@ -101,14 +101,14 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     if (!option) {
       return;
     }
-    const label = typeof option === "string" ? option : option.label;
-    const matchedOption = searchResultLabelMap.get(label);
-    if (!matchedOption) {
-      // user typed a query that does not match any suggested label
-      history.push(`/hledat?label=${label}`);
+    if (typeof option === "string") {
+      history.push(`/hledat?label=${option}`);
     } else {
-      const route = generateRoute({ ...matchedOption });
-      history.push(route);
+      const matchedOption = searchResultLabelMap.get(option.label);
+      if (matchedOption) {
+        const route = generateRoute({ ...matchedOption });
+        history.push(route);
+      }
     }
   };
 
