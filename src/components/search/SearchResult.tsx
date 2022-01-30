@@ -11,6 +11,25 @@ import { generateRoute } from "../../utils/SearchUtil";
 import MaxLineText from "../MaxLineText";
 
 const HighlightedText = styled(Typography)(({ theme }) => ({
+  "--fontsize": "1.6982rem",
+  "@media (min-width: 600px)": {
+    "--fontsize": "1.9576rem",
+  },
+  "@media (min-width: 900px)": {
+    "--fontsize": "2.16rem",
+  },
+  lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)))`,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  "& em": {
+    fontStyle: "normal",
+    fontWeight: 600,
+  },
+}));
+
+const HighlightedTextDefinition = styled(Typography)(({ theme }) => ({
+  alignSelf: "start",
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -66,7 +85,7 @@ const SearchResultView: React.FC<SearchResult> = ({
 
           {isMatchInDefinition && (
             <Box mt={1}>
-              <HighlightedText
+              <HighlightedTextDefinition
                 variant="h5"
                 dangerouslySetInnerHTML={{
                   __html: generateStyledSnippet(

@@ -28,7 +28,7 @@ const SuggestedWords: React.FC = () => {
         {words.map((word) => (
           <RouteLink
             key={word}
-            to={`/search?label=${word}`}
+            to={`/hledat?label=${word}`}
             sx={{ mr: 3 }}
             color="textSecondary"
             variant="h5"
