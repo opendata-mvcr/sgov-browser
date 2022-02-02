@@ -39,16 +39,16 @@ const Router: React.FC = () => {
       <ScrollToTop />
       <Layout>
         <Switch>
-          <Route exact path="/vocabularies/:vocabularyName/terms/:termName">
+          <Route exact path="/pojem">
             <TermPage />
           </Route>
-          <Route exact path="/vocabularies/:vocabularyName">
+          <Route exact path="/slovnik">
             <VocabularyPage />
           </Route>
-          <Route exact path="/disambiguation">
+          <Route exact path="/rozcestnik">
             <DisambiguationPage />
           </Route>
-          <Route exact path="/search">
+          <Route exact path="/hledat">
             <SearchPage />
           </Route>
           <Route exact path="/">

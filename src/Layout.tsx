@@ -16,7 +16,7 @@ const ContentBox = styled(Box)({
   flexGrow: 1,
 });
 
-const nonSearchRoutes = ["/", "/search"];
+const nonSearchRoutes = ["/", "/hledat"];
 const nonIllustrationRoutes = ["/"];
 
 const Layout: React.FC = (props) => {

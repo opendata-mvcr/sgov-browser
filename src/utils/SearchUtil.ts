@@ -11,7 +11,7 @@ export const generateRoute = (item: {
 }) => {
   if (item.type.includes(skos.Concept)) return generateTermRoute(item.items[0]);
   if (item.type.includes(skos.Collection))
-    return `/disambiguation?label=${item.label}`;
+    return `/rozcestnik?label=${item.label}`;
   if (item.type.includes(popisDat["slovník"]))
     return generateVocabularyRoute(item.vocabularies["id"]);
   return "/error";
