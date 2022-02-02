@@ -63,7 +63,9 @@ export const DetailItemWrapper: React.FC<DetailItemWrapperProps> = (props) => {
             </Box>
             <Box>{props.secondaryElement}</Box>
           </Box>
-          <Box pl={4}>{props.children}</Box>
+          <Box pl={4} mt={2}>
+            {props.children}
+          </Box>
         </Box>
       </Box>
     </Container>
