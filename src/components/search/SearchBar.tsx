@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 interface SearchBarProps {
   size: "small" | "large";
   initialValue?: string;
+  focusCallback?: () => void;
 }
 
 const InputTextField = styled(TextField)({
@@ -160,6 +161,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
+      blurOnSelect={true}
       options={data}
       getOptionLabel={(option: SearchResult | string) =>
         typeof option === "string" ? option : option.label
@@ -174,6 +176,8 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       renderInput={(params) => (
         <InputTextField
           {...params}
+          onFocus={props.focusCallback}
+          onBlur={props.focusCallback}
           placeholder="Zadejte hledané slovo"
           InputProps={{
             ...params.InputProps,
