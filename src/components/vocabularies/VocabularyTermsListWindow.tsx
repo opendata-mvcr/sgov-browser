@@ -20,7 +20,6 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     fontSize: "1.25rem",
-    // fontWeight: 500,
     lineHeight: "1.6",
     display: "block",
     whiteSpace: "nowrap",
@@ -33,6 +32,10 @@ const useStyles = makeStyles(() => ({
       fontWeight: 700,
     },
   },
+  noDecoration: {
+    textDecoration: "none",
+    color: "#000000",
+  },
 }));
 
 interface VocabularyTermsListProps {
@@ -40,13 +43,13 @@ interface VocabularyTermsListProps {
   terms: VocabularyTermInterface[];
 }
 
-function split_at_index(value: string, index: number, length: number) {
+const split_at_index = (value: string, index: number, length: number) => {
   return [
     value.substring(0, index),
     value.substring(index, index + length),
     value.substring(index + length),
   ];
-}
+};
 
 const getHighlightedTex = (text: string, termText: string) => {
   let searchedText = text.toLowerCase();
@@ -57,6 +60,12 @@ const getHighlightedTex = (text: string, termText: string) => {
     return `${splitted[0]}<em>${splitted[1]}</em>${splitted[2]}`;
   else return termText;
 };
+
+const endAdornment = (
+  <InputAdornment position={"end"}>
+    <SearchIcon />
+  </InputAdornment>
+);
 
 const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   vocabularyIri,
@@ -91,16 +100,9 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
     });
   };
 
-  const endAdornment = (
-    <InputAdornment position={"end"}>
-      <SearchIcon />
-    </InputAdornment>
-  );
-
   const filter = (
     <Box ml={4}>
       <TextField
-        id="filter"
         value={name}
         onChange={handleChange}
         size={"small"}
@@ -132,7 +134,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
                 <div className={classes.wrapper}>
                   <RouterLink
                     to={getTermRoute(filteredTerms[index])}
-                    className={classes.text}
+                    className={classes.noDecoration}
                   >
                     <div
                       className={classes.text}
