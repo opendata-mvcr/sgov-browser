@@ -91,6 +91,12 @@ const MagnifyingGlass = styled(SearchIcon)({
   },
 });
 
+const CustomPopper = styled(Popper)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    width: "100% !important",
+  },
+}));
+
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
   const [inputValue, setInputValue] = useState<string | undefined>();
@@ -138,6 +144,10 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     };
   }, [debouncedChangeHandler]);
 
+  const Popper = (props: PopperProps) => {
+    return <CustomPopper {...props} />;
+  };
+
   const endAdornment = (
     <InputAdornment position="end">
       {isLoading ? (
@@ -183,6 +193,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       )}
       onInputChange={debouncedChangeHandler}
       ListboxProps={{ style: { maxHeight: "500px" } }}
+      PopperComponent={Popper}
       renderInput={(params) => (
         <InputTextField
           {...params}
