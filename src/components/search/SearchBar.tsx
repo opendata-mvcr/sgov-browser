@@ -3,7 +3,13 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import SearchIcon from "@mui/icons-material/Search";
-import { CircularProgress, InputAdornment, styled } from "@mui/material";
+import {
+  CircularProgress,
+  InputAdornment,
+  Popper,
+  PopperProps,
+  styled,
+} from "@mui/material";
 import { useSearch, SearchResult } from "../../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
@@ -61,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 interface SearchBarProps {
   size: "small" | "large";
   initialValue?: string;
-  focusCallback?: () => void;
+  focusCallback?: (state: boolean) => void;
 }
 
 const InputTextField = styled(TextField)({
@@ -103,6 +109,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       return;
     }
     if (typeof option === "string") {
+      props.focusCallback?.(true);
       history.push(`/hledat?label=${option}`);
     } else {
       const matchedOption = searchResultLabelMap.get(option.label);
@@ -138,9 +145,12 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       ) : (
         <MagnifyingGlass
           fontSize={props.size === "small" ? "medium" : "large"}
-          onClick={() => {
+          onClick={(e) => {
             if (!(inputValue === undefined || inputValue === "")) {
               onChangeHandler(inputValue);
+              //stops the propagation, otherwise input would get focused and callback would be called again
+              e.stopPropagation();
+              props.focusCallback?.(true);
             }
           }}
         />
@@ -176,8 +186,13 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       renderInput={(params) => (
         <InputTextField
           {...params}
-          onFocus={props.focusCallback}
-          onBlur={props.focusCallback}
+          onFocus={() => {
+            //calls the callback to hide the logo if needed
+            props.focusCallback?.(false);
+          }}
+          onBlur={() => {
+            props.focusCallback?.(true);
+          }}
           placeholder="Zadejte hledané slovo"
           InputProps={{
             ...params.InputProps,

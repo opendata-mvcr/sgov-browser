@@ -48,10 +48,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         </RouteLinkWrapper>
         {props.showSearch && (
           <SearchBarWrapper homeButtonVisibility={homeButtonVisible}>
-            <SearchBar
-              size="small"
-              focusCallback={() => setHomeButtonVisible(!homeButtonVisible)}
-            />
+            <SearchBar size="small" focusCallback={setHomeButtonVisible} />
           </SearchBarWrapper>
         )}
       </Toolbar>
