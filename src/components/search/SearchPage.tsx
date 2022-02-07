@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useSearch } from "../../api/WordsAPI";
 import useRouteQuery from "../../hooks/useRouteQuery";
 import SearchResultView from "./SearchResult";
@@ -17,7 +17,15 @@ const SearchPage: React.FC = () => {
 
   if (isLoading) return <Loader />;
 
-  if (isError) return <Typography variant="h1">Error occurred</Typography>;
+  if (isError) {
+    return (
+      <Box>
+        <LargeSearchBar searchedText={""} />
+        <NoResults />
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <LargeSearchBar searchedText={wordLabel} />
@@ -37,5 +45,4 @@ const SearchPage: React.FC = () => {
     </Box>
   );
 };
-
 export default SearchPage;

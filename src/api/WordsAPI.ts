@@ -13,6 +13,8 @@ const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
+  word = word.replace(/(?=[()/])/g, "\\");
+
   const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
   const vocabularyData = await firstValueFrom(
     VocabularySearchResource.query(getVocabularySearchQuery(word))
@@ -80,6 +82,11 @@ export type SearchResult = ReturnType<typeof getSearchResults> extends Promise<
 export type SearchTerm = SearchResult["items"] extends (infer U)[] ? U : never;
 
 export const useSearch = (word: string | undefined) => {
+  //removes all trailing whitespaces
+  word = word?.replace(/[ /\t]+$/, "");
+  //removes all leading whitespaces
+  word = word?.replace(/^[ /\t]+/, "");
+
   return useQuery(["directsearch", word], () => getSearchResults(word), {
     enabled: !!word,
   });
