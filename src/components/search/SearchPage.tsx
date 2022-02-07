@@ -17,6 +17,15 @@ const SearchPage: React.FC = () => {
 
   if (isLoading) return <Loader />;
 
+  if (isError) {
+    return (
+      <Box>
+        <LargeSearchBar searchedText={""} />
+        <NoResults />
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <LargeSearchBar searchedText={wordLabel} />
@@ -24,7 +33,7 @@ const SearchPage: React.FC = () => {
       <Container>
         <Box pt={2} pb={4}>
           <NumberOfResults amount={data.length > 50 ? 50 : data.length} />
-          {data.length && !isError ? (
+          {data.length ? (
             data.slice(0, NUMBER_OF_RESULT).map((item) => {
               return <SearchResultView key={item.label} {...item} />;
             })
@@ -36,5 +45,4 @@ const SearchPage: React.FC = () => {
     </Box>
   );
 };
-
 export default SearchPage;

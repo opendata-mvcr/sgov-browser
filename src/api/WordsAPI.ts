@@ -13,6 +13,8 @@ const getSearchResults = async (word: string | undefined) => {
   if (!word) {
     return [];
   }
+  word = word.replace(/(?=[()/])/g, "\\");
+
   const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
   const vocabularyData = await firstValueFrom(
     VocabularySearchResource.query(getVocabularySearchQuery(word))
@@ -84,8 +86,6 @@ export const useSearch = (word: string | undefined) => {
   word = word?.replace(/[ /\t]+$/, "");
   //removes all leading whitespaces
   word = word?.replace(/^[ /\t]+/, "");
-  //escapes forward slashes, necessary for lucene query
-  word = word?.replace(/\//g, "\\/");
 
   return useQuery(["directsearch", word], () => getSearchResults(word), {
     enabled: !!word,
