@@ -194,12 +194,12 @@ export const MobileLLine270: React.FC = () => {
 };
 
 export const MobileFlippedLLine: React.FC = () => {
-    return (
-        <Box flex={1}>
-            <ConnectorBox flex={1} style={{ borderWidth: "0px 4px 2px 0px" }} />
-            <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 0px" }} />
-        </Box>
-    );
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 4px 2px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 0px" }} />
+    </Box>
+  );
 };
 
 export const MobileFlippedLLine90: React.FC = () => {
@@ -238,7 +238,6 @@ export const MobileFlippedHLine: React.FC = () => {
   );
 };
 
-//Straight shifted
 export const MobileHorizontal: React.FC = () => {
   return (
     <Box flex={1}>

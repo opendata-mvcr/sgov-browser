@@ -1,9 +1,8 @@
 import React, { ReactElement } from "react";
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { TermInterface } from "../../api/data/terms";
 import { CurrentRelationTerm } from "./RelationItem";
 import { calculateConnector } from "./Relations";
-import RelationConnector, { TLine } from "./RelationConnector";
 import useIsMobile from "../../hooks/useIsMobile";
 import TermRelationsMobile from "./TermRelationsMobile";
 
@@ -61,9 +60,14 @@ const TermRelations: React.FC<RelationsItemProps> = ({
       </Box>
     );
   } else {
-    return <TermRelationsMobile currentTerm={currentTerm} domains={domains} ranges={ranges}/>
+    return (
+      <TermRelationsMobile
+        currentTerm={currentTerm}
+        domains={domains}
+        ranges={ranges}
+      />
+    );
   }
 };
-
 
 export default TermRelations;
