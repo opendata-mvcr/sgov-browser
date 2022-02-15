@@ -36,8 +36,6 @@ export const getRelationPosition = (index: number, size: number) => {
     return "ONLY_ONE";
   } else if (size > 1 && index === 0) {
     return "FIRST";
-  } else if (size > 1 && index + 1 === size - 1) {
-    return "PENULTIMATE";
   } else if (size > 1 && index + 1 !== size) {
     return "MIDDLE";
   } else if (size > 1 && index + 1 === size) {

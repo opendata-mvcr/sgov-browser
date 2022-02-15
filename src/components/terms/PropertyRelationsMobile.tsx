@@ -71,7 +71,7 @@ const getDomainConnectors = (
       row2R: <RelationConnector type={"m_f_vertical"} />,
     };
   }
-  if (position === "MIDDLE" || position === "PENULTIMATE") {
+  if (position === "MIDDLE" ) {
     return {
       row1L: <RelationConnector type={"m_hline"} />,
       row1M: currElement,
@@ -101,11 +101,7 @@ const getRangeConnectors = (
       row1M: currElement,
     };
   }
-  if (
-    position === "MIDDLE" ||
-    position === "PENULTIMATE" ||
-    position === "FIRST"
-  ) {
+  if (position === "MIDDLE" || position === "FIRST") {
     return {
       row1M: currElement,
       row1L: <RelationConnector type={"m_hline"} />,

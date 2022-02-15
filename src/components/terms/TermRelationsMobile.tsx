@@ -24,17 +24,27 @@ const TermRelationsMobile: React.FC<RelationsItemProps> = ({
     return <RelationItemWrapper key={item.key} {...props} />;
   });
 
-  const rangeArr = [...ranges, currEl];
+  const rangeArr = [...ranges];
   const rangeRows = rangeArr.map((item, index) => {
     const position = getRelationPosition(index, rangeArr.length);
     const props = getRangeConnectors(position, item);
     return <RelationItemWrapper key={item.key} {...props} />;
   });
 
+  const wrappedCurrent = (
+      currElement: ReactElement
+  ): RelationItemWrapperProps => {
+    return {
+      row1M: currElement,
+      row1L: <RelationConnector type={"m_lline"} />,
+    };
+  };
+
   return (
     <Box>
       {domains.length !== 0 && domainRows}
       {ranges.length !== 0 && rangeRows}
+      {ranges.length !==0 && <RelationItemWrapper key={currEl.key} {...wrappedCurrent(currEl)}/>}
     </Box>
   );
 };
@@ -54,7 +64,7 @@ const getDomainConnectors = (
       row2R: <RelationConnector type={"m_lline90"} />,
     };
   }
-  if (position === "MIDDLE" || position === "PENULTIMATE") {
+  if (position === "MIDDLE") {
     return {
       row1L: <RelationConnector type={"m_hline"} />,
       row1M: currElement,
@@ -86,8 +96,9 @@ const getRangeConnectors = (
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
-      row2R: <RelationConnector type={"m_f_vertical"} />,
+      row2R: <RelationConnector type={"m_f_lline"} />,
       row2M: <RelationConnector type={"m_horizontal"} />,
+      row2L: <RelationConnector type={"m_lline270"}/>
     };
   }
   if (position === "MIDDLE") {
@@ -97,19 +108,13 @@ const getRangeConnectors = (
       row2R: <RelationConnector type={"m_f_vertical"} />,
     };
   }
-  if (position === "PENULTIMATE") {
-    return {
-      row1R: <RelationConnector type={"m_f_hline"} />,
-      row1M: currElement,
-      row2L: <RelationConnector type={"m_lline270"} />,
-      row2M: <RelationConnector type={"m_horizontal"} />,
-      row2R: <RelationConnector type={"m_f_lline"} />,
-    };
-  }
   if (position === "LAST") {
     return {
-      row1L: <RelationConnector type={"m_lline"} />,
       row1M: currElement,
+      row1R: <RelationConnector type={"m_f_hline"} />,
+      row2R: <RelationConnector type={"m_f_lline"} />,
+      row2M: <RelationConnector type={"m_horizontal"} />,
+      row2L: <RelationConnector type={"m_lline270"}/>
     };
   }
 
