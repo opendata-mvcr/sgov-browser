@@ -9,9 +9,23 @@ const ConnectorBox = styled(Box)({
 });
 
 interface RelationConnectorProps {
-  type?: string;
+  type: string;
 }
 
+//Wrapper component for all possible connectors
+/**Types:
+ *  straight
+ *  lline( resembles L shape)
+ *  hline (resembles H shape)
+ *  tline (resembles T shape)
+ *  vertical
+ *  horizontal (same as straight, just for mobile)
+ *  Modifiers:
+ *  r_ reversed direction
+ *  m_ mobile version
+ *  f_ mirrored
+ *  m_line{number} number indicates angle of ccw rotation
+ * **/
 const RelationConnector: React.FC<RelationConnectorProps> = ({ type }) => {
   let connector;
   if (type === "straight") connector = <StraightLine />;
@@ -21,6 +35,18 @@ const RelationConnector: React.FC<RelationConnectorProps> = ({ type }) => {
   else if (type === "r_hline") connector = <ReverseHLine />;
   else if (type === "r_lline") connector = <ReverseLLine />;
   else if (type === "r_tline") connector = <ReverseTLine />;
+  else if (type === "m_hline") connector = <MobileHLine />;
+  else if (type === "m_f_hline") connector = <MobileFlippedHLine />;
+  else if (type === "m_lline") connector = <MobileLLine />;
+  else if (type === "m_lline90") connector = <MobileLLine90 />;
+  else if (type === "m_lline180") connector = <MobileLLine180 />;
+  else if (type === "m_lline270") connector = <MobileLLine270 />;
+  else if (type === "m_f_lline") connector = <MobileFlippedLLine />;
+  else if (type === "m_f_lline90") connector = <MobileFlippedLLine90 />;
+  else if (type === "m_f_lline180") connector = <MobileFlippedLLine180 />;
+  else if (type === "m_horizontal") connector = <MobileHorizontal />;
+  else if (type === "m_vertical") connector = <MobileVertical />;
+  else if (type === "m_f_vertical") connector = <MobileFlippedVertical />;
   else return null;
 
   return (
@@ -30,6 +56,7 @@ const RelationConnector: React.FC<RelationConnectorProps> = ({ type }) => {
   );
 };
 
+//For desktop view only
 export const StraightLine: React.FC = () => {
   return (
     <>
@@ -139,6 +166,115 @@ export const ReverseLLine: React.FC = () => {
         <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 0px 0px" }} />
       </Box>
     </>
+  );
+};
+
+//For mobile view only
+export const MobileLLine: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 0px 4px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "4px 0px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileLLine90: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 4px 2px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileLLine180: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 2px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 4px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileLLine270: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 2px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 4px" }} />
+    </Box>
+  );
+};
+
+export const MobileFlippedLLine: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 4px 2px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileFlippedLLine90: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 2px 4px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "2px 0px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileFlippedLLine180: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 4px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 0px 4px" }} />
+    </Box>
+  );
+};
+
+export const MobileHLine: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 0px 0px 4px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "4px 0px 0px 4px" }} />
+    </Box>
+  );
+};
+
+export const MobileFlippedHLine: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox flex={1} style={{ borderWidth: "0px 4px 0px 0px" }} />
+      <ConnectorBox flex={1} style={{ borderWidth: "4px 4px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileHorizontal: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox style={{ borderWidth: "0px 0px 2px 0px" }} />
+      <ConnectorBox style={{ borderWidth: "2px 0px 0px 0px" }} />
+    </Box>
+  );
+};
+
+export const MobileVertical: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox style={{ borderWidth: "0px 0px 0px 4px" }} />
+      <ConnectorBox style={{ borderWidth: "0px 0px 0px 4px" }} />
+    </Box>
+  );
+};
+
+export const MobileFlippedVertical: React.FC = () => {
+  return (
+    <Box flex={1}>
+      <ConnectorBox style={{ borderWidth: "0px 4px 0px 0px" }} />
+      <ConnectorBox style={{ borderWidth: "0px 4px 0px 0px" }} />
+    </Box>
   );
 };
 
