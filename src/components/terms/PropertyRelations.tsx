@@ -22,7 +22,8 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
   currentTerm,
 }) => {
   const mobileActive = useIsMobile();
-  if (domains.length === 0 || ranges.length === 0)
+
+  if (domains.length === 0 || ranges.length === 0) {
     return (
       <TermRelations
         currentTerm={currentTerm}
@@ -30,6 +31,8 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
         ranges={domains}
       />
     );
+  }
+
   if (mobileActive) {
     return (
       <PropertyRelationsMobile
@@ -39,6 +42,7 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
       />
     );
   }
+
   const firstRow =
     domains.length && ranges.length ? (
       <Box flex={1} display="flex" alignItems="center" justifyContent="center">

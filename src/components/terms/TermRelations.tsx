@@ -27,6 +27,18 @@ const TermRelations: React.FC<RelationsItemProps> = ({
   currentTerm,
   ranges,
 }) => {
+  const mobileActive = useIsMobile();
+
+  if (mobileActive) {
+    return (
+      <TermRelationsMobile
+        currentTerm={currentTerm}
+        domains={domains}
+        ranges={ranges}
+      />
+    );
+  }
+
   const domainRows = domains.map((item, index) => {
     return (
       <Box display="flex" key={item.key}>
@@ -51,23 +63,12 @@ const TermRelations: React.FC<RelationsItemProps> = ({
     );
   });
 
-  const mobileActive = useIsMobile();
-  if (!mobileActive) {
-    return (
-      <Box mt={1}>
-        {domains.length !== 0 && domainRows}
-        {ranges.length !== 0 && rangeRows}
-      </Box>
-    );
-  } else {
-    return (
-      <TermRelationsMobile
-        currentTerm={currentTerm}
-        domains={domains}
-        ranges={ranges}
-      />
-    );
-  }
+  return (
+    <Box mt={1}>
+      {domains.length !== 0 && domainRows}
+      {ranges.length !== 0 && rangeRows}
+    </Box>
+  );
 };
 
 export default TermRelations;

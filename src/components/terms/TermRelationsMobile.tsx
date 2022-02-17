@@ -6,7 +6,7 @@ import RelationConnector from "./RelationConnector";
 import RelationItemWrapper, {
   RelationItemWrapperProps,
 } from "./RelationItemWrapperMobile";
-import { getRelationPosition } from "../../utils/TermUtils";
+import { getRelationPosition, RelationPosition } from "../../utils/TermUtils";
 
 const TermRelationsMobile: React.FC<RelationsItemProps> = ({
   domains,
@@ -31,31 +31,36 @@ const TermRelationsMobile: React.FC<RelationsItemProps> = ({
     return <RelationItemWrapper key={item.key} {...props} />;
   });
 
-  const wrappedCurrent = (
-      currElement: ReactElement
-  ): RelationItemWrapperProps => {
-    return {
-      row1M: currElement,
-      row1L: <RelationConnector type={"m_lline"} />,
-    };
-  };
-
   return (
     <Box>
       {domains.length !== 0 && domainRows}
       {ranges.length !== 0 && rangeRows}
-      {ranges.length !==0 && <RelationItemWrapper key={currEl.key} {...wrappedCurrent(currEl)}/>}
+      {ranges.length !== 0 && (
+        <RelationItemWrapper key={currEl.key} {...wrappedCurrent(currEl)} />
+      )}
     </Box>
   );
 };
 
-//Gets the appropriate connectors for domain relations
-const getDomainConnectors = (
-  position: string,
+//Code belows addresses all possible connectors for terms regarding their position in the visualisation
+
+const wrappedCurrent = (
   currElement: ReactElement
 ): RelationItemWrapperProps => {
-  //debugger;
-  if (position === "FIRST" || position === "ONLY_ONE") {
+  return {
+    row1M: currElement,
+    row1L: <RelationConnector type={"m_lline"} />,
+  };
+};
+
+const getDomainConnectors = (
+  position: RelationPosition,
+  currElement: ReactElement
+): RelationItemWrapperProps => {
+  if (
+    position === RelationPosition.FIRST ||
+    position === RelationPosition.ONLY_ONE
+  ) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
@@ -64,61 +69,61 @@ const getDomainConnectors = (
       row2R: <RelationConnector type={"m_lline90"} />,
     };
   }
-  if (position === "MIDDLE") {
+  if (position === RelationPosition.MIDDLE) {
     return {
       row1L: <RelationConnector type={"m_hline"} />,
       row1M: currElement,
       row2L: <RelationConnector type={"m_vertical"} />,
     };
   }
-  if (position === "LAST") {
+  if (position === RelationPosition.LAST) {
     return {
       row1L: <RelationConnector type={"m_lline"} />,
       row1M: currElement,
     };
   }
 
-  return {};
+  return { row1M: currElement };
 };
-//Gets the appropriate connectors for range relations
+
 const getRangeConnectors = (
-  position: string,
+  position: RelationPosition,
   currElement: ReactElement
 ): RelationItemWrapperProps => {
-  if (position === "FIRST") {
+  if (position === RelationPosition.FIRST) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
       row2R: <RelationConnector type={"m_f_vertical"} />,
     };
   }
-  if (position === "ONLY_ONE") {
+  if (position === RelationPosition.ONLY_ONE) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
       row2R: <RelationConnector type={"m_f_lline"} />,
       row2M: <RelationConnector type={"m_horizontal"} />,
-      row2L: <RelationConnector type={"m_lline270"}/>
+      row2L: <RelationConnector type={"m_lline270"} />,
     };
   }
-  if (position === "MIDDLE") {
+  if (position === RelationPosition.MIDDLE) {
     return {
       row1R: <RelationConnector type={"m_f_hline"} />,
       row1M: currElement,
       row2R: <RelationConnector type={"m_f_vertical"} />,
     };
   }
-  if (position === "LAST") {
+  if (position === RelationPosition.LAST) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_f_hline"} />,
       row2R: <RelationConnector type={"m_f_lline"} />,
       row2M: <RelationConnector type={"m_horizontal"} />,
-      row2L: <RelationConnector type={"m_lline270"}/>
+      row2L: <RelationConnector type={"m_lline270"} />,
     };
   }
 
-  return {};
+  return { row1M: currElement };
 };
 
 export default TermRelationsMobile;

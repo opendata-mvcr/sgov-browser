@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { RelationsItemProps } from "./TermRelations";
 import { Box } from "@mui/material";
 import { CurrentRelationTerm } from "./RelationItem";
-import { getRelationPosition } from "../../utils/TermUtils";
+import { getRelationPosition, RelationPosition } from "../../utils/TermUtils";
 import RelationItemWrapper, {
   RelationItemWrapperProps,
 } from "./RelationItemWrapperMobile";
@@ -38,6 +38,8 @@ const PropertyRelationsMobile: React.FC<RelationsItemProps> = ({
   );
 };
 
+//Code belows addresses all possible connectors for terms regarding their position in the visualisation
+
 const wrappedCurrent = (
   currElement: ReactElement
 ): RelationItemWrapperProps => {
@@ -52,10 +54,10 @@ const wrappedCurrent = (
 };
 
 const getDomainConnectors = (
-  position: string,
+  position: RelationPosition,
   currElement: ReactElement
 ): RelationItemWrapperProps => {
-  if (position === "ONLY_ONE") {
+  if (position === RelationPosition.ONLY_ONE) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
@@ -64,21 +66,21 @@ const getDomainConnectors = (
       row2L: <RelationConnector type={"m_lline270"} />,
     };
   }
-  if (position === "FIRST") {
+  if (position === RelationPosition.FIRST) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_lline180"} />,
       row2R: <RelationConnector type={"m_f_vertical"} />,
     };
   }
-  if (position === "MIDDLE" ) {
+  if (position === RelationPosition.MIDDLE) {
     return {
       row1L: <RelationConnector type={"m_hline"} />,
       row1M: currElement,
       row2L: <RelationConnector type={"m_vertical"} />,
     };
   }
-  if (position === "LAST") {
+  if (position === RelationPosition.LAST) {
     return {
       row1M: currElement,
       row1R: <RelationConnector type={"m_f_hline"} />,
@@ -88,34 +90,37 @@ const getDomainConnectors = (
     };
   }
 
-  return {};
+  return { row1M: currElement };
 };
 
 const getRangeConnectors = (
-  position: string,
+  position: RelationPosition,
   currElement: ReactElement
 ): RelationItemWrapperProps => {
-  if (position === "ONLY_ONE") {
+  if (position === RelationPosition.ONLY_ONE) {
     return {
       row1L: <RelationConnector type={"m_lline"} />,
       row1M: currElement,
     };
   }
-  if (position === "MIDDLE" || position === "FIRST") {
+  if (
+    position === RelationPosition.MIDDLE ||
+    position === RelationPosition.FIRST
+  ) {
     return {
       row1M: currElement,
       row1L: <RelationConnector type={"m_hline"} />,
       row2L: <RelationConnector type={"m_vertical"} />,
     };
   }
-  if (position === "LAST") {
+  if (position === RelationPosition.LAST) {
     return {
       row1L: <RelationConnector type={"m_lline"} />,
       row1M: currElement,
     };
   }
 
-  return {};
+  return { row1M: currElement };
 };
 
 export default PropertyRelationsMobile;

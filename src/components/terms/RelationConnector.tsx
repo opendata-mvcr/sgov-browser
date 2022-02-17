@@ -9,9 +9,23 @@ const ConnectorBox = styled(Box)({
 });
 
 interface RelationConnectorProps {
-  type?: string;
+  type: string;
 }
 
+//Wrapper component for all possible connectors
+/**Types:
+ *  straight
+ *  lline( resembles L shape)
+ *  hline (resembles H shape)
+ *  tline (resembles T shape)
+ *  vertical
+ *  horizontal (same as straight, just for mobile)
+ *  Modifiers:
+ *  r_ reversed direction
+ *  m_ mobile version
+ *  f_ mirrored
+ *  m_line{number} number indicates angle of ccw rotation
+ * **/
 const RelationConnector: React.FC<RelationConnectorProps> = ({ type }) => {
   let connector;
   if (type === "straight") connector = <StraightLine />;
@@ -155,8 +169,7 @@ export const ReverseLLine: React.FC = () => {
   );
 };
 
-//For mobile only
-
+//For mobile view only
 export const MobileLLine: React.FC = () => {
   return (
     <Box flex={1}>

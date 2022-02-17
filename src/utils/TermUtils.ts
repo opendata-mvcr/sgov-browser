@@ -31,15 +31,26 @@ export const generateStyledSnippet = (
     : `<i> - ${snippetText}</i>&hellip;`;
 };
 
-export const getRelationPosition = (index: number, size: number) => {
+export enum RelationPosition {
+  ONLY_ONE,
+  FIRST,
+  MIDDLE,
+  LAST,
+  UNKNOWN,
+}
+
+export const getRelationPosition = (
+  index: number,
+  size: number
+): RelationPosition => {
   if (size === 1) {
-    return "ONLY_ONE";
+    return RelationPosition.ONLY_ONE;
   } else if (size > 1 && index === 0) {
-    return "FIRST";
+    return RelationPosition.FIRST;
   } else if (size > 1 && index + 1 !== size) {
-    return "MIDDLE";
+    return RelationPosition.MIDDLE;
   } else if (size > 1 && index + 1 === size) {
-    return "LAST";
+    return RelationPosition.LAST;
   }
-  return "UNKNOWN";
+  return RelationPosition.UNKNOWN;
 };
