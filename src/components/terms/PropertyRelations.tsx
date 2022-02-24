@@ -3,6 +3,8 @@ import { Box, styled } from "@mui/material";
 import { CurrentRelationTerm } from "./RelationItem";
 import TermRelations, { RelationsItemProps } from "./TermRelations";
 import { calculateConnector } from "./Relations";
+import useIsMobile from "../../hooks/useIsMobile";
+import PropertyRelationsMobile from "./PropertyRelationsMobile";
 
 const TermBox = styled(Box)(({ theme }) => ({
   flex: 3,
@@ -19,7 +21,9 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
   ranges,
   currentTerm,
 }) => {
-  if (domains.length === 0 || ranges.length === 0)
+  const mobileActive = useIsMobile();
+
+  if (domains.length === 0 || ranges.length === 0) {
     return (
       <TermRelations
         currentTerm={currentTerm}
@@ -27,6 +31,17 @@ const PropertyRelations: React.FC<RelationsItemProps> = ({
         ranges={domains}
       />
     );
+  }
+
+  if (mobileActive) {
+    return (
+      <PropertyRelationsMobile
+        currentTerm={currentTerm}
+        domains={domains}
+        ranges={ranges}
+      />
+    );
+  }
 
   const firstRow =
     domains.length && ranges.length ? (

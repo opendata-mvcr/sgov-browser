@@ -3,7 +3,13 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import makeStyles from "@mui/styles/makeStyles";
 import SearchIcon from "@mui/icons-material/Search";
-import { CircularProgress, InputAdornment, styled } from "@mui/material";
+import {
+  CircularProgress,
+  InputAdornment,
+  Popper,
+  PopperProps,
+  styled,
+} from "@mui/material";
 import { useSearch, SearchResult } from "../../api/WordsAPI";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
@@ -61,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 interface SearchBarProps {
   size: "small" | "large";
   initialValue?: string;
+  focusCallback?: (state: boolean) => void;
 }
 
 const InputTextField = styled(TextField)({
@@ -84,6 +91,12 @@ const MagnifyingGlass = styled(SearchIcon)({
   },
 });
 
+const CustomPopper = styled(Popper)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    width: "100% !important",
+  },
+}));
+
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const classes = useStyles(props);
   const [inputValue, setInputValue] = useState<string | undefined>();
@@ -102,6 +115,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       return;
     }
     if (typeof option === "string") {
+      props.focusCallback?.(true);
       history.push(`/hledat?label=${option}`);
     } else {
       const matchedOption = searchResultLabelMap.get(option.label);
@@ -130,6 +144,10 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     };
   }, [debouncedChangeHandler]);
 
+  const Popper = (props: PopperProps) => {
+    return <CustomPopper {...props} />;
+  };
+
   const endAdornment = (
     <InputAdornment position="end">
       {isLoading ? (
@@ -137,9 +155,12 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       ) : (
         <MagnifyingGlass
           fontSize={props.size === "small" ? "medium" : "large"}
-          onClick={() => {
+          onClick={(e) => {
             if (!(inputValue === undefined || inputValue === "")) {
               onChangeHandler(inputValue);
+              //stops the propagation, otherwise input would get focused and callback would be called again
+              e.stopPropagation();
+              props.focusCallback?.(true);
             }
           }}
         />
@@ -160,6 +181,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
+      blurOnSelect={true}
       options={data}
       getOptionLabel={(option: SearchResult | string) =>
         typeof option === "string" ? option : option.label
@@ -171,9 +193,17 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       )}
       onInputChange={debouncedChangeHandler}
       ListboxProps={{ style: { maxHeight: "500px" } }}
+      PopperComponent={Popper}
       renderInput={(params) => (
         <InputTextField
           {...params}
+          onFocus={() => {
+            //calls the callback to hide the logo if needed
+            props.focusCallback?.(false);
+          }}
+          onBlur={() => {
+            props.focusCallback?.(true);
+          }}
           placeholder="Zadejte hledané slovo"
           InputProps={{
             ...params.InputProps,
