@@ -43,22 +43,15 @@ interface VocabularyTermsListProps {
   terms: VocabularyTermInterface[];
 }
 
-const split_at_index = (value: string, index: number, length: number) => {
-  return [
-    value.substring(0, index),
-    value.substring(index, index + length),
-    value.substring(index + length),
-  ];
-};
+const getHighlightedText = (originalLabel: string, searchedPart: string) => {
+  if (searchedPart === "") {
+    return originalLabel;
+  }
 
-const getHighlightedTex = (text: string, termText: string) => {
-  let searchedText = text.toLowerCase();
-  let original = termText.toLowerCase();
-  let index = original.indexOf(searchedText);
-  let splitted = split_at_index(termText, index, text.length);
-  if (splitted[0] || splitted[1])
-    return `${splitted[0]}<em>${splitted[1]}</em>${splitted[2]}`;
-  else return termText;
+  const regexForAfter = new RegExp(`(?<=${searchedPart})`, "gi");
+  const regexForBefore = new RegExp(`(?=${searchedPart})`, "gi");
+  const replaced = originalLabel.replace(regexForAfter, "</em>");
+  return replaced.replace(regexForBefore, "<em>");
 };
 
 const endAdornment = (
@@ -72,26 +65,26 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   terms,
 }) => {
   const classes = useStyles();
-  const [name, setName] = useState("");
+  const [filterText, setFilterText] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    setFilterText(event.target.value);
   };
   const filteredTerms = useMemo(() => {
     return terms
       .filter((term) => {
-        if (name === "") return true;
+        if (filterText === "") return true;
         else {
-          return term.label.toLowerCase().includes(name.toLowerCase());
+          return term.label.toLowerCase().includes(filterText.toLowerCase());
         }
       })
       .map((term) => {
         return {
           $id: term.$id,
           $type: term.$type,
-          label: getHighlightedTex(name, term.label),
+          label: getHighlightedText(term.label, filterText),
         };
       });
-  }, [terms, name]);
+  }, [terms, filterText]);
 
   const getTermRoute = (term: VocabularyTermInterface) => {
     return generateTermRoute({
@@ -103,7 +96,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   const filter = (
     <Box ml={4}>
       <TextField
-        value={name}
+        value={filterText}
         onChange={handleChange}
         size={"small"}
         fullWidth

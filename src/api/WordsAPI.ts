@@ -82,11 +82,7 @@ export type SearchResult = ReturnType<typeof getSearchResults> extends Promise<
 export type SearchTerm = SearchResult["items"] extends (infer U)[] ? U : never;
 
 export const useSearch = (word: string | undefined) => {
-  //removes all trailing whitespaces
-  word = word?.replace(/[ /\t]+$/, "");
-  //removes all leading whitespaces
-  word = word?.replace(/^[ /\t]+/, "");
-
+  word = word?.trim();
   return useQuery(["directsearch", word], () => getSearchResults(word), {
     enabled: !!word,
   });
