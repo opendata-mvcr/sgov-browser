@@ -43,15 +43,26 @@ interface VocabularyTermsListProps {
   terms: VocabularyTermInterface[];
 }
 
+const split_at_index = (value: string, index: number, length: number) => {
+  return [
+    value.substring(0, index),
+    value.substring(index, index + length),
+    value.substring(index + length),
+  ];
+};
+
 const getHighlightedText = (originalLabel: string, searchedPart: string) => {
   if (searchedPart === "") {
     return originalLabel;
   }
 
-  const regexForAfter = new RegExp(`(?<=${searchedPart})`, "gi");
-  const regexForBefore = new RegExp(`(?=${searchedPart})`, "gi");
-  const replaced = originalLabel.replace(regexForAfter, "</em>");
-  return replaced.replace(regexForBefore, "<em>");
+  let searchedText = searchedPart.toLowerCase();
+  let original = originalLabel.toLowerCase();
+  let index = original.indexOf(searchedText);
+  let splitted = split_at_index(originalLabel, index, searchedPart.length);
+  if (splitted[0] || splitted[1])
+    return `${splitted[0]}<em>${splitted[1]}</em>${splitted[2]}`;
+  else return originalLabel;
 };
 
 const endAdornment = (
