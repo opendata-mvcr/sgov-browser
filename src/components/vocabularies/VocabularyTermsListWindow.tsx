@@ -1,11 +1,13 @@
 import { FixedSizeList as List } from "react-window";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactWindowScroller } from "../../utils/ReactWindowScroller";
 import makeStyles from "@mui/styles/makeStyles";
 import { VocabularyTermInterface } from "../../api/data/vocabularies";
 import { generateTermRoute } from "../../utils/Utils";
-import DetailItemWrapper from "../detail_common/DetailItemWrapper";
+import { DetailItemWrapper } from "../terms/Hierarchy";
+import { Box, InputAdornment, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 //Unfortunately the makeStyles performs better than styled
 //Even though makeStyles is considered legacy, I would leave it here for now
@@ -18,12 +20,19 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     fontSize: "1.25rem",
-    // fontWeight: 500,
     lineHeight: "1.6",
     display: "block",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    textDecoration: "none",
+    color: "#000000",
+    "& em": {
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
+  },
+  noDecoration: {
     textDecoration: "none",
     color: "#000000",
   },
@@ -34,11 +43,59 @@ interface VocabularyTermsListProps {
   terms: VocabularyTermInterface[];
 }
 
+const split_at_index = (value: string, index: number, length: number) => {
+  return [
+    value.substring(0, index),
+    value.substring(index, index + length),
+    value.substring(index + length),
+  ];
+};
+
+const getHighlightedText = (originalLabel: string, searchedPart: string) => {
+  if (searchedPart === "") {
+    return originalLabel;
+  }
+
+  let searchedText = searchedPart.toLowerCase();
+  let original = originalLabel.toLowerCase();
+  let index = original.indexOf(searchedText);
+  let splitted = split_at_index(originalLabel, index, searchedPart.length);
+  if (splitted[0] || splitted[1])
+    return `${splitted[0]}<em>${splitted[1]}</em>${splitted[2]}`;
+  else return originalLabel;
+};
+
+const endAdornment = (
+  <InputAdornment position={"end"}>
+    <SearchIcon />
+  </InputAdornment>
+);
+
 const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   vocabularyIri,
   terms,
 }) => {
   const classes = useStyles();
+  const [filterText, setFilterText] = useState("");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterText(event.target.value);
+  };
+  const filteredTerms = useMemo(() => {
+    return terms
+      .filter((term) => {
+        if (filterText === "") return true;
+        else {
+          return term.label.toLowerCase().includes(filterText.toLowerCase());
+        }
+      })
+      .map((term) => {
+        return {
+          $id: term.$id,
+          $type: term.$type,
+          label: getHighlightedText(term.label, filterText),
+        };
+      });
+  }, [terms, filterText]);
 
   const getTermRoute = (term: VocabularyTermInterface) => {
     return generateTermRoute({
@@ -47,8 +104,23 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
     });
   };
 
+  const filter = (
+    <Box ml={4}>
+      <TextField
+        value={filterText}
+        onChange={handleChange}
+        size={"small"}
+        fullWidth
+        placeholder="Zadejte hledaný pojem"
+        InputProps={{
+          endAdornment: endAdornment,
+        }}
+      />
+    </Box>
+  );
+
   return (
-    <DetailItemWrapper title={"Pojmy"}>
+    <DetailItemWrapper title={"Pojmy"} secondaryElement={filter}>
       <ReactWindowScroller>
         {({ ref, outerRef, style, onScroll }: any) => (
           <List
@@ -57,7 +129,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
             outerRef={outerRef}
             style={style}
             height={window.innerHeight}
-            itemCount={terms.length}
+            itemCount={filteredTerms.length}
             itemSize={34}
             onScroll={onScroll}
           >
@@ -65,10 +137,15 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
               <div style={style}>
                 <div className={classes.wrapper}>
                   <RouterLink
-                    to={getTermRoute(terms[index])}
-                    className={classes.text}
+                    to={getTermRoute(filteredTerms[index])}
+                    className={classes.noDecoration}
                   >
-                    {terms[index].label}
+                    <div
+                      className={classes.text}
+                      dangerouslySetInnerHTML={{
+                        __html: filteredTerms[index].label,
+                      }}
+                    />
                   </RouterLink>
                 </div>
               </div>
