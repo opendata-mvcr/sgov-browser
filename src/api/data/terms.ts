@@ -6,6 +6,7 @@ import { owl, popisDat, rdfs, zSgovPojem } from "./namespaces";
 import { $ } from "@ldkit/sparql";
 import { namedNode as n } from "@ldkit/rdf";
 import { HIDDEN_VOCABULARY } from "./vocabularies";
+
 const RelationItemSchema = {
   "@type": skos.Concept,
   label: skos.prefLabel,
@@ -131,6 +132,15 @@ WHERE {
     ?vocabulary ${n(dcterms.title)} ?title .
   }
   UNION{
+      ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
+    ?domainRestriction ${n(owl.someValuesFrom)} ?term ; ${n(
+    owl.onProperty
+  )} ${n(zSgovPojem["je-vlastností"])} .
+    ?domain ${n(skos.prefLabel)} ?label .
+    ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+    ?vocabulary ${n(dcterms.title)} ?title .
+  }
+  UNION{
     ?domain ${n(rdfs.domain)} ?term .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
@@ -199,6 +209,15 @@ WHERE {
     ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
     ?vocabulary ${n(dcterms.title)} ?title .
 
+  }
+  UNION {
+    ?term ${n(rdfs.subClassOf)} ?domainRestriction . 
+    ?domainRestriction ${n(owl.allValuesFrom)} ?domain ; ${n(
+    owl.onProperty
+  )} ${n(zSgovPojem["je-vlastností"])} .
+    ?domain ${n(skos.prefLabel)} ?label .
+    ?domain ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+    ?vocabulary ${n(dcterms.title)} ?title .
   }
   UNION{
     ?term ${n(rdfs.domain)} ?domain .

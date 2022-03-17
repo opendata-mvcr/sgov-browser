@@ -29,7 +29,7 @@ export const luceneInstance = createNamespace({
 export const owl = createNamespace({
   iri: "http://www.w3.org/2002/07/owl#",
   prefix: "owl:",
-  terms: ["someValuesFrom", "onProperty", "ObjectProperty"],
+  terms: ["someValuesFrom", "onProperty", "ObjectProperty", "allValuesFrom"],
 } as const);
 
 export const zSgovPojem = createNamespace({
@@ -40,6 +40,7 @@ export const zSgovPojem = createNamespace({
     "má-vztažený-prvek-2",
     "typ-vztahu",
     "typ-vlastnosti",
+    "je-vlastností",
   ],
 } as const);
 
