@@ -54,3 +54,15 @@ export const getRelationPosition = (
   }
   return RelationPosition.UNKNOWN;
 };
+
+export const isValidHttpUrl = (definition: string): boolean => {
+  let url;
+
+  try {
+    url = new URL(definition);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+};
