@@ -4,9 +4,11 @@ import {
   BoxProps,
   Container,
   Grid,
+  Link,
   styled,
   Typography,
 } from "@mui/material";
+import { isValidHttpUrl } from "../../utils/TermUtils";
 
 interface DefinitionWrapperProps {
   definition?: string;
@@ -52,16 +54,7 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
               <Box mb={props.source ? 2 : 0}>
                 <Typography variant="h6">{props.definition}</Typography>
               </Box>
-              {props.source && (
-                <Box fontStyle="italic" color="text.disabled">
-                  <Typography
-                    variant="body1"
-                    style={{ wordWrap: "break-word" }}
-                  >
-                    {props.source}
-                  </Typography>
-                </Box>
-              )}
+              <DefinitionSource definitionSource={props.source} />
             </Box>
           </Grid>
           <IllustrationWrapper item sm={2}>
@@ -70,6 +63,35 @@ const DefinitionWrapper: React.FC<DefinitionWrapperProps & BoxProps> = (
         </Grid>
       </Box>
     </Wrapper>
+  );
+};
+
+interface DefinitionSourceProps {
+  definitionSource?: string;
+}
+
+const DefinitionSource: React.FC<DefinitionSourceProps> = ({
+  definitionSource,
+}) => {
+  if (!definitionSource) return null;
+  const content = isValidHttpUrl(definitionSource) ? (
+    <Link
+      target="_blank"
+      rel="noopener"
+      href={definitionSource}
+      color="text.disabled"
+    >
+      {definitionSource}
+    </Link>
+  ) : (
+    <Typography variant="body1" color="text.disabled">
+      {definitionSource}
+    </Typography>
+  );
+  return (
+    <Box fontStyle="italic" style={{ wordWrap: "break-word" }}>
+      {content}
+    </Box>
   );
 };
 
