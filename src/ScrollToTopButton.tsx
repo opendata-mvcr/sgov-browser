@@ -4,14 +4,16 @@ import KeyboardArrowUpSharpIcon from "@mui/icons-material/KeyboardArrowUpSharp";
 
 const ScrollButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "isVisible",
-})<{ isVisible?: boolean }>(({ theme, isVisible }) => ({
+})<{ isVisible?: boolean }>(({ isVisible }) => ({
   position: "fixed",
   bottom: 20,
   right: 20,
   justifyContent: "center",
   alignItems: "center",
-  maxWidth: 50,
+  maxWidth: 40,
   minWidth: 30,
+  minHeight: 30,
+  maxHeight: 40,
   transitionProperty: "opacity",
   opacity: isVisible ? 100 : 0,
   transition: "0.3s ease",
@@ -40,7 +42,7 @@ const ScrollToTopButton: React.FC = () => {
     <ScrollButton
       isVisible={isVisible}
       onClick={handleScrollUp}
-      variant="outlined"
+      variant="contained"
       color="secondary"
     >
       <Box
