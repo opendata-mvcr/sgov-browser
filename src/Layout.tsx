@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Box, styled } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 const FullSizedBox = styled(Box)({
   minHeight: "100vh",
@@ -33,6 +34,7 @@ const Layout: React.FC = (props) => {
       <Header showSearch={showSearch} />
       <ContentBox>{props.children}</ContentBox>
       <Footer showImage={showIllustration} />
+      <ScrollToTopButton />
     </FullSizedBox>
   );
 };
