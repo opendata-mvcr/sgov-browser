@@ -5,9 +5,9 @@ import { ReactWindowScroller } from "../../utils/ReactWindowScroller";
 import makeStyles from "@mui/styles/makeStyles";
 import { VocabularyTermInterface } from "../../api/data/vocabularies";
 import { generateTermRoute } from "../../utils/Utils";
-import { DetailItemWrapper } from "../terms/Hierarchy";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { DetailItemWrapper } from "../detail_common/DetailItemWrapper";
 
 //Unfortunately the makeStyles performs better than styled
 //Even though makeStyles is considered legacy, I would leave it here for now
@@ -105,7 +105,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   };
 
   const filter = (
-    <Box ml={4}>
+    <Box ml={4} mb={2}>
       <TextField
         value={filterText}
         onChange={handleChange}

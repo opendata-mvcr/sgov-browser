@@ -3,7 +3,7 @@ import { useVocabularyTerms } from "../../api/VocabularyAPI";
 import Loader from "../Loader";
 import { Typography } from "@mui/material";
 import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
-import DetailItemWrapper from "../detail_common/DetailItemWrapper";
+import { DetailItemWrapper } from "../detail_common/DetailItemWrapper";
 
 interface VocabularyTermsProps {
   vocabularyIri: string;

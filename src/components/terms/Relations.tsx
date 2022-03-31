@@ -2,7 +2,7 @@ import React from "react";
 import { useRelations } from "../../api/TermAPI";
 import Loader from "../Loader";
 import { TermInterface } from "../../api/data/terms";
-import DetailItemWrapper from "../detail_common/DetailItemWrapper";
+import { DetailItemWrapper } from "../detail_common/DetailItemWrapper";
 import TermRelations from "./TermRelations";
 import PropertyRelations from "./PropertyRelations";
 import { isProperty, isTermEmpty } from "../../utils/TermUtils";
