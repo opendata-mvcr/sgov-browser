@@ -6,13 +6,14 @@ interface MaxLineTextProp {
 }
 const MaxLineText: React.FC<TypographyProps & MaxLineTextProp> = (props) => {
   const Text = styled(Typography)(({ theme }) => ({
-    "--fontsize": "1.5982rem",
+    "--fontsize": "1.6982rem",
     "@media (min-width: 600px)": {
-      "--fontsize": "1.8576rem",
+      "--fontsize": "1.9576rem",
     },
     "@media (min-width: 900px)": {
-      "--fontsize": "2.06rem",
+      "--fontsize": "2.16rem",
     },
+    lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)))`,
     position: "relative",
     maxHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize) * ${props.maxlines}) )`,
     overflow: "hidden",
@@ -28,7 +29,7 @@ const MaxLineText: React.FC<TypographyProps & MaxLineTextProp> = (props) => {
       position: "absolute",
       right: 0,
       width: "1.7rem",
-      height: "2.1rem",
+      height: "2.15rem",
       background: theme.palette.text.secondary,
     },
     "& em": {

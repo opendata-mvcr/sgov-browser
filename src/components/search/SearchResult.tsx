@@ -10,24 +10,6 @@ import TypeIcon from "../TypeIcon";
 import { generateRoute } from "../../utils/SearchUtil";
 import MaxLineText from "../MaxLineText";
 
-const HighlightedText = styled(Typography)(({ theme }) => ({
-  "--fontsize": "1.6982rem",
-  "@media (min-width: 600px)": {
-    "--fontsize": "1.9576rem",
-  },
-  "@media (min-width: 900px)": {
-    "--fontsize": "2.16rem",
-  },
-  lineHeight: `calc((${theme.typography.h4.lineHeight} * var(--fontsize)))`,
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  "& em": {
-    fontStyle: "normal",
-    fontWeight: 600,
-  },
-}));
-
 const HighlightedTextDefinition = styled(Typography)(({ theme }) => ({
   alignSelf: "start",
   whiteSpace: "nowrap",
@@ -74,7 +56,8 @@ const SearchResultView: React.FC<SearchResult> = ({
                 }}
               />
             ) : (
-              <HighlightedText
+              <MaxLineText
+                maxlines={1}
                 variant="h4"
                 dangerouslySetInnerHTML={{
                   __html: displayText,
