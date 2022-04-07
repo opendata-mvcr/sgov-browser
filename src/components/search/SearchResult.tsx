@@ -47,23 +47,13 @@ const SearchResultView: React.FC<SearchResult> = ({
         <SearchCard borderColor={`${border} !important`}>
           <Box display="flex">
             <TypeIcon type={type} width={17} height={20} />
-            {type.includes(popisDat["slovník"]) ? (
-              <MaxLineText
-                variant="h4"
-                maxlines={3}
-                dangerouslySetInnerHTML={{
-                  __html: displayText,
-                }}
-              />
-            ) : (
-              <MaxLineText
-                maxlines={1}
-                variant="h4"
-                dangerouslySetInnerHTML={{
-                  __html: displayText,
-                }}
-              />
-            )}
+            <MaxLineText
+              variant="h4"
+              maxlines={type.includes(popisDat["slovník"]) ? 3 : 1}
+              dangerouslySetInnerHTML={{
+                __html: displayText,
+              }}
+            />
           </Box>
 
           {isMatchInDefinition && (
