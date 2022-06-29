@@ -7,8 +7,8 @@ import {
   tooltipClasses,
   TooltipProps,
   Typography,
+  styled,
 } from "@mui/material";
-import { styled } from "@mui/styles";
 
 export interface IriItem {
   iri: string;
