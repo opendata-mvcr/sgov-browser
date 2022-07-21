@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { ReactComponent as Copy } from "../../assets/copy_small.svg";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Tooltip,
+  tooltipClasses,
+  TooltipProps,
+  Typography,
+  styled,
+} from "@mui/material";
 
 export interface IriItem {
   iri: string;
@@ -19,17 +27,29 @@ const Content = React.forwardRef((props: any, ref: any) => {
   );
 });
 
+const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip
+    {...props}
+    classes={{ popper: className }}
+    children={props.children}
+  />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: "none",
+  },
+});
+
 const IRI: React.FC<IriItem> = (props) => {
-  const [title, setTitle] = useState("Zkopírovat IRI");
+  const [title, setTitle] = useState(`${props.iri}`);
   const click = () => {
     navigator.clipboard
       .writeText(props.iri)
-      .then(() => setTitle("Zkopírováno!"));
+      .then(() => setTitle(`Zkopírováno: ${props.iri}`));
   };
   return (
-    <Tooltip title={title} arrow>
+    <NoMaxWidthTooltip title={title} arrow>
       <Content onClick={click} />
-    </Tooltip>
+    </NoMaxWidthTooltip>
   );
 };
 
