@@ -1,8 +1,8 @@
-import { SchemaInterface, createResource } from "@ldkit/core";
-import { xsd, skos, dcterms, ldkit } from "@ldkit/namespaces";
-import { namedNode as n, literal as l } from "@ldkit/rdf";
-import { $ } from "@ldkit/sparql";
+import { SchemaInterface, createResource } from "ldkit";
+import { xsd, skos, dcterms, ldkit } from "ldkit/namespaces";
+import { $ } from "ldkit/sparql";
 import { lucene, luceneInstance, popisDat } from "./namespaces";
+import { n, l } from "./utils";
 import { context } from "./context";
 import { HIDDEN_VOCABULARY } from "./vocabularies";
 

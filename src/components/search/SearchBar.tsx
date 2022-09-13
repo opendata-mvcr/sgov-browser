@@ -176,7 +176,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           onChangeHandler(newValue);
         }
       }}
-      defaultValue={props.initialValue}
+      //defaultValue={props.initialValue}
       filterOptions={filterOptions}
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth

@@ -1,10 +1,10 @@
-import { createResource, SchemaInterface } from "@ldkit/core";
-import { dcterms, skos, ldkit } from "@ldkit/namespaces";
-import { namedNode as n } from "@ldkit/rdf";
-import { $ } from "@ldkit/sparql";
+import { createResource, SchemaInterface } from "ldkit";
+import { dcterms, skos, ldkit } from "ldkit/namespaces";
+import { $ } from "ldkit/sparql";
 
 import { context } from "./context";
 import { popisDat } from "./namespaces";
+import { n } from "./utils";
 import { TermBaseSchema } from "./terms";
 
 export const HIDDEN_VOCABULARY = "https://slovník.gov.cz/základní";

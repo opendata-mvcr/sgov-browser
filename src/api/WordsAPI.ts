@@ -7,7 +7,7 @@ import {
   SearchResource,
   VocabularySearchResource,
 } from "./data/search";
-import { skos } from "@ldkit/namespaces";
+import { skos } from "ldkit/namespaces";
 
 const getSearchResults = async (word: string | undefined) => {
   if (!word) {

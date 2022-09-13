@@ -1,5 +1,5 @@
 import React from "react";
-import { skos } from "@ldkit/namespaces";
+import { skos } from "ldkit/namespaces";
 import { ReactComponent as TermIcon } from "../assets/article.svg";
 import { ReactComponent as WordIcon } from "../assets/split.svg";
 import { popisDat } from "../api/data/namespaces";
