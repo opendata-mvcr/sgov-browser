@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { firstValueFrom } from "rxjs";
 
 import {
   getPropertyRelationsQuery,
@@ -24,14 +23,12 @@ export const getTerm = async (term: TermBase) => {
   //If user is trying to fetch term from hidden vocabulary, immediately return null -> no retries from React Query
   if (term.vocabulary.$id === HIDDEN_VOCABULARY) return null;
 
-  const data = await firstValueFrom(Terms.findByIri(term.$id));
+  const data = await Terms.findByIri(term.$id);
   if (!data) {
     // Term not found
     throw new Error("404 Term not found");
   }
-  const types = await firstValueFrom(
-    TermsTypes.query(getTermTypeQuery(term.$id))
-  );
+  const types = await TermsTypes.query(getTermTypeQuery(term.$id));
   (data.$type as string[]) = types[0].$type;
   //Removes all mentions of terms coming from hidden vocabulary
   (data.parentTerms as TermBaseInterface[]) = data.parentTerms.filter(
@@ -51,13 +48,9 @@ export const getRelations = async (
     return Promise.reject("Invalid term");
   }
   if (isProperty(term)) {
-    return await firstValueFrom(
-      TermsRelationsResource.query(getPropertyRelationsQuery(term.$id))
-    );
+    return await TermsRelationsResource.query(getPropertyRelationsQuery(term.$id));
   } else {
-    return await firstValueFrom(
-      TermsRelationsResource.query(getTermRelationsQuery(term.$id))
-    );
+    return await TermsRelationsResource.query(getTermRelationsQuery(term.$id));
   }
 };
 
