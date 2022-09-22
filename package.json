@@ -5,9 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.1.0",
-    "@mui/material": "^5.1.0",
-    "@mui/styles": "^5.1.0",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.6",
+    "@mui/styles": "^5.10.6",
     "@types/lodash": "^4.14.172",
     "@types/node": "^12.20.19",
     "@types/react": "^17.0.34",
