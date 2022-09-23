@@ -1,10 +1,10 @@
-import { createResource, SchemaInterface } from "@ldkit/core";
-import { dcterms, ldkit, rdf, skos } from "@ldkit/namespaces";
+import { createResource, SchemaInterface } from "ldkit";
+import { dcterms, ldkit, rdf, skos } from "ldkit/namespaces";
 
 import { context } from "./context";
 import { owl, popisDat, rdfs, zSgovPojem } from "./namespaces";
-import { $ } from "@ldkit/sparql";
-import { namedNode as n } from "@ldkit/rdf";
+import { $ } from "ldkit/sparql";
+import { n } from "./utils";
 import { HIDDEN_VOCABULARY } from "./vocabularies";
 
 const RelationItemSchema = {

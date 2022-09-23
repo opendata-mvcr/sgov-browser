@@ -1,5 +1,5 @@
 import { SearchTerm } from "../api/WordsAPI";
-import { skos } from "@ldkit/namespaces";
+import { skos } from "ldkit/namespaces";
 import { generateTermRoute, generateVocabularyRoute } from "./Utils";
 import { popisDat } from "../api/data/namespaces";
 

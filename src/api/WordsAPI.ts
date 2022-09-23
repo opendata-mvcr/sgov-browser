@@ -1,13 +1,12 @@
 import { useQuery } from "react-query";
 import _ from "lodash";
-import { firstValueFrom } from "rxjs";
 import {
   getSearchQuery,
   getVocabularySearchQuery,
   SearchResource,
   VocabularySearchResource,
 } from "./data/search";
-import { skos } from "@ldkit/namespaces";
+import { skos } from "ldkit/namespaces";
 
 const getSearchResults = async (word: string | undefined) => {
   if (!word) {
@@ -15,10 +14,8 @@ const getSearchResults = async (word: string | undefined) => {
   }
   word = word.replace(/(?=[()/])/g, "\\");
 
-  const data = await firstValueFrom(SearchResource.query(getSearchQuery(word)));
-  const vocabularyData = await firstValueFrom(
-    VocabularySearchResource.query(getVocabularySearchQuery(word))
-  );
+  const data = await SearchResource.query(getSearchQuery(word));
+  const vocabularyData = await VocabularySearchResource.query(getVocabularySearchQuery(word));
   // Groups results with the same label
   // adds isWord flag when there are multiple
   const result = _(data)

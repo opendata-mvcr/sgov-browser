@@ -1,4 +1,4 @@
-import { createNamespace } from "@ldkit/core";
+import { createNamespace } from "ldkit";
 
 export const popisDat = createNamespace({
   iri: "http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/",

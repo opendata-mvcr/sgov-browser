@@ -176,16 +176,13 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           onChangeHandler(newValue);
         }
       }}
-      defaultValue={props.initialValue}
+      defaultValue={props.initialValue || ""}
       filterOptions={filterOptions}
       noOptionsText="Nebyly nalezeny žádné výsledky"
       fullWidth
       freeSolo
       blurOnSelect={true}
       options={data}
-      getOptionLabel={(option: SearchResult | string) =>
-        typeof option === "string" ? option : option.label
-      }
       renderOption={(props, option: SearchResult, { selected }) => (
         <li {...props}>
           <SearchBarResult key={option.displayText} {...option} />
