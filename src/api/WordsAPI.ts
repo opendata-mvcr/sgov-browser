@@ -15,7 +15,9 @@ const getSearchResults = async (word: string | undefined) => {
   word = word.replace(/(?=[()/])/g, "\\");
 
   const data = await SearchResource.query(getSearchQuery(word));
-  const vocabularyData = await VocabularySearchResource.query(getVocabularySearchQuery(word));
+  const vocabularyData = await VocabularySearchResource.query(
+    getVocabularySearchQuery(word)
+  );
   // Groups results with the same label
   // adds isWord flag when there are multiple
   const result = _(data)
