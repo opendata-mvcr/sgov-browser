@@ -48,7 +48,9 @@ export const getRelations = async (
     return Promise.reject("Invalid term");
   }
   if (isProperty(term)) {
-    return await TermsRelationsResource.query(getPropertyRelationsQuery(term.$id));
+    return await TermsRelationsResource.query(
+      getPropertyRelationsQuery(term.$id)
+    );
   } else {
     return await TermsRelationsResource.query(getTermRelationsQuery(term.$id));
   }

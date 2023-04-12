@@ -32,7 +32,9 @@ export const useVocabulary = (vocabularyUri: string) => {
 };
 
 const getVocabularyTerms = async (vocabularyIri: string) => {
-  const data = await VocabularyTerms.query(getVocabularyTermsQuery(vocabularyIri));
+  const data = await VocabularyTerms.query(
+    getVocabularyTermsQuery(vocabularyIri)
+  );
 
   data.sort((a, b) => a.label.localeCompare(b.label));
   return data;
