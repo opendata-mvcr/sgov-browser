@@ -3,8 +3,10 @@ import React, { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ReactWindowScroller } from "../../utils/ReactWindowScroller";
 import makeStyles from "@mui/styles/makeStyles";
-import { VocabularyTermInterface } from "../../api/data/vocabularies";
-import { generateTermRoute } from "../../utils/Utils";
+import {
+  VocabularyInterface,
+  VocabularyTermInterface,
+} from "../../api/data/vocabularies";
 import { DetailItemWrapper } from "../terms/Hierarchy";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -38,9 +40,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface VocabularyTermsListProps {
-  vocabularyIri: string;
-  terms: VocabularyTermInterface[];
+interface VocabularyAndTermsListProps {
+  data: VocabularyTermInterface[] | VocabularyInterface[];
+  routeResolver: (id: string) => string;
+  listLabel: string;
+  searchHelperText: string;
 }
 
 const split_at_index = (value: string, index: number, length: number) => {
@@ -71,9 +75,11 @@ const endAdornment = (
   </InputAdornment>
 );
 
-const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
-  vocabularyIri,
-  terms,
+const VocabularyAndTermsListWindow: React.FC<VocabularyAndTermsListProps> = ({
+  data,
+  routeResolver,
+  listLabel,
+  searchHelperText,
 }) => {
   const classes = useStyles();
   const [filterText, setFilterText] = useState("");
@@ -81,7 +87,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
     setFilterText(event.target.value);
   };
   const filteredTerms = useMemo(() => {
-    return terms
+    return data
       .filter((term) => {
         if (filterText === "") return true;
         else {
@@ -95,14 +101,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
           label: getHighlightedText(term.label, filterText),
         };
       });
-  }, [terms, filterText]);
-
-  const getTermRoute = (term: VocabularyTermInterface) => {
-    return generateTermRoute({
-      $id: term.$id,
-      vocabulary: { $id: vocabularyIri },
-    });
-  };
+  }, [data, filterText]);
 
   const filter = (
     <Box ml={4}>
@@ -111,7 +110,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
         onChange={handleChange}
         size={"small"}
         fullWidth
-        placeholder="Zadejte hledaný pojem"
+        placeholder={searchHelperText}
         InputProps={{
           endAdornment: endAdornment,
         }}
@@ -120,7 +119,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
   );
 
   return (
-    <DetailItemWrapper title={"Pojmy"} secondaryElement={filter}>
+    <DetailItemWrapper title={listLabel} secondaryElement={filter}>
       <ReactWindowScroller>
         {({ ref, outerRef, style, onScroll }: any) => (
           <List
@@ -137,7 +136,7 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
               <div style={style}>
                 <div className={classes.wrapper}>
                   <RouterLink
-                    to={getTermRoute(filteredTerms[index])}
+                    to={routeResolver(filteredTerms[index].$id)}
                     className={classes.noDecoration}
                   >
                     <div
@@ -156,4 +155,4 @@ const VocabularyTermsListWindow: React.FC<VocabularyTermsListProps> = ({
     </DetailItemWrapper>
   );
 };
-export default VocabularyTermsListWindow;
+export default VocabularyAndTermsListWindow;

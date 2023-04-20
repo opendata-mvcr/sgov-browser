@@ -3,6 +3,7 @@ import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
 import SuggestedWords from "./SuggestedWords";
 import SearchBar from "./search/SearchBar";
+import RouteLink from "./RouteLink";
 
 const HeroWrapper = styled(Grid)(({ theme }) => ({
   textAlign: "right",
@@ -40,6 +41,14 @@ const HeroSection: React.FC = () => {
           </Grid>
           <Grid item md={10} xs={12}>
             <SuggestedWords />
+            <Box display={"flex"} justifyContent={"center"} mt={1}>
+              <Typography variant={"h6"} color="textSecondary">
+                Nebo si prohlédněte dostupné{" "}
+                <RouteLink to={`/slovniky`} color="textSecondary" variant="h6">
+                  slovníky
+                </RouteLink>
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Container>

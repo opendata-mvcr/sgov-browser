@@ -15,6 +15,7 @@ import DisambiguationPage from "./components/search/DisambiguationPage";
 import TermPage from "./components/terms/TermPage";
 import VocabularyPage from "./components/vocabularies/VocabularyPage";
 import { PUBLIC_PATH } from "./app/variables";
+import VocabulariesPage from "./components/vocabularies/VocabulariesPage";
 
 const InitialLocationFix: React.FC = () => {
   // This is a workaround for a bug in React Router that does not work well
@@ -44,6 +45,9 @@ const Router: React.FC = () => {
           </Route>
           <Route exact path="/slovnik">
             <VocabularyPage />
+          </Route>
+          <Route exact path="/slovniky">
+            <VocabulariesPage />
           </Route>
           <Route exact path="/rozcestnik">
             <DisambiguationPage />

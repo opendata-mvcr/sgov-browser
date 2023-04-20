@@ -2,8 +2,9 @@ import React from "react";
 import { useVocabularyTerms } from "../../api/VocabularyAPI";
 import Loader from "../Loader";
 import { Typography } from "@mui/material";
-import VocabularyTermsListWindow from "./VocabularyTermsListWindow";
+import VocabularyAndTermsListWindow from "./VocabularyAndTermsListWindow";
 import DetailItemWrapper from "../detail_common/DetailItemWrapper";
+import { generateTermRoute } from "../../utils/Utils";
 
 interface VocabularyTermsProps {
   vocabularyIri: string;
@@ -11,6 +12,13 @@ interface VocabularyTermsProps {
 
 const VocabularyTerms: React.FC<VocabularyTermsProps> = ({ vocabularyIri }) => {
   const { data = [], isLoading, isError } = useVocabularyTerms(vocabularyIri);
+
+  const getTermRoute = (id: string) => {
+    return generateTermRoute({
+      $id: id,
+      vocabulary: { $id: vocabularyIri },
+    });
+  };
 
   if (isError || isLoading) {
     return (
@@ -24,7 +32,12 @@ const VocabularyTerms: React.FC<VocabularyTermsProps> = ({ vocabularyIri }) => {
     );
   }
   return (
-    <VocabularyTermsListWindow vocabularyIri={vocabularyIri} terms={data} />
+    <VocabularyAndTermsListWindow
+      routeResolver={getTermRoute}
+      data={data}
+      listLabel={"Pojmy"}
+      searchHelperText={"Zadejte hledaný pojem"}
+    />
   );
 };
 
