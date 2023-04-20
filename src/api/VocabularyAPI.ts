@@ -26,7 +26,9 @@ export const getAllVocabularies = async () => {
     throw new Error("404 No vocabularies were found");
   }
   //Z-GOV should not be visible
-  return data.filter((vocabulary) => vocabulary.$id !== HIDDEN_VOCABULARY);
+  return data
+    .filter((vocabulary) => vocabulary.$id !== HIDDEN_VOCABULARY)
+    .sort((a, b) => a.label.localeCompare(b.label));
 };
 
 export const useVocabulary = (vocabularyUri: string) => {
