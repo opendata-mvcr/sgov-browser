@@ -20,6 +20,15 @@ export const getVocabulary = async (vocabularyIri: string) => {
   return data;
 };
 
+export const getAllVocabularies = async () => {
+  const data = await Vocabularies.find();
+  if (!data) {
+    throw new Error("404 No vocabularies were found");
+  }
+  //Z-GOV should not be visible
+  return data.filter((vocabulary) => vocabulary.$id !== HIDDEN_VOCABULARY);
+};
+
 export const useVocabulary = (vocabularyUri: string) => {
   return useQuery(
     ["vocabulary", vocabularyUri],
@@ -29,6 +38,10 @@ export const useVocabulary = (vocabularyUri: string) => {
       notifyOnChangeProps: ["data", "isError"],
     }
   );
+};
+
+export const useAllVocabularies = () => {
+  return useQuery(["vocabularies"], () => getAllVocabularies());
 };
 
 const getVocabularyTerms = async (vocabularyIri: string) => {
