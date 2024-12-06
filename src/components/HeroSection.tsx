@@ -1,7 +1,6 @@
 import { Box, Container, Grid, styled, Typography } from "@mui/material";
 import React from "react";
 import { ReactComponent as Hero } from "../assets/hero.svg";
-import SuggestedWords from "./SuggestedWords";
 import SearchBar from "./search/SearchBar";
 import RouteLink from "./RouteLink";
 
@@ -40,7 +39,7 @@ const HeroSection: React.FC = () => {
             <SearchBar size="large" />
           </Grid>
           <Grid item md={10} xs={12}>
-            <SuggestedWords />
+            {/* <SuggestedWords /> */}
             <Box display={"flex"} justifyContent={"center"} mt={1}>
               <Typography variant={"h6"} color="textSecondary">
                 Nebo si prohlédněte dostupné{" "}

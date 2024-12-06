@@ -1,13 +1,13 @@
 import { SchemaInterface, createResource } from "ldkit";
 import { xsd, skos, dcterms, ldkit } from "ldkit/namespaces";
 import { $ } from "ldkit/sparql";
-import { lucene, luceneInstance, popisDat } from "./namespaces";
+import { lucene, luceneInstance } from "./namespaces";
 import { n, l } from "./utils";
 import { context } from "./context";
 import { HIDDEN_VOCABULARY } from "./vocabularies";
 
 const VocabularySchema = {
-  "@type": popisDat["slovník"],
+  "@type": skos.ConceptScheme,
   title: dcterms.title,
 };
 
@@ -19,7 +19,7 @@ const SearchSchema = {
     "@optional": true,
   },
   vocabulary: {
-    "@id": popisDat["je-pojmem-ze-slovníku"],
+    "@id": skos.inScheme,
     "@context": VocabularySchema,
   },
   snippetField: lucene.snippetField,
@@ -31,7 +31,7 @@ const SearchSchema = {
 } as const;
 
 const VocabularySearchSchema = {
-  "@type": popisDat["slovník"],
+  "@type": skos.ConceptScheme,
   label: {
     "@id": dcterms.title,
   },
@@ -81,7 +81,7 @@ CONSTRUCT {
   ?entity a ${n(skos.Concept)} , ${n(ldkit.Resource)} ;
           ${n(skos.prefLabel)} ?label ;
           ${n(skos.definition)} ?definition ;
-          ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary ;
+          ${n(skos.inScheme)} ?vocabulary ;
           ${n(lucene.snippetText)} ?snippetText ;
           ${n(lucene.snippetField)} ?snippetField ;
           ${n(lucene.score)} ?score .
@@ -98,7 +98,7 @@ CONSTRUCT {
       ?entity a ${n(skos.Concept)} ;
               ${n(skos.prefLabel)} ?label .
     }
-    ?entity ${n(popisDat["je-pojmem-ze-slovníku"])} ?vocabulary .
+    ?entity ${n(skos.inScheme)} ?vocabulary .
     ?vocabulary ${n(dcterms.title)} ?vocabularyTitle .
     OPTIONAL { ?entity ${n(skos.definition)} ?definition . }
     ?entity ${n(lucene.score)} ?initScore ;
@@ -134,7 +134,7 @@ export const getVocabularySearchQuery = (text: string) => {
 
   const query = $`
 CONSTRUCT {
-  ?entity a ${n(popisDat["slovník"])} , ${n(ldkit.Resource)} ;
+  ?entity a ${n(skos.ConceptScheme)} , ${n(ldkit.Resource)} ;
           ${n(dcterms.title)} ?label ;
           ${n(dcterms.description)} ?definition ;
           ${n(lucene.snippetText)} ?snippetText ;
@@ -149,7 +149,7 @@ CONSTRUCT {
             ${n(lucene.snippetSize)} 2000 ;
             ${n(lucene.entities)} ?entity . 
     GRAPH ?g {
-      ?entity a ${n(popisDat["slovník"])} ;
+      ?entity a ${n(skos.ConceptScheme)} ;
               ${n(dcterms.title)} ?label .
     }
     OPTIONAL { ?entity ${n(dcterms.description)} ?definition . }

@@ -3,7 +3,6 @@ import { dcterms, skos, ldkit } from "ldkit/namespaces";
 import { $ } from "ldkit/sparql";
 
 import { context } from "./context";
-import { popisDat } from "./namespaces";
 import { n } from "./utils";
 import { TermBaseSchema } from "./terms";
 
@@ -14,7 +13,7 @@ const VocabularyTermSchema = {
 } as const;
 
 const VocabularySchema = {
-  "@type": popisDat["slovník"],
+  "@type": skos.ConceptScheme,
   label: {
     "@id": dcterms.title,
   },
@@ -43,7 +42,7 @@ export const getVocabularyTermsQuery = (vocabularyIri: string) => {
   }
   WHERE {
     ?iri a ${n(skos.Concept)} ;
-      ${n(popisDat["je-pojmem-ze-slovníku"])} ${n(vocabularyIri)} ;
+      ${n(skos.inScheme)} ${n(vocabularyIri)} ;
       ${n(skos.prefLabel)} ?label .
     OPTIONAL { ?iri ${n(skos.definition)} ?definition . }
   }
