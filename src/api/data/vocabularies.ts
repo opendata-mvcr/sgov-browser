@@ -15,7 +15,7 @@ const VocabularyTermSchema = {
 const VocabularySchema = {
   "@type": skos.ConceptScheme,
   label: {
-    "@id": dcterms.title,
+    "@id": skos.prefLabel,
   },
   description: {
     "@id": dcterms.description,

@@ -15,7 +15,7 @@ const RelationItemSchema = {
     "@context": {
       "@type": skos.ConceptScheme,
       label: {
-        "@id": dcterms.title,
+        "@id": skos.prefLabel,
         "@optional": true,
       },
     },
@@ -30,7 +30,7 @@ export const TermBaseSchema = {
     "@context": {
       "@type": skos.ConceptScheme,
       label: {
-        "@id": dcterms.title,
+        "@id": skos.prefLabel,
         "@optional": true,
       },
     },
@@ -117,8 +117,8 @@ CONSTRUCT{
   ?term ${n(rdfs.range)} ?range .
   ?range ${n(skos.inScheme)} ?vocabulary2 .
   ?range a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
-  ?vocabulary ${n(dcterms.title)} ?title .
-  ?vocabulary2 ${n(dcterms.title)} ?title2 .
+  ?vocabulary ${n(skos.prefLabel)} ?title .
+  ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 }
 WHERE {
   BIND(${n(termIri)} as ?term)
@@ -129,7 +129,7 @@ WHERE {
   )} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
   }
   UNION{
       ?domain ${n(rdfs.subClassOf)} ?domainRestriction . 
@@ -138,32 +138,32 @@ WHERE {
   )} ${n(zSgovPojem["je-vlastností"])} .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
   }
   UNION{
     ?domain ${n(rdfs.domain)} ?term .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
   }
   UNION {
     ?range ${n(rdfs.range)} ?term .
     ?range ${n(skos.prefLabel)} ?label2 .
     ?range ${n(skos.inScheme)} ?vocabulary2 .
-    ?vocabulary2 ${n(dcterms.title)} ?title2 .
+    ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 
   }
   UNION{
   ?domain ${n(zSgovPojem["má-vztažený-prvek-1"])} ?term .
   ?domain ${n(skos.prefLabel)} ?label .
   ?domain ${n(skos.inScheme)} ?vocabulary .
-  ?vocabulary ${n(dcterms.title)} ?title .
+  ?vocabulary ${n(skos.prefLabel)} ?title .
   }
   UNION{
    ?range ${n(zSgovPojem["má-vztažený-prvek-2"])} ?term.
    ?range ${n(skos.prefLabel)} ?label2 .
    ?range ${n(skos.inScheme)} ?vocabulary2 .
-   ?vocabulary2 ${n(dcterms.title)} ?title2 .
+   ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 
   }
   UNION {
@@ -173,7 +173,7 @@ WHERE {
   )} .
     ?range ${n(skos.prefLabel)} ?label2 .
     ?range ${n(skos.inScheme)} ?vocabulary2 .
-    ?vocabulary2 ${n(dcterms.title)} ?title2 .
+    ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 
   }
   FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})
@@ -195,8 +195,8 @@ CONSTRUCT{
   ?term ${n(rdfs.range)} ?range .
   ?range ${n(skos.inScheme)} ?vocabulary2 .
   ?range a ${n(skos.Concept)}; ${n(skos.prefLabel)} ?label2 .
-  ?vocabulary ${n(dcterms.title)} ?title .
-  ?vocabulary2 ${n(dcterms.title)} ?title2 .
+  ?vocabulary ${n(skos.prefLabel)} ?title .
+  ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 }
 WHERE {
   BIND(${n(propertyIri)} as ?term)
@@ -207,7 +207,7 @@ WHERE {
   )} ${n(zSgovPojem["má-vztažený-prvek-1"])} .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
 
   }
   UNION {
@@ -217,20 +217,20 @@ WHERE {
   )} ${n(zSgovPojem["je-vlastností"])} .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
   }
   UNION{
     ?term ${n(rdfs.domain)} ?domain .
     ?domain ${n(skos.prefLabel)} ?label .
     ?domain ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?title .
+    ?vocabulary ${n(skos.prefLabel)} ?title .
 
   }
   UNION {
     ?term ${n(rdfs.range)} ?range .
     ?range ${n(skos.prefLabel)} ?label2 .
     ?range ${n(skos.inScheme)} ?vocabulary2 .
-    ?vocabulary2 ${n(dcterms.title)} ?title2 .
+    ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 
   }
   UNION {
@@ -240,7 +240,7 @@ WHERE {
   )} ${n(zSgovPojem["má-vztažený-prvek-2"])} .
     ?range ${n(skos.prefLabel)} ?label2 .
     ?range ${n(skos.inScheme)} ?vocabulary2 .
-    ?vocabulary2 ${n(dcterms.title)} ?title2 .
+    ?vocabulary2 ${n(skos.prefLabel)} ?title2 .
 
   }
   FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})

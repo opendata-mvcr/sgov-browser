@@ -8,7 +8,7 @@ import { generateStyledSnippet } from "../../utils/TermUtils";
 import TypeIcon from "../TypeIcon";
 import { generateRoute } from "../../utils/SearchUtil";
 import MaxLineText from "../MaxLineText";
-import { skos } from "ldkit/types/namespaces";
+import { skos } from "ldkit/namespaces";
 
 const HighlightedText = styled(Typography)(({ theme }) => ({
   "--fontsize": "1.6982rem",

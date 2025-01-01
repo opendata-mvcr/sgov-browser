@@ -8,7 +8,7 @@ import { HIDDEN_VOCABULARY } from "./vocabularies";
 
 const VocabularySchema = {
   "@type": skos.ConceptScheme,
-  title: dcterms.title,
+  title: skos.prefLabel,
 };
 
 const SearchSchema = {
@@ -33,7 +33,7 @@ const SearchSchema = {
 const VocabularySearchSchema = {
   "@type": skos.ConceptScheme,
   label: {
-    "@id": dcterms.title,
+    "@id": skos.prefLabel,
   },
   description: {
     "@id": dcterms.description,
@@ -85,7 +85,7 @@ CONSTRUCT {
           ${n(lucene.snippetText)} ?snippetText ;
           ${n(lucene.snippetField)} ?snippetField ;
           ${n(lucene.score)} ?score .
-  ?vocabulary ${n(dcterms.title)} ?vocabularyTitle .
+  ?vocabulary ${n(skos.prefLabel)} ?vocabularyTitle .
 } WHERE {
   SELECT DISTINCT ?entity ?label ?definition ?vocabulary ?vocabularyTitle ?snippetField ?snippetText ?score {
     { ?search a ${n(luceneInstance.label_index)} } 
@@ -99,7 +99,7 @@ CONSTRUCT {
               ${n(skos.prefLabel)} ?label .
     }
     ?entity ${n(skos.inScheme)} ?vocabulary .
-    ?vocabulary ${n(dcterms.title)} ?vocabularyTitle .
+    ?vocabulary ${n(skos.prefLabel)} ?vocabularyTitle .
     OPTIONAL { ?entity ${n(skos.definition)} ?definition . }
     ?entity ${n(lucene.score)} ?initScore ;
             ${n(lucene.snippets)} _:s .
@@ -108,8 +108,8 @@ CONSTRUCT {
     FILTER (lang(?label) = "cs")
     FILTER (?vocabulary != ${n(HIDDEN_VOCABULARY)})
     BIND(IF(lcase(str(?snippetText)) = lcase(str(${l(
-      exactMatchString
-    )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
+    exactMatchString
+  )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
     text
   )}), IF(?snippetField = "label", ?initScore * 1.5, ?initScore), ?initScore)) as ?exactMatchScore)
     BIND(IF(?snippetField = "label", ?exactMatchScore * 2, IF(?snippetField = "definition", ?exactMatchScore * 1.2, ?exactMatchScore)) as ?score)
@@ -135,7 +135,7 @@ export const getVocabularySearchQuery = (text: string) => {
   const query = $`
 CONSTRUCT {
   ?entity a ${n(skos.ConceptScheme)} , ${n(ldkit.Resource)} ;
-          ${n(dcterms.title)} ?label ;
+          ${n(skos.prefLabel)} ?label ;
           ${n(dcterms.description)} ?definition ;
           ${n(lucene.snippetText)} ?snippetText ;
           ${n(lucene.snippetField)} ?snippetField ;
@@ -150,7 +150,7 @@ CONSTRUCT {
             ${n(lucene.entities)} ?entity . 
     GRAPH ?g {
       ?entity a ${n(skos.ConceptScheme)} ;
-              ${n(dcterms.title)} ?label .
+              ${n(skos.prefLabel)} ?label .
     }
     OPTIONAL { ?entity ${n(dcterms.description)} ?definition . }
     ?entity ${n(lucene.score)} ?initScore ;
@@ -160,8 +160,8 @@ CONSTRUCT {
     FILTER (lang(?label) = "cs")
     FILTER (?entity != ${n(HIDDEN_VOCABULARY)})
     BIND(IF(lcase(str(?snippetText)) = lcase(str(${l(
-      exactMatchString
-    )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
+    exactMatchString
+  )})), ?initScore * 2, IF(CONTAINS(lcase(str(?snippetText)), ${l(
     text
   )}), IF(?snippetField = "title", ?initScore * 1.5, ?initScore), ?initScore)) as ?exactMatchScore)
     BIND(IF(?snippetField = "title", ?exactMatchScore * 2, IF(?snippetField = "description", ?exactMatchScore * 1.2, ?exactMatchScore)) as ?score)
